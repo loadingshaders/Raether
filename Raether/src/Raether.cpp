@@ -53,7 +53,7 @@ void Raether::raeInit() {
 		raeErrorList("SDL texture could not be created...");
 	}
 
-	//destination rect
+	// destination rect
 	screensize.x = 0;
 	screensize.y = 0;
 	screensize.w = windowwidth;
