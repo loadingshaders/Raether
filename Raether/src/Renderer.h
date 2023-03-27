@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <random>
 
 #include "Raether.h"
 #include "Camera.h"
@@ -18,9 +19,11 @@ public:
 
 	void Render(Raether& rae, const Scene& scene, const Camera& camera);
 private:
-	glm::vec4 CalculateColor(const Ray& ray, const Scene& scene, Hitrec& hitrecord);
+	const Camera* renderCam = nullptr;
+	const Scene* renderScene = nullptr;
+private:
+	glm::vec4 PerPixel(int x, int y);
 	bool Hittable(const Ray& ray, const std::vector<Sphere>& SphereList, Hitrec& hitrecord);
-
 private:	
 	glm::vec4 Lerp(const Ray& ray, glm::vec3 start, glm::vec3 end);
 	bool Inrange(float value, float low, float high);
