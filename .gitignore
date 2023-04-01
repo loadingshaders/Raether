@@ -3,6 +3,7 @@
 bin/
 
 # Files
+*.gif
 *.vcxproj
 *.vcxproj.user
 *.vcxproj.filters
