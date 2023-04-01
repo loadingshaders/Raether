@@ -20,7 +20,6 @@ public:
 	void raeCreateWindow(const char* w_t, int w_width, int w_height);
 	void raeRun();
 	void raeDrawPix(int u, int v, std::vector<glm::ui8_tvec4>& PixData);
-
 	void raeRenderBegin();
 	void raeRenderEnd();
 	void raeIP();
