@@ -4,8 +4,8 @@ Raether::Raether() {
 	raeState = RaeState::ACTIVE;
 	window = nullptr;
 	title = "Raether";
-	windowwidth = 1280;
-	windowheight = 720;
+	windowwidth = 900;
+	windowheight = 500;
 	renderer = nullptr;
 	texture = nullptr;
 	screensize = SDL_Rect{ 0, 0, windowwidth, windowheight };
@@ -47,7 +47,7 @@ void Raether::raeInit() {
 		raeErrorList("SDL blendmode could not be created...");
 	}
 
-	texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, windowwidth, windowheight);
+	texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ABGR8888, SDL_TEXTUREACCESS_STREAMING, windowwidth, windowheight);
 	if (texture == nullptr) {
 		raeErrorList(SDL_GetError());
 		raeErrorList("SDL texture could not be created...");
@@ -68,25 +68,24 @@ void Raether::raeCreateWindow(const char* w_t, int w_width, int w_height) {
 	raeInit();
 }
 
-void Raether::raeDrawPix(int u, int v) {
-	int sdlError = SDL_RenderDrawPoint(renderer, u, v);
-	if (sdlError != 0) {
-		raeErrorList("SDL pixel could not be drawn...");
-		raeErrorList(SDL_GetError());
-	}
-}
+void Raether::raeDrawPix(int u, int v, std::vector<glm::ui8_tvec4>& PixData) {
 
-void Raether::raeDrawCol(SDL_Color color) {
-	int sdlError = SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
+	uint32_t* pixels;
+	int pitch;
+	
+	const int numofPixels = u * v;
+
+	// Lock the texture pixels for direct write access
+	int sdlError = SDL_LockTexture(texture, &screensize, (void **)&pixels, &pitch);
 	if (sdlError != 0) {
 		raeErrorList(SDL_GetError());
-		raeErrorList("SDL color could not be created...");
+		raeErrorList("SDL texture could not be locked...");
 	}
-}
 
-SDL_Color Raether::raeCreateCol(glm::ui8_tvec4 color) {
-	SDL_Color c{ color.r, color.g, color.b, color.a };
-	return c;
+	memcpy(pixels, PixData.data(), numofPixels * sizeof(uint32_t));
+
+	// Unlock the texture to allow rendering
+	SDL_UnlockTexture(texture);
 }
 
 void Raether::raeIP() {
@@ -100,12 +99,6 @@ void Raether::raeIP() {
 	}
 }
 
-void Raether::raeLoop() {
-	while (raeState == RaeState::ACTIVE) {
-		raeRender();
-	}
-}
-
 void Raether::raeRenderBegin() {
 	SDL_SetRenderTarget(renderer, texture);
 }
@@ -115,12 +108,6 @@ void Raether::raeRenderEnd() {
 	SDL_RenderPresent(renderer);
 }
 
-void Raether::raeRender() {
-	raeRenderEnd();
-	raeIP();
-	raeRenderBegin();
-}
-
 void Raether::raeQuit() {
 	if (raeState == RaeState::EXIT) {
 		SDL_DestroyTexture(texture);
@@ -128,8 +115,4 @@ void Raether::raeQuit() {
 		SDL_DestroyWindow(window);
 		SDL_Quit();
 	}
-}
-
-void Raether::raeRun() {
-	raeLoop();
 }
