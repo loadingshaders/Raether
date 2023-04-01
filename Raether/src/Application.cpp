@@ -1,9 +1,7 @@
 #include "Application.h"
 
-App::App() : rae(), scene(), sphere(), camera(), renderer() {
+App::App() : width(900), height(500), rae(), scene(), sphere(), camera(), renderer() {
 	title = "Raether";
-	width = 900;
-	height = 500;
 }
 App::~App() {
 }
@@ -37,9 +35,17 @@ void App::setUpScene() {
 		Material blueSpheres;
 		blueSpheres.Albedo = glm::vec3(0.0f, 0.0f, 1.0f);
 		blueSpheres.Metallic = 0.0f;
-		blueSpheres.Roughness = 0.5f;
+		blueSpheres.Roughness = 0.3f;
 
 		scene.addMaterials(blueSpheres);
+	}
+	{
+		Material greySpheres;
+		greySpheres.Albedo = glm::vec3(0.2f, 0.2f, 0.2f);
+		greySpheres.Metallic = 0.0f;
+		greySpheres.Roughness = 1.0f;
+
+		scene.addMaterials(greySpheres);
 	}
 
 	// Configure spehers
@@ -47,7 +53,6 @@ void App::setUpScene() {
 	//	sphere.SphereOrigin = glm::vec3(-1.0f, 0.0f, 0.0f);
 	//	sphere.Radius = 0.5f;
 	//	sphere.MatIndex = 0;
-
 	//	// Add the Sphere to the scene
 	//	scene.addSpheres(sphere);
 	//}
@@ -55,7 +60,6 @@ void App::setUpScene() {
 	//	sphere.SphereOrigin = glm::vec3(0.0f, 0.0f, 0.0f);
 	//	sphere.Radius = 0.5f;
 	//	sphere.MatIndex = 1;
-
 	//	// Add the Sphere to the scene
 	//	scene.addSpheres(sphere);
 	//}
@@ -63,7 +67,6 @@ void App::setUpScene() {
 	//	sphere.SphereOrigin = glm::vec3(1.0f, 0.0f, 0.0f);
 	//	sphere.Radius = 0.5f;
 	//	sphere.MatIndex = 2;
-
 	//	// Add the Sphere to the scene
 	//	scene.addSpheres(sphere);
 	//}
@@ -73,20 +76,30 @@ void App::setUpScene() {
 		sphere.SphereOrigin = glm::vec3(0.0f, 0.0f, 0.0f);
 		sphere.Radius = 0.5f;
 		sphere.MatIndex = 0;
-
 		scene.addSpheres(sphere);
 	}
 	{
-		sphere.SphereOrigin = glm::vec3(0.0f, -30.5f, 0.0f);
-		sphere.Radius = 30.0f;
+		sphere.SphereOrigin = glm::vec3(0.0f, -3000.5f, 0.0f);
+		sphere.Radius = 3000.0f;
+		sphere.MatIndex = 3;
+		scene.addSpheres(sphere);
+	}
+	{
+		sphere.SphereOrigin = glm::vec3(0.7f, -0.3f, 0.0f);
+		sphere.Radius = 0.2f;
 		sphere.MatIndex = 1;
-
+		scene.addSpheres(sphere);
+	}
+	{
+		sphere.SphereOrigin = glm::vec3(-0.85f, -0.2f, 0.0f);
+		sphere.Radius = 0.3f;
+		sphere.MatIndex = 2;
 		scene.addSpheres(sphere);
 	}
 
 	// Camera setup
-	camera.SetPosition(glm::vec3(0.0f, 0.5f, 2.3f)); // 0.0f, 1.0f, 2.0f
-	camera.SetOrientation(glm::vec3(0.0f, -0.30f, -1.2f)); // 0.0f, -0.5f, -1.0f
+	camera.SetPosition(glm::vec3(0.0f, 0.5f, 2.5f));
+	camera.SetOrientation(glm::vec3(0.0f, -0.30f, -1.2f));
 	camera.SetViewPortWidth(width);
 	camera.SetViewPortHeight(height);
 	camera.SetProjection(45.0f, 0.1f, 100.0f);
@@ -96,18 +109,11 @@ void App::setUpScene() {
 	// Adding the light direction to the scene
 	scene.Lightdirection = glm::normalize(glm::vec3(-1.0f, -1.0f, -1.0f));
 }
+
 void App::run() {
 	setUpScene();
 
-	auto start = logtime;
+	scene.SampleCount = 500;
 
 	renderer.Render(rae, scene, camera);
-
-	auto end = logtime;
-	std::cout << "Elapsed time: " << elapsed(end - start).count() << " ms" << std::endl;
-	
-	rae.raeRun();
-
-	end = logtime;
-	std::cout << "\nTotal Runtime: " << elapsed(end - start).count() << " ms" << std::endl;
 }
