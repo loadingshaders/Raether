@@ -18,7 +18,7 @@ namespace Utils {
 		return c;
 	}
 
-	glm::vec3 Randomoffset(float from, float to) {
+	glm::vec3 Randomoffset1(float from, float to) {
 		static float range_from = from;
 		static float range_to = to;
 
@@ -33,6 +33,20 @@ namespace Utils {
 		return offset;
 	}
 
+	glm::vec3 Randomoffset2(float from, float to) {
+		static float range_from = from;
+		static float range_to = to;
+
+		static std::random_device rand_dev;
+		// Using Mersenne Twister algorithm for random num generation
+		static std::mt19937 generator(rand_dev());
+
+		static std::uniform_real_distribution<float> distr(range_from, range_to);
+
+		glm::vec3 offset(distr(generator), distr(generator), distr(generator));
+
+		return offset;
+	}
 
 	bool Inrange(float value, float low, float high) {
 		if (value > low && value < high) {
@@ -60,26 +74,73 @@ void Renderer::Render(Raether& rae, const Scene& scene, const Camera& camera) {
 	int width = renderCam->GetViewPortWidth();
 	int height = renderCam->GetViewPortHeight();
 
-	for (int y = 0; y < height; y++) {
-		for (int x = 0; x < width; x++) {
+	PixelData.resize(width * height);
+	AccumPixelData.resize(width * height);
 
-			/// Check Whether it hits something or not and return a color according to it
-			glm::vec4 color = glm::clamp(PerPixel(x, y), glm::vec4(0.0f), glm::vec4(1.0f));
+	int printSpec = -1;
 
-			/// Draw the color using SDL
-			rae.raeDrawCol(rae.raeCreateCol(Utils::converttoRGBA(color)));
-			rae.raeDrawPix(x, height - y);
+	auto start = logtime;
+
+	while (rae.raeState == RaeState::ACTIVE) {
+
+		/// End the render
+		rae.raeRenderEnd();
+
+		if (FrameCount == 1) {
+			/// Reset the Accumulate ImgaeBuffer
+			memset(&AccumPixelData[0], 0, width * height * sizeof(glm::vec4));
 		}
+
+		else if (FrameCount < renderScene->SampleCount) {
+
+			for (int y = 0; y < height; y++) {
+				for (int x = 0; x < width; x++) {
+
+					glm::vec4 color = PerPixel(x, (height - 1) - y);
+
+					/// Accumulate the color
+					AccumPixelData[x + y * width] += color;
+
+					glm::vec4 accumColor = AccumPixelData[x + y * width];
+					/// Balancing the brightness 
+					accumColor /= (float)FrameCount;
+
+					/// Check Whether it hits something or not and return a color according to it
+					accumColor = glm::clamp(accumColor, glm::vec4(0.0f), glm::vec4(1.0f));
+
+					/// Store the color data
+					PixelData[x + y * width] = Utils::converttoRGBA(accumColor);
+				}
+			}
+			/// Draw the color using SDL
+			rae.raeDrawPix(width, height, PixelData);
+
+		}
+		else if (FrameCount > renderScene->SampleCount && printSpec < 0) {
+
+			auto end = logtime;
+
+			std::cout << "Elapsed Time: " << elapsed(end - start).count() << " ms" << std::endl;
+			std::cout << "Sample Count: " << scene.SampleCount << std::endl;
+			std::cout << "Sphere Count: " << scene.SphereList.size() << std::endl;
+
+			printSpec++;
+		}
+		/// Check for input
+		rae.raeIP();
+
+		/// Start the render
+		rae.raeRenderBegin();
+
+		FrameCount++;
 	}
 }
 
 glm::vec4 Renderer::PerPixel(int x, int y) {
 
 	Ray ray;
-	/// Setting the Ray Origin
 	ray.Origin = renderCam->GetPosition();
-	/// Setting the Ray Directions
-	ray.Direction = renderCam->GetRayDirection()[x + y * renderCam->GetViewPortWidth()];
+	ray.Direction = renderCam->GetRayDirection()[x + y * renderCam->GetViewPortWidth()] + Utils::Randomoffset1(-0.001f, 0.001f);
 
 	Hitrec hitrecord;
 
@@ -111,13 +172,13 @@ glm::vec4 Renderer::PerPixel(int x, int y) {
 		luminance = glm::max(glm::dot(hitrecord.Surfacenormal, Tolight), 0.0f);
 
 		// glm::vec3 normalview((hitrecord.Surfacenormal + 0.5f) * 0.5f);
-		// fragColor += glm::vec4(mat.Albedo * luminance, 1.0f) * multiplier;
-		multiplier *= 0.5f;
+		fragColor += glm::vec4(mat.Albedo * luminance, 1.0f) * multiplier;
+		multiplier *= 0.35f;
 
 		ray.Origin = hitrecord.Hitpoint + hitrecord.Surfacenormal * 0.0001f;
-		ray.Direction = glm::reflect(ray.Direction, hitrecord.Surfacenormal + mat.Roughness * Utils::Randomoffset(-0.5f, 0.5f));
+		ray.Direction = glm::reflect(ray.Direction, hitrecord.Surfacenormal + mat.Roughness * Utils::Randomoffset2(-0.5f, 0.5f));
 	}
-
+	 
 	return fragColor;
 }
 
