@@ -19,6 +19,9 @@ struct Sphere {
 };
 
 struct Scene {
+
+	float SampleCount;
+
 	glm::vec3 Lightdirection;
 
 	std::vector<Sphere> SphereList;
