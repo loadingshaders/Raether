@@ -1,7 +1,6 @@
 #pragma once
 
 #include <iostream>
-#include <chrono>
 
 #include <glm\glm.hpp>
 
@@ -10,10 +9,6 @@
 #include "Camera.h"
 #include "Scene.h"
 #include "Ray.h"
-
-#define logtime std::chrono::steady_clock::now()
-#define elapsed std::chrono::duration_cast<std::chrono::milliseconds>
-
 
 class App
 {
@@ -24,8 +19,8 @@ public:
 	void run();
 private:
 	const char* title;
-	int width;
-	int height;
+	const int width;
+	const int height;
 
 	Raether rae;
 	Scene scene;
