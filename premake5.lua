@@ -19,6 +19,8 @@ project "Raether"
 	cppdialect "C++17"
 	staticruntime "On"
 
+	files {"%{prj.name}/assets/icon/Raether.ico"}
+
 	targetdir ("bin/" .. arch .. "/" .. config)
 	objdir ("bin/intermediates/" .. arch .. "/" .. config )
 
@@ -26,7 +28,7 @@ project "Raether"
 		"%{prj.name}/Resources/resources.rc"
 	}
 
-	headerfiles = {
+	rcheaderfiles = {
 		"%{prj.name}/Resources/resource.h"
 	}
 
@@ -36,7 +38,7 @@ project "Raether"
 		"%{prj.name}/src/**.cpp",
 
 		rcfiles,
-		headerfiles
+		rcheaderfiles
 	}
 
 	includedirs
@@ -51,10 +53,8 @@ project "Raether"
 
 	filter "system:windows"
 		systemversion "latest"
-		files {"%{prj.name}/assets/icon/Raether.ico"}
 
 	filter "configurations:Debug"
-		files {"%{prj.name}/assets/icon/Raether.ico"}
 		defines { "DEBUG" }
 		runtime "Debug"
 		symbols "On"
@@ -68,8 +68,7 @@ project "Raether"
 		}
 
 	filter "configurations:Release"
-		files {"%{prj.name}/assets/icon/Raether.ico"}
-		defines { "NDEBUG" }
+		defines { "RELEASE" }
 		runtime "Release"
 		symbols "Off"
 		optimize "On"
@@ -79,8 +78,6 @@ project "Raether"
 			"SDL2.lib",
 			"SDL2main.lib",
 		}
-
-	filter {}
 
 	vstudio = {  }
 
