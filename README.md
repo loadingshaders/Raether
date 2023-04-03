@@ -4,7 +4,7 @@ A simple offline path tracer made using SDL
 
 <div align="center">
   
-  ![Raether](https://user-images.githubusercontent.com/92203452/229559950-b45a6bd1-ef68-4ebd-92ce-c0b8adc3c79a.gif)
+  <img src="https://user-images.githubusercontent.com/92203452/229559950-b45a6bd1-ef68-4ebd-92ce-c0b8adc3c79a.gif" alt="Raether" width="360" height="360">
 
 </div>
 
