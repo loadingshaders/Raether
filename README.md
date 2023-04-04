@@ -1,12 +1,12 @@
-# Raether
-
-A simple offline path tracer made using SDL
-
 <div align="center">
   
   <img src="https://user-images.githubusercontent.com/92203452/229559950-b45a6bd1-ef68-4ebd-92ce-c0b8adc3c79a.gif" alt="Raether" width="300" height="300">
 
 </div>
+
+# Raether
+
+A simple offline path tracer made using SDL
 
 ## Usage
 
