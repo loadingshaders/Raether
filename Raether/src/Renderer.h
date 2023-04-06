@@ -22,12 +22,15 @@ public:
 	Renderer();
 	~Renderer();
 
-	void Render(Raether& rae, const Scene& scene, const Camera& camera);
+	void RenderLoop(Raether& rae, const Scene& scene, Camera& camera);
+
+	void Render(const Scene& scene, Camera& camera);
 private:
 	int FrameCount = 1;
 
 	const Camera* renderCam = nullptr;
 	const Scene* renderScene = nullptr;
+	Raether* raeObj = nullptr;
 
 	std::vector<glm::ui8_tvec4> PixelData;
 

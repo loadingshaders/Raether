@@ -5,6 +5,7 @@ Renderer::Renderer() {
 Renderer::~Renderer() {
 }
 
+
 namespace Utils {
 	static glm::ui8_tvec4 converttoRGBA(glm::vec4& color) {
 
@@ -65,11 +66,24 @@ namespace Utils {
 
 		return lineargradient;
 	}
+	void printSpec(const std::vector<Sphere>& SphereList) {
+		std::cout << "Sphere Count => " << SphereList.size();
+	}
 }
-void Renderer::Render(Raether& rae, const Scene& scene, const Camera& camera) {
 
+void Renderer::RenderLoop(Raether& rae, const Scene& scene, Camera& camera) {
+	raeObj = &rae;
 	renderCam = &camera;
 	renderScene = &scene;
+
+	Utils::printSpec(scene.SphereList);
+
+	while (rae.windowState == RaeState::ACTIVE) {
+		Render(scene, camera);
+	}
+}
+
+void Renderer::Render(const Scene& scene, Camera& camera) {
 
 	int width = renderCam->GetViewPortWidth();
 	int height = renderCam->GetViewPortHeight();
@@ -77,61 +91,46 @@ void Renderer::Render(Raether& rae, const Scene& scene, const Camera& camera) {
 	PixelData.resize(width * height);
 	AccumPixelData.resize(width * height);
 
-	int printSpec = -1;
+	/// Start the render
+	raeObj->raeRenderBegin();
 
-	auto start = logtime;
+	if (FrameCount == 1) {
+		/// Reset the Accumulate ImgaeBuffer
+		memset(&AccumPixelData[0], 0, width * height * sizeof(glm::vec4));
+	}
 
-	while (rae.raeState == RaeState::ACTIVE) {
+	else if (FrameCount < renderScene->SampleCount) {
 
-		/// End the render
-		rae.raeRenderEnd();
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) {
 
-		if (FrameCount == 1) {
-			/// Reset the Accumulate ImgaeBuffer
-			memset(&AccumPixelData[0], 0, width * height * sizeof(glm::vec4));
-		}
+				glm::vec4 color = PerPixel(x, (height - 1) - y);
 
-		else if (FrameCount < renderScene->SampleCount) {
+				/// Accumulate the color
+				AccumPixelData[x + y * width] += color;
 
-			for (int y = 0; y < height; y++) {
-				for (int x = 0; x < width; x++) {
+				glm::vec4 accumColor = AccumPixelData[x + y * width];
+				/// Balancing the brightness 
+				accumColor /= (float)FrameCount;
 
-					glm::vec4 color = PerPixel(x, (height - 1) - y);
+				/// Check Whether it hits something or not and return a color according to it
+				accumColor = glm::clamp(accumColor, glm::vec4(0.0f), glm::vec4(1.0f));
 
-					/// Accumulate the color
-					AccumPixelData[x + y * width] += color;
-
-					glm::vec4 accumColor = AccumPixelData[x + y * width];
-					/// Balancing the brightness 
-					accumColor /= (float)FrameCount;
-
-					/// Check Whether it hits something or not and return a color according to it
-					accumColor = glm::clamp(accumColor, glm::vec4(0.0f), glm::vec4(1.0f));
-
-					/// Store the color data
-					PixelData[x + y * width] = Utils::converttoRGBA(accumColor);
-				}
+				/// Store the color data
+				PixelData[x + y * width] = Utils::converttoRGBA(accumColor);
 			}
-			/// Draw the color using SDL
-			rae.raeDrawPix(width, height, PixelData);
-
 		}
-		else if (FrameCount > renderScene->SampleCount && printSpec < 0) {
+		/// Draw the color using SDL
+		raeObj->raeDrawPix(width, height, PixelData);
 
-			auto end = logtime;
+	}
+	/// Check for input
+	raeObj->raeIP();
 
-			std::cout << "Elapsed Time: " << elapsed(end - start).count() << " ms" << std::endl;
-			std::cout << "Sample Count: " << scene.SampleCount << std::endl;
-			std::cout << "Sphere Count: " << scene.SphereList.size() << std::endl;
-
-			printSpec++;
-		}
-		/// Check for input
-		rae.raeIP();
-
-		/// Start the render
-		rae.raeRenderBegin();
-
+	/// End the render
+	raeObj->raeRenderEnd();
+	
+	if (FrameCount <= 1000) {
 		FrameCount++;
 	}
 }
@@ -253,3 +252,13 @@ bool Renderer::Hittable(const Ray& ray, const std::vector<Sphere>& SphereList, H
 		return false;
 	}
 }
+
+
+
+// auto start = logtime;
+
+/*auto end = logtime;
+
+			std::cout << "Elapsed Time: " << elapsed(end - start).count() << " ms" << std::endl;
+			std::cout << "Sample Count: " << scene.SampleCount << std::endl;
+			std::cout << "Sphere Count: " << scene.SphereList.size() << std::endl;*/
