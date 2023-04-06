@@ -18,9 +18,13 @@ git clone https://github.com/Shreyosgit/Raether.git
 
 After cloning the repo click the `setup.bat` file to generate the **visual studio** solution file.
 
-## Features
+## Screenshots
 
-- To be added
+</br>
+
+![Raether](https://user-images.githubusercontent.com/92203452/230507907-228b24e8-a607-4806-a8cd-c3701d05538d.png)
+
+</br>
 
 ## References
 
