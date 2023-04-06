@@ -4,7 +4,7 @@ A simple offline path tracer made using SDL
 
 <div align="center">
   
-  <img src="https://user-images.githubusercontent.com/92203452/229559950-b45a6bd1-ef68-4ebd-92ce-c0b8adc3c79a.gif" alt="Raether" width="360" height="360">
+  <img src="https://user-images.githubusercontent.com/92203452/229559950-b45a6bd1-ef68-4ebd-92ce-c0b8adc3c79a.gif" alt="Raether" width="300" height="300">
 
 </div>
 
@@ -24,7 +24,7 @@ After cloning the repo click the `setup.bat` file to generate the **visual studi
 
 ## References
 
-Some of the references that I have followed and helped me dearly while working in this projects
+Some of the references that I have followed and helped me dearly while working in this project
 
 - The Cherno's [Ray Tracing](https://www.youtube.com/watch?v=gfW1Fhd9u9Q&list=PLlrATfBNZ98edc5GshdBtREv5asFW3yXl)  series
 - The [Rtiow](https://raytracing.github.io/books/RayTracingInOneWeekend.html) Book from Peter Shirley
