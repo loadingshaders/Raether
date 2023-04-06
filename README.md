@@ -8,7 +8,7 @@ A simple offline path tracer made using SDL
 
 </div>
 
-## Project Setup
+## Setup
 
 **Download** the `Raether-main.zip` file or to clone it using your ***CLI*** tool, first navigate to the directory where you want to clone this repository and then use the command
 
