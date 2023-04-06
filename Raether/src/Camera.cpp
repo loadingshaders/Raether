@@ -9,7 +9,6 @@ void Camera::SetPosition(glm::vec3 position) { cameraOrigin = position; }
 void Camera::SetOrientation(glm::vec3 orientation) { cameraOrientation = orientation; }
 void Camera::SetViewPortWidth(int vp_Width) { viewportWidth = vp_Width; }
 void Camera::SetViewPortHeight(int vp_Height) { viewportHeight = vp_Height; }
-
 void Camera::SetProjection(float cv_fov, float n_Clip, float f_Clip) {
 	V_FOV = cv_fov;
 	// aspect = (float)viewportWidth / (float)viewportHeight;

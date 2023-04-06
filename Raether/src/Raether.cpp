@@ -1,7 +1,7 @@
 #include "Raether.h"
 
 Raether::Raether() {
-	raeState = RaeState::ACTIVE;
+	windowState = RaeState::ACTIVE;
 	window = nullptr;
 	title = "Raether";
 	windowwidth = 900;
@@ -92,24 +92,27 @@ void Raether::raeIP() {
 	SDL_Event event;
 	while (SDL_PollEvent(&event)) {
 		switch (event.type) {
+
 		case SDL_QUIT:
-			raeState = RaeState::EXIT;
+			windowState = RaeState::EXIT;
 		break;
+
 		}
 	}
 }
 
 void Raether::raeRenderBegin() {
 	SDL_SetRenderTarget(renderer, texture);
-}
-void Raether::raeRenderEnd() {
-	SDL_SetRenderTarget(renderer, texture);
 	SDL_RenderCopy(renderer, texture, NULL, &screensize);
 	SDL_RenderPresent(renderer);
 }
 
+void Raether::raeRenderEnd() {
+	SDL_SetRenderTarget(renderer, texture);
+}
+
 void Raether::raeQuit() {
-	if (raeState == RaeState::EXIT) {
+	if (windowState == RaeState::EXIT) {
 		SDL_DestroyTexture(texture);
 		SDL_DestroyRenderer(renderer);
 		SDL_DestroyWindow(window);

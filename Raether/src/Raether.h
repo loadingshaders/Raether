@@ -12,6 +12,7 @@ namespace glm {
 }
 
 enum struct RaeState { ACTIVE, EXIT };
+
 class Raether {
 public:
 	Raether();
@@ -25,7 +26,7 @@ public:
 	void raeIP();
 	void raeQuit();
 
-	RaeState raeState;
+	RaeState windowState;
 private:
 	SDL_Window* window;
 	const char* title;

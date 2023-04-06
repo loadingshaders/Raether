@@ -79,8 +79,8 @@ void App::setUpScene() {
 		scene.addSpheres(sphere);
 	}
 	{
-		sphere.SphereOrigin = glm::vec3(0.0f, -3000.5f, 0.0f);
-		sphere.Radius = 3000.0f;
+		sphere.SphereOrigin = glm::vec3(0.0f, -1000.5f, 0.0f);
+		sphere.Radius = 1000.0f;
 		sphere.MatIndex = 3;
 		scene.addSpheres(sphere);
 	}
@@ -115,5 +115,5 @@ void App::run() {
 
 	scene.SampleCount = 500;
 
-	renderer.Render(rae, scene, camera);
+	renderer.RenderLoop(rae, scene, camera);
 }

@@ -6,6 +6,8 @@
 #include <glm\glm.hpp>
 #include <glm\gtc\matrix_transform.hpp>
 
+#include "Raether.h"
+
 class Camera
 {
 public:
@@ -16,6 +18,7 @@ public:
 	void SetOrientation(glm::vec3 orientation);
 	void SetViewPortWidth(int vp_Width);
 	void SetViewPortHeight(int vp_Height);
+	void SetMotionSensitivity(float sensitivity);
 
 	void SetProjection(float cv_fov, float nearclip, float farclip);
 	void SetView();
@@ -43,6 +46,8 @@ private:
 	float aspect = (float)viewportWidth / (float)viewportHeight;
 	float nearClip;
 	float farClip;
+
+	float camMotionSensitivity;
 
 	glm::vec3 cameraOrigin{ 0.0f, 0.0f, 1.0f };
 	glm::vec3 cameraOrientation{ 0.0f, 0.0f, -1.0f };
