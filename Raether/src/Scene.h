@@ -21,6 +21,8 @@ struct Sphere {
 struct Scene {
 
 	float SampleCount;
+	int Bounces;
+
 
 	glm::vec3 Lightdirection;
 
