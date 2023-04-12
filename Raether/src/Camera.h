@@ -4,9 +4,13 @@
 #include <vector>
 
 #include <glm\glm.hpp>
-#include <glm\gtc\matrix_transform.hpp>
+#include <glm\simd\matrix.h>
+#include <glm/gtc/quaternion.hpp>
+#include <glm/gtx/quaternion.hpp>
 
 #include "Raether.h"
+
+enum struct CamMotion { STATIC, MOVED };
 
 class Camera
 {
@@ -15,10 +19,12 @@ public:
 	~Camera();
 
 	void SetPosition(glm::vec3 position);
-	void SetOrientation(glm::vec3 orientation);
+	void SetForwardDirection(glm::vec3 forward);
 	void SetViewPortWidth(int vp_Width);
 	void SetViewPortHeight(int vp_Height);
+
 	void SetMotionSensitivity(float sensitivity);
+	void SetMovementSpeed(float speed);
 
 	void SetProjection(float cv_fov, float nearclip, float farclip);
 	void SetView();
@@ -28,15 +34,18 @@ public:
 	const int GetViewPortHeight() const { return (int)viewportHeight; }
 	
 	const glm::vec3& GetPosition() const { return cameraOrigin; }
-	const glm::vec3& GetOrientation() const { return cameraOrientation; }
+	/*const glm::vec3& GetOrientation() const { return cameraOrientation; }
 
 	const glm::mat4& GetProjection() const { return projection; }
 	const glm::mat4& GetInverseProjMatrix() const { return inverseProjection; }
-	const glm::mat4& GetInverseViewMatrix() const { return inverseView; }
+	const glm::mat4& GetInverseViewMatrix() const { return inverseView; }*/
 
 	const std::vector<glm::vec3>& GetRayDirection() const { return rayDirections; }
 
 	void CalculateRayDirections();
+
+	void HandleMouseInput(class Raether& rae);
+
 private:
 
 	uint32_t viewportWidth = 700;
@@ -46,13 +55,14 @@ private:
 	float aspect = (float)viewportWidth / (float)viewportHeight;
 	float nearClip;
 	float farClip;
-
 	float camMotionSensitivity;
+	float speed;
 
-	glm::vec3 cameraOrigin{ 0.0f, 0.0f, 1.0f };
-	glm::vec3 cameraOrientation{ 0.0f, 0.0f, -1.0f };
+	glm::vec3 cameraOrigin;
+	glm::vec3 cameraOrientation;
 	glm::vec3 forwardDirection;
-	glm::vec3 upDirection{ 0.0f, 1.0f, 0.0f };
+	glm::vec3 upDirection;
+	glm::vec3 rightDirection;
 
 	glm::mat4 projection;
 	glm::mat4 view;
