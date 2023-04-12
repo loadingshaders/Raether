@@ -12,6 +12,8 @@ namespace glm {
 }
 
 enum struct RaeState { ACTIVE, EXIT };
+enum struct Keystate { STANDBY, W, A, S, D, Q, E};
+enum struct Mousestate { STATIC, INMOTION };
 
 class Raether {
 public:
@@ -23,10 +25,13 @@ public:
 	void raeDrawPix(int u, int v, std::vector<glm::ui8_tvec4>& PixData);
 	void raeRenderBegin();
 	void raeRenderEnd();
-	void raeIP();
+	bool raeIP();
 	void raeQuit();
 
 	RaeState windowState;
+	Keystate keyState;
+	Mousestate mouseState;
+	glm::vec2 delta;
 private:
 	SDL_Window* window;
 	const char* title;
