@@ -30,4 +30,5 @@ private:
 
 	void setWindow();
 	void setUpScene();
+	void updateScene();
 };
