@@ -2,6 +2,7 @@
 
 Raether::Raether() {
 	windowState = RaeState::ACTIVE;
+	keyState = Keystate::STANDBY;
 	window = nullptr;
 	title = "Raether";
 	windowwidth = 900;
@@ -77,6 +78,7 @@ void Raether::raeDrawPix(int u, int v, std::vector<glm::ui8_tvec4>& PixData) {
 
 	// Lock the texture pixels for direct write access
 	int sdlError = SDL_LockTexture(texture, &screensize, (void **)&pixels, &pitch);
+	
 	if (sdlError != 0) {
 		raeErrorList(SDL_GetError());
 		raeErrorList("SDL texture could not be locked...");
@@ -88,17 +90,85 @@ void Raether::raeDrawPix(int u, int v, std::vector<glm::ui8_tvec4>& PixData) {
 	SDL_UnlockTexture(texture);
 }
 
-void Raether::raeIP() {
+bool Raether::raeIP() {
+	bool Moved = false;
+
 	SDL_Event event;
+
 	while (SDL_PollEvent(&event)) {
-		switch (event.type) {
 
-		case SDL_QUIT:
+		keyState = Keystate::STANDBY;
+		mouseState = Mousestate::STATIC;
+
+		if (event.type == SDL_QUIT) {
 			windowState = RaeState::EXIT;
-		break;
-
+			break;
 		}
+		else if (event.button.button == SDL_BUTTON_LEFT) {
+
+			mouseState = Mousestate::STATIC;
+
+			if (event.type == SDL_MOUSEMOTION) {
+
+				// Hide the mouse cursor
+				SDL_ShowCursor(SDL_DISABLE);
+
+				// Lock the mouse to the window
+				SDL_SetWindowGrab(window, SDL_TRUE);
+
+				delta.x = event.motion.xrel;
+				delta.y = event.motion.yrel;
+
+				Moved = true;
+
+				mouseState = Mousestate::INMOTION;
+				
+				break;
+			}
+		}
+		else if (event.type == SDL_KEYDOWN) {
+
+			if (event.key.keysym.sym == SDLK_w) {
+				keyState = Keystate::W;
+				Moved = true;
+				break;
+			}
+			else if (event.key.keysym.sym == SDLK_a) {
+				keyState = Keystate::A;
+				Moved = true;
+				break;
+			}
+			else if (event.key.keysym.sym == SDLK_s) {
+				keyState = Keystate::S;
+				Moved = true;
+				break;
+			}
+			else if (event.key.keysym.sym == SDLK_d) {
+				keyState = Keystate::D;
+				Moved = true;
+				break;
+			}
+			else if (event.key.keysym.sym == SDLK_q) {
+				keyState = Keystate::Q;
+				Moved = true;
+				break;
+			}
+			else if (event.key.keysym.sym == SDLK_e) {
+				keyState = Keystate::E;
+				Moved = true;
+				break;
+			}
+		}
+		else {
+			// Show the mouse cursor
+			SDL_ShowCursor(SDL_ENABLE);
+
+			// Unlock the mouse to the window
+			SDL_SetWindowGrab(window, SDL_FALSE);
+		}
+
 	}
+	return Moved;
 }
 
 void Raether::raeRenderBegin() {
