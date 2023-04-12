@@ -71,16 +71,23 @@ namespace Utils {
 	}
 }
 
-void Renderer::RenderLoop(Raether& rae, const Scene& scene, Camera& camera) {
+void Renderer::Init(Raether& rae, const Scene& scene, Camera& camera) {
 	raeObj = &rae;
 	renderCam = &camera;
 	renderScene = &scene;
+}
 
-	Utils::printSpec(scene.SphereList);
+glm::ui8_tvec4 Renderer::GammaCorrection(glm::vec4 color) {
 
-	while (rae.windowState == RaeState::ACTIVE) {
-		Render(scene, camera);
-	}
+	glm::vec4 c;
+
+	float scale = 1.0f / (float)renderScene->SampleCount;
+
+	c.r = glm::sqrt(c.r * scale);
+	c.g = glm::sqrt(c.g * scale);
+	c.b = glm::sqrt(c.b * scale);
+
+	return color;
 }
 
 void Renderer::Render(const Scene& scene, Camera& camera) {
@@ -90,9 +97,6 @@ void Renderer::Render(const Scene& scene, Camera& camera) {
 
 	PixelData.resize(width * height);
 	AccumPixelData.resize(width * height);
-
-	/// Start the render
-	raeObj->raeRenderBegin();
 
 	if (FrameCount == 1) {
 		/// Reset the Accumulate ImgaeBuffer
@@ -117,19 +121,13 @@ void Renderer::Render(const Scene& scene, Camera& camera) {
 				accumColor = glm::clamp(accumColor, glm::vec4(0.0f), glm::vec4(1.0f));
 
 				/// Store the color data
-				PixelData[x + y * width] = Utils::converttoRGBA(accumColor);
+				PixelData[x + y * width] = GammaCorrection(Utils::converttoRGBA(accumColor));
 			}
 		}
 		/// Draw the color using SDL
 		raeObj->raeDrawPix(width, height, PixelData);
 
 	}
-	/// Check for input
-	raeObj->raeIP();
-
-	/// End the render
-	raeObj->raeRenderEnd();
-	
 	if (FrameCount <= 1000) {
 		FrameCount++;
 	}
@@ -152,9 +150,7 @@ glm::vec4 Renderer::PerPixel(int x, int y) {
 	float luminance;
 	float multiplier = 1.0f;
 
-	int bounce = 50;
-
-	for (int i = 0; i < bounce; i++) {
+	for (int i = 0; i < renderScene->Bounces; i++) {
 		if (Hittable(ray, renderScene->SphereList, hitrecord) == false) {
 
 			glm::vec4 SkyColor = Utils::Lerp(ray, white, blue);
@@ -171,8 +167,9 @@ glm::vec4 Renderer::PerPixel(int x, int y) {
 		luminance = glm::max(glm::dot(hitrecord.Surfacenormal, Tolight), 0.0f);
 
 		// glm::vec3 normalview((hitrecord.Surfacenormal + 0.5f) * 0.5f);
+
 		fragColor += glm::vec4(mat.Albedo * luminance, 1.0f) * multiplier;
-		multiplier *= 0.35f;
+		multiplier *= 0.5f;
 
 		ray.Origin = hitrecord.Hitpoint + hitrecord.Surfacenormal * 0.0001f;
 		ray.Direction = glm::reflect(ray.Direction, hitrecord.Surfacenormal + mat.Roughness * Utils::Randomoffset2(-0.5f, 0.5f));
@@ -252,13 +249,3 @@ bool Renderer::Hittable(const Ray& ray, const std::vector<Sphere>& SphereList, H
 		return false;
 	}
 }
-
-
-
-// auto start = logtime;
-
-/*auto end = logtime;
-
-			std::cout << "Elapsed Time: " << elapsed(end - start).count() << " ms" << std::endl;
-			std::cout << "Sample Count: " << scene.SampleCount << std::endl;
-			std::cout << "Sphere Count: " << scene.SphereList.size() << std::endl;*/
