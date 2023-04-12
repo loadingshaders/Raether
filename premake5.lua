@@ -81,7 +81,7 @@ project "Raether"
 
 	vstudio = {  }
 
-	vstudio.toolset = "msc-v143"
+	vstudio.toolset = "latest"
 
 	vstudio.vc2022 = {
 		includeDirs = { 
