@@ -88,8 +88,8 @@ void App::setUpScene() {
 	//}
 
 	{
-		sphere.SphereOrigin = glm::vec3(0.0f, -100.5f, 0.0f);
-		sphere.Radius = 100.0f;
+		sphere.SphereOrigin = glm::vec3(0.0f, -1000.5f, 0.0f);
+		sphere.Radius = 1000.0f;
 		sphere.MatIndex = 3;
 		scene.addSpheres(sphere);
 	}
@@ -117,11 +117,11 @@ void App::setUpScene() {
 	camera.SetForwardDirection(glm::vec3(0.0f, 0.0f, -1.0f)); // glm::vec3(0.0f, -0.30f, -1.2f)
 	camera.SetViewPortWidth(width);
 	camera.SetViewPortHeight(height);
-	camera.SetProjection(45.0f, 0.1f, 100.0f);
 
 	camera.SetMotionSensitivity(0.01f);
 	camera.SetMovementSpeed(0.3f);
 
+	camera.SetProjection(45.0f, 0.1f, 100.0f);
 	camera.SetView();
 	camera.CalculateRayDirections();
 
