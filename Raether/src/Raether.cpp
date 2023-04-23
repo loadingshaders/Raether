@@ -106,8 +106,6 @@ bool Raether::raeIP() {
 		}
 		else if (event.button.button == SDL_BUTTON_LEFT) {
 
-			mouseState = Mousestate::STATIC;
-
 			if (event.type == SDL_MOUSEMOTION) {
 
 				// Hide the mouse cursor
