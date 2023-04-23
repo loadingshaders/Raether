@@ -79,7 +79,7 @@ void Renderer::Init(Raether& rae, const Scene& scene, Camera& camera) {
 
 glm::ui8_tvec4 Renderer::GammaCorrection(glm::vec4 color) {
 
-	glm::vec4 c;
+	glm::vec4 c{0.0f};
 
 	float scale = 1.0f / (float)renderScene->SampleCount;
 
@@ -147,15 +147,17 @@ glm::vec4 Renderer::PerPixel(int x, int y) {
 	// Initialize the fragColor as black background
 	glm::vec4 fragColor = background;
 
-	float luminance;
-	float multiplier = 1.0f;
+	float diffused;
+	float ambient = 0.4f;
+	glm::vec3 lightcolor{ 1.0f };
+	float attenuation = 1.0f;
 
 	for (int i = 0; i < renderScene->Bounces; i++) {
 		if (Hittable(ray, renderScene->SphereList, hitrecord) == false) {
 
 			glm::vec4 SkyColor = Utils::Lerp(ray, white, blue);
 
-			fragColor += SkyColor * multiplier;
+			fragColor += SkyColor * attenuation;
 
 			return fragColor;
 		}
@@ -164,15 +166,18 @@ glm::vec4 Renderer::PerPixel(int x, int y) {
 		const Material& mat = renderScene->Materials[sphere.MatIndex];
 
 		glm::vec3 Tolight(-renderScene->Lightdirection);
-		luminance = glm::max(glm::dot(hitrecord.Surfacenormal, Tolight), 0.0f);
+		diffused = glm::max(glm::dot(hitrecord.Surfacenormal, Tolight), 0.0f);
 
-		// glm::vec3 normalview((hitrecord.Surfacenormal + 0.5f) * 0.5f);
+		glm::vec3 ambientcolor = mat.Albedo * ambient;
+		glm::vec3 diffusedcolor = mat.Albedo * diffused * lightcolor;
 
-		fragColor += glm::vec4(mat.Albedo * luminance, 1.0f) * multiplier;
-		multiplier *= 0.5f;
+
+		fragColor += glm::vec4(ambientcolor + diffusedcolor, 1.0f) * attenuation;
+
+		attenuation *= 0.4f; // 0.5f
 
 		ray.Origin = hitrecord.Hitpoint + hitrecord.Surfacenormal * 0.0001f;
-		ray.Direction = glm::reflect(ray.Direction, hitrecord.Surfacenormal + mat.Roughness * Utils::Randomoffset2(-0.5f, 0.5f));
+		ray.Direction = glm::reflect(ray.Direction + mat.Roughness * Utils::Randomoffset2(-1.0f, 1.0f), hitrecord.Surfacenormal);
 	}
 	 
 	return fragColor;
