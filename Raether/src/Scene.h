@@ -7,6 +7,8 @@
 
 struct Material {
 	glm::vec3 Albedo{ 1.0f };
+	glm::vec3 EmissionColor{ 0.0f };
+	float EmissionStrength{ 0.0f };
 	float Roughness{ 0.1f };
 	float Metallic{ 0.0 };
 };
@@ -22,9 +24,6 @@ struct Scene {
 
 	float SampleCount;
 	int Bounces;
-
-
-	glm::vec3 Lightdirection;
 
 	std::vector<Sphere> SphereList;
 	std::vector<Material> Materials;
