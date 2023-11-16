@@ -10,7 +10,7 @@
 
 #include "Raether.h"
 
-enum struct CamMotion { STATIC, MOVED };
+enum struct CamMotion { STATIC, MOVED , FOV};
 
 class Camera
 {

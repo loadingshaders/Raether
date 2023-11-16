@@ -26,32 +26,29 @@ void Raether::raeErrorList(std::string errorlist) {
 void Raether::raeInit() {
 	SDL_bool hintError = SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, 0);
 
-	int sdlError = SDL_Init(SDL_INIT_EVERYTHING);
+	int sdlError = SDL_Init(SDL_INIT_VIDEO);
 	if (sdlError != 0) {
-		raeErrorList(SDL_GetError());
+		raeErrorList("SDL subsystems could not be initialized: " + std::string(SDL_GetError()));
 	}
 
 	window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, windowwidth, windowheight, SDL_WINDOW_SHOWN);
 	if (window == nullptr) {
-		raeErrorList("SDL window could not be created...");
+		raeErrorList("SDL window could not be created: " + std::string(SDL_GetError()));
 	}
 
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	if (renderer == nullptr) {
-		raeErrorList(SDL_GetError());
-		raeErrorList("SDL renderer could not be created...");
+		raeErrorList("SDL renderer could not be created: " + std::string(SDL_GetError()));
 	}
 
 	int sdlblendmode = SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 	if (sdlblendmode != 0) {
-		raeErrorList(SDL_GetError());
-		raeErrorList("SDL blendmode could not be created...");
+		raeErrorList("SDL blendmode could not be created: " + std::string(SDL_GetError()));
 	}
 
 	texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ABGR8888, SDL_TEXTUREACCESS_STREAMING, windowwidth, windowheight);
 	if (texture == nullptr) {
-		raeErrorList(SDL_GetError());
-		raeErrorList("SDL texture could not be created...");
+		raeErrorList("SDL texture could not be created: " + std::string(SDL_GetError()));
 	}
 
 	// destination rect
@@ -80,8 +77,7 @@ void Raether::raeDrawPix(int u, int v, std::vector<glm::ui8_tvec4>& PixData) {
 	int sdlError = SDL_LockTexture(texture, &screensize, (void **)&pixels, &pitch);
 	
 	if (sdlError != 0) {
-		raeErrorList(SDL_GetError());
-		raeErrorList("SDL texture could not be locked...");
+		raeErrorList("SDL texture could not be locked: " + std::string(SDL_GetError()));
 	}
 
 	memcpy(pixels, PixData.data(), numofPixels * sizeof(uint32_t));
@@ -90,7 +86,7 @@ void Raether::raeDrawPix(int u, int v, std::vector<glm::ui8_tvec4>& PixData) {
 	SDL_UnlockTexture(texture);
 }
 
-bool Raether::raeIP() {
+bool Raether::raeInputEvents() {
 	bool Moved = false;
 
 	SDL_Event event;
@@ -103,6 +99,20 @@ bool Raether::raeIP() {
 		if (event.type == SDL_QUIT) {
 			windowState = RaeState::EXIT;
 			break;
+		}
+		else if (event.type == SDL_MOUSEWHEEL) {
+
+			// Hide the mouse cursor
+			SDL_ShowCursor(SDL_DISABLE);
+
+			// Lock the mouse to the window
+			SDL_SetWindowGrab(window, SDL_TRUE);
+
+			scrollAmount = event.wheel.y;
+
+			Moved = true;
+
+			mouseState = Mousestate::SCROLLING;
 		}
 		else if (event.button.button == SDL_BUTTON_LEFT) {
 
@@ -170,12 +180,15 @@ bool Raether::raeIP() {
 }
 
 void Raether::raeRenderBegin() {
+	//Update the screen
 	SDL_SetRenderTarget(renderer, texture);
+
 	SDL_RenderCopy(renderer, texture, NULL, &screensize);
 	SDL_RenderPresent(renderer);
 }
 
 void Raether::raeRenderEnd() {
+	//Update the screen
 	SDL_SetRenderTarget(renderer, texture);
 }
 

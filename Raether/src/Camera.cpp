@@ -54,7 +54,7 @@ void Camera::HandleMouseInput(class Raether& rae) {
 
 	CamMotion cam = CamMotion::STATIC;
 
-	/// Camera Movement
+	/// For Camera Movement
 	if (rae.keyState == Keystate::W) {
 		cameraOrigin += forwardDirection * speed;
 		cam = CamMotion::MOVED;
@@ -80,7 +80,7 @@ void Camera::HandleMouseInput(class Raether& rae) {
 		cam = CamMotion::MOVED;
 	}
 
-	/// Camera Rotation
+	/// For Camera Rotation
 	if (rae.mouseState == Mousestate::INMOTION) {
 		if (rae.delta.x != 0.0f || rae.delta.y != 0.0f) {
 
@@ -94,6 +94,22 @@ void Camera::HandleMouseInput(class Raether& rae) {
 			cam = CamMotion::MOVED;
 		}
 	}
+
+	/// For Camera FOV
+	if (rae.mouseState == Mousestate::SCROLLING) {
+
+		V_FOV -= rae.scrollAmount * 1.5f;
+		if(V_FOV <= 1.0f) {
+			V_FOV = 1.0f;
+		}
+		else if (V_FOV >= 179.0f) {
+			V_FOV = 179.0f;
+		}
+		SetProjection(V_FOV, nearClip, farClip);
+
+		cam = CamMotion::MOVED;
+	}
+
 
 	if (cam == CamMotion::MOVED) {
 		SetView();

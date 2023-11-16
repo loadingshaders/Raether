@@ -9,13 +9,9 @@
 #include "Ray.h"
 #include "Scene.h"
 
-#define black glm::vec4(0.0f, 0.0f, 0.0f, 1.0f)
+#define black glm::vec3(0.0f, 0.0f, 0.0f)
 #define white glm::vec3(1.0f)
 #define blue glm::vec3(0.5f, 0.7f, 1.0f)
-
-#define logtime std::chrono::steady_clock::now()
-#define elapsed std::chrono::duration_cast<std::chrono::milliseconds>
-
 
 class Renderer {
 public:
@@ -23,9 +19,7 @@ public:
 	~Renderer();
 
 	void Init(Raether& rae, const Scene& scene, Camera& camera);
-
 	void Render(const Scene& scene, Camera& camera);
-
 	void ResetFrameIdx() { FrameCount = 1; }
 
 	const Camera* renderCam = nullptr;
