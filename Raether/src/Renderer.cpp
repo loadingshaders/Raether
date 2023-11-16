@@ -187,7 +187,7 @@ glm::vec4 Renderer::PerPixel(int x, int y) {
 
 bool Renderer::Hittable(const Ray& ray, const std::vector<Sphere>& SphereList, Hitrec& hitrecord) {
 
-	float closestHit = 101.0f; // hit out of rangeS
+	float closestHit = 101.0f; // hit out of range
 	float t_min = 0.0f; // minimum hit distance
 	float t_max = 100.0f; // maximum hit distance
 
