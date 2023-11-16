@@ -48,7 +48,7 @@ void Camera::CalculateRayDirections() {
 	}
 }
 
-void Camera::HandleMouseInput(class Raether& rae) {
+void Camera::HandleInput(class Raether& rae) {
 
 	rightDirection = glm::cross(forwardDirection, upDirection);
 

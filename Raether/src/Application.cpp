@@ -1,8 +1,7 @@
 #include "Application.h"
 
-App::App() : width(900), height(500), rae(), scene(), sphere(), camera(), renderer() {
-	title = "Raether";
-}
+App::App() : title("Raether"), width(900), height(500), rae(), scene(), sphere(), camera(), renderer() {
+}//900,500
 App::~App() {
 }
 
@@ -150,6 +149,7 @@ void App::setUpScene() {
 
 		scene.addMaterials(whiteSpheres);
 	}
+
 	// Configure spehers
 	//{
 	//	sphere.SphereOrigin = glm::vec3(-1.0f, 0.0f, 0.0f);
@@ -287,7 +287,7 @@ void App::setUpScene() {
 	camera.SetView();
 	camera.CalculateRayDirections();
 
-	// Scene setup
+	// Render specs
 	scene.SampleCount = 10000;
 	scene.Bounces = 10;
 }
@@ -303,7 +303,7 @@ void App::updateScene() {
 
 		/// Check for input
 		if (rae.raeInputEvents()) {
-			camera.HandleMouseInput(rae);
+			camera.HandleInput(rae);
 			renderer.ResetFrameIdx();
 		}
 

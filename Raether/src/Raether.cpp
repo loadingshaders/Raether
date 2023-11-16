@@ -74,7 +74,7 @@ void Raether::raeDrawPix(int u, int v, std::vector<glm::ui8_tvec4>& PixData) {
 	const int numofPixels = u * v;
 
 	// Lock the texture pixels for direct write access
-	int sdlError = SDL_LockTexture(texture, &screensize, (void **)&pixels, &pitch);
+	int sdlError = SDL_LockTexture(texture, &screensize, (void**)&pixels, &pitch);
 	
 	if (sdlError != 0) {
 		raeErrorList("SDL texture could not be locked: " + std::string(SDL_GetError()));
@@ -180,16 +180,12 @@ bool Raether::raeInputEvents() {
 }
 
 void Raether::raeRenderBegin() {
-	//Update the screen
-	SDL_SetRenderTarget(renderer, texture);
-
-	SDL_RenderCopy(renderer, texture, NULL, &screensize);
-	SDL_RenderPresent(renderer);
+	SDL_RenderClear(renderer);
 }
 
 void Raether::raeRenderEnd() {
-	//Update the screen
-	SDL_SetRenderTarget(renderer, texture);
+	SDL_RenderCopy(renderer, texture, NULL, &screensize);
+	SDL_RenderPresent(renderer);
 }
 
 void Raether::raeQuit() {

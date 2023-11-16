@@ -44,7 +44,7 @@ public:
 
 	void CalculateRayDirections();
 
-	void HandleMouseInput(class Raether& rae);
+	void HandleInput(class Raether& rae);
 
 private:
 

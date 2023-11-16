@@ -1,6 +1,6 @@
 #include "Renderer.h"
 
-Renderer::Renderer() {
+Renderer::Renderer() : FrameCount(1) {
 }
 Renderer::~Renderer() {
 }
@@ -69,6 +69,24 @@ namespace Utils {
 	void printSpec(const std::vector<Sphere>& SphereList) {
 		std::cout << "Sphere Count => " << SphereList.size();
 	}
+	void PrintVec2(const char* vecName, glm::vec2 vec) {
+		std::cout << vecName << std::endl;
+		std::cout << "X => " << vec.r << std::endl;
+		std::cout << "Y => " << vec.g << std::endl;
+	}
+	void PrintVec3(const char* vecName, glm::vec3 vec) {
+		std::cout << vecName << std::endl;
+		std::cout << "X => " << vec.r << std::endl;
+		std::cout << "Y => " << vec.g << std::endl;
+		std::cout << "Z => " << vec.b << std::endl;
+	}
+	void PrintVec4(const char* vecName, glm::vec4 vec) {
+		std::cout << vecName << std::endl;
+		std::cout << "X => " << vec.r << std::endl;
+		std::cout << "Y => " << vec.g << std::endl;
+		std::cout << "Z => " << vec.b << std::endl;
+		std::cout << "W => " << vec.a << std::endl;
+	}
 }
 
 glm::ui8_tvec4 Renderer::GammaCorrection(glm::vec4 color) {
@@ -115,7 +133,7 @@ void Renderer::Render(const Scene& scene, Camera& camera) {
 
 				glm::vec4 accumColor = AccumPixelData[x + y * width];
 
-				/// Balancing the brightness 
+				/// Adjust the brightness
 				accumColor /= (float)FrameCount;
 
 				accumColor = glm::clamp(accumColor, glm::vec4(0.0f), glm::vec4(1.0f));
@@ -140,9 +158,7 @@ glm::vec4 Renderer::PerPixel(int x, int y) {
 
 	Hitrec hitrecord;
 
-	// Initialize the rayColor as white background
 	glm::vec4 rayColor = glm::vec4(white, 1.0f);
-
 	glm::vec4 incomingLight = glm::vec4(black, 1.0f);
 
 	for (int i = 0; i < renderScene->Bounces; i++) {
@@ -176,31 +192,27 @@ bool Renderer::Hittable(const Ray& ray, const std::vector<Sphere>& SphereList, H
 	float t_max = 100.0f; // maximum hit distance
 
 	int loopCount = 0;
-
 	int closestSphereIDX = -1;
 
 	glm::vec3 hitpoint = glm::vec3(0.0f);
-
 	glm::vec3 origin = glm::vec3(0.0f);
 
+	/// Check the hit
 	for (auto& sphere : SphereList) {
 
-		/// check the hit
-
 		/// Sphere Equation
-		/// 
 		/// (bx^2 + by^2 + bz^2)t^2 + 2 ( (ax*bx + ay*by + az*bz) + (ax^2 + ay^2 + az^2) - r^2 = 0
-		// a = camera origin (ax, ay, az)
+		// a = camera/ray origin (ax, ay, az)
 		// b = ray direction (bx, by, bz)
 		// t = hit distance
 		// A , B , C = sphere origin
 		// r = sphere radius
 
-		glm::vec3 neworigin = ray.Origin - sphere.SphereOrigin;
+		glm::vec3 newrayOrigin = ray.Origin - sphere.SphereOrigin;
 
 		float a = glm::dot(ray.Direction, ray.Direction); // (bx^2 + by^2 + bz^2)
-		float b = 2.0f * (glm::dot(neworigin, ray.Direction)); // 2 ((ax * bx + ay * by + az * bz)
-		float c = glm::dot(neworigin, neworigin) - sphere.Radius * sphere.Radius; // (ax^2 + ay^2 + az^2) - r^2
+		float b = 2.0f * (glm::dot(newrayOrigin, ray.Direction)); // 2 ((ax * bx + ay * by + az * bz)
+		float c = glm::dot(newrayOrigin, newrayOrigin) - sphere.Radius * sphere.Radius; // (ax^2 + ay^2 + az^2) - r^2
 
 		float discriminant = (b * b) - (4.0f * a * c);
 
@@ -209,11 +221,11 @@ bool Renderer::Hittable(const Ray& ray, const std::vector<Sphere>& SphereList, H
 
 			float HitDist = (-b - std::sqrt(discriminant)) / (2.0f * a); // near hit distance
 
-			if (loopCount == 0 && Utils::Inrange(HitDist, t_min, t_max)) {
+			/*if (loopCount == 0 && Utils::Inrange(HitDist, t_min, t_max)) {
 				closestHit = HitDist;
 				closestSphereIDX = loopCount;
-			}
-			else if (HitDist < closestHit && Utils::Inrange(HitDist, t_min, t_max)) {
+			}*/
+			if (HitDist < closestHit && Utils::Inrange(HitDist, t_min, t_max)) {
 				closestHit = HitDist;
 				closestSphereIDX = loopCount;
 			}
@@ -223,11 +235,10 @@ bool Renderer::Hittable(const Ray& ray, const std::vector<Sphere>& SphereList, H
 		loopCount++;
 	}
 
-	/// calculate & store hit details if
+	/// Calculate & store hit details
 	if (closestSphereIDX != -1) {
 
 		glm::vec3 origin = ray.Origin - SphereList[closestSphereIDX].SphereOrigin;
-
 		hitpoint = origin + ray.Direction * closestHit; // px = camera.x + direction.x * nt; py = camera.y + direction.y * nt; pz = camera.z + direction.z * nt;
 		hitrecord.Hitpoint = hitpoint;
 		hitrecord.Surfacenormal = glm::normalize(hitpoint);
