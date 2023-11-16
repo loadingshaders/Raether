@@ -26,7 +26,7 @@ public:
 	const Scene* renderScene = nullptr;
 	Raether* raeObj = nullptr;
 private:
-	int FrameCount = 1;
+	int FrameCount;
 
 	std::vector<glm::ui8_tvec4> PixelData;
 	std::vector<glm::vec4> AccumPixelData;
