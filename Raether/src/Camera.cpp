@@ -82,10 +82,10 @@ void Camera::HandleInput(class Raether& rae) {
 
 	/// For Camera Rotation
 	if (rae.mouseState == Mousestate::INMOTION) {
-		if (rae.delta.x != 0.0f || rae.delta.y != 0.0f) {
+		if (rae.mouseDelta.x != 0.0f || rae.mouseDelta.y != 0.0f) {
 
-			float yawDelta = rae.delta.x * camMotionSensitivity;
-			float pitchDelta = rae.delta.y * camMotionSensitivity;
+			float yawDelta = rae.mouseDelta.x * camMotionSensitivity;
+			float pitchDelta = rae.mouseDelta.y * camMotionSensitivity;
 
 			/// Don't really know what's happening here :/
 			glm::quat q = glm::normalize(glm::cross(glm::angleAxis(-pitchDelta, rightDirection), glm::angleAxis(-yawDelta, upDirection)));

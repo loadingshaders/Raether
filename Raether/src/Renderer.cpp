@@ -143,7 +143,7 @@ void Renderer::Render(const Scene& scene, Camera& camera) {
 			}
 		}
 		/// Draw the color using SDL
-		raeObj->raeDrawPix(width, height, PixelData);
+		raeObj->raeDrawPix(PixelData);
 	}
 	if (FrameCount <= renderScene->SampleCount) {
 		FrameCount++;

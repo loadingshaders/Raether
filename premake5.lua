@@ -1,4 +1,4 @@
-workspace "Raether"
+workspace "Raether-v.2"
 	architecture "x64"
 
 	configurations
@@ -7,13 +7,13 @@ workspace "Raether"
 		"Release"
 	}
 
-	startproject "Raether"
+	startproject "Raether-v.2"
 
 arch = "%{cfg.architecture}"
 config = "%{cfg.buildcfg}"
 
-project "Raether"
-	location "Raether"
+project "Raether-v.2"
+	location "Raether-v.2"
 	kind "ConsoleApp"
 	language "C++"
 	cppdialect "C++17"
