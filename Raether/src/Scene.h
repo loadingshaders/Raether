@@ -5,6 +5,9 @@
 
 #include <glm\glm.hpp>
 
+#define near 0.001f
+#define far 10000.f
+
 struct Material {
 	glm::vec3 Albedo{ 1.0f };
 	glm::vec3 EmissionColor{ 0.0f };
@@ -43,9 +46,9 @@ struct Scene {
 };
 
 struct Hitrec {
-	glm::vec3 Hitpoint;
-	glm::vec3 Surfacenormal;
+	glm::vec3 HitPoint;
+	glm::vec3 SurfaceNormal;
 	glm::vec3 HitColor;
-	int Hitobjindex;
+	int HitObjId;
 };
 

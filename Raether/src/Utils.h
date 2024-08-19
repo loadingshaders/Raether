@@ -48,7 +48,18 @@ namespace Utils {
 		// Do Nothing!
 	}
 	#endif
-
+	
+	inline bool Inrange(float value, float low, float high) {
+		if (value > low && value < high) {
+			return true;
+		}
+		return false;
+	}
+	inline glm::vec3 Lerp(const glm::vec3& rayDirection, glm::vec3 start, glm::vec3 end) {
+		float t = 1.0f - ((rayDirection.y * 0.5f) + 0.5f);
+		/// Calculate linear color gradient using linear interpolation
+		return glm::vec3((1 - t) * start + t * end);
+	}
 	inline glm::ui8_tvec4 converttoRGBA(glm::vec4& color) {
 
 		glm::ui8_tvec4 c;
@@ -71,7 +82,8 @@ namespace Utils {
 
 		return c;
 	}
-	inline glm::vec3 Randomoffset(float from, float to) {
+
+	inline glm::vec3 RandomOffset(float from, float to) {
 
 		static std::random_device rand_dev;
 		// Using Mersenne Twister algorithm for random num generation
@@ -82,7 +94,7 @@ namespace Utils {
 
 		return offset;
 	}
-	inline glm::vec3 Randomoffset1(float from, float to) {
+	inline glm::vec3 RandomOffset1(float from, float to) {
 
 		static std::random_device rand_dev;
 		// Using Mersenne Twister algorithm for random num generation
@@ -93,15 +105,34 @@ namespace Utils {
 
 		return offset;
 	}
-	inline bool Inrange(float value, float low, float high) {
-		if (value > low && value < high) {
-			return true;
-		}
-		return false;
+	inline float LengthSquared(glm::vec3 vec) {
+		return (vec.r * vec.r + vec.g * vec.g + vec.b * vec.b);
 	}
-	inline glm::vec3 Lerp(const glm::vec3& rayDirection, glm::vec3 start, glm::vec3 end) {
-		float t = 1.0f - ((rayDirection.y * 0.5f) + 0.5f);
-		/// Calculate linear color gradient using linear interpolation
-		return glm::vec3((1 - t) * start + t * end);
+	inline glm::vec3 RandomUnitVector() {
+
+		glm::vec3 rand_unit;
+
+		while (true) {
+			rand_unit = RandomOffset(-1.f, 1.f);
+			if (LengthSquared(rand_unit) < 1.f) {
+				break;
+			}
+		}
+
+		return glm::normalize(rand_unit);
+	}
+	inline glm::vec3 RandomOnHemisphere(const glm::vec3& surfacenormal) {
+		glm::vec3 random = RandomUnitVector();
+
+		if (glm::dot(random, surfacenormal) > 0.f) {
+			return random;
+		}
+		else {
+			return -random;
+		}
+	}
+	inline bool NearZero(glm::vec3& rayDirection) {
+		double s = 1e-8;
+		return ((std::fabs(rayDirection.r) < s) && (std::fabs(rayDirection.g) < s) && (std::fabs(rayDirection.b) < s));
 	}
 };

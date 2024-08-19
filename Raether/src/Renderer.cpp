@@ -60,40 +60,48 @@ glm::vec3 Renderer::PerPixel(glm::vec2 uv) {
 
 	Ray ray;
 	ray.Origin = renderCam->GetPosition();
-	ray.Direction = renderCam->GetRayDirection()[uv.x + uv.y * renderCam->GetViewPortWidth()] + Utils::Randomoffset(-0.001f, 0.001f);
+	ray.Direction = renderCam->GetRayDirection()[uv.x + uv.y * renderCam->GetViewPortWidth()] + Utils::RandomOffset(-0.001f, 0.001f);
 
 	Hitrec hitrecord;
 
 	glm::vec3 hitColor = glm::vec3(1.f);
-	
-	if (Hittable(ray, renderScene->SphereList, hitrecord) == true) {
+	float multiplier = 1.f;
+	float attenuation = 0.5f;
 
-		const Sphere& sphere = renderScene->SphereList[hitrecord.Hitobjindex];
-		const Material& mat = renderScene->Materials[sphere.MatIndex];
+	for (uint32_t bounces = 0; bounces < renderScene->Bounces; bounces++) {
 
-		hitColor = ((hitrecord.Surfacenormal * 0.5f) + 0.5f);
-	}
-	else {
-		hitColor = Utils::Lerp(ray.Direction, blue, white);
+		if (Hittable(ray, hitrecord) == true) {
+
+			const Sphere& sphere = renderScene->SphereList[hitrecord.HitObjId];
+			const Material& mat = renderScene->Materials[sphere.MatIndex];
+
+			hitColor *= multiplier;
+			multiplier *= attenuation;
+
+			ray.Origin = hitrecord.HitPoint;
+			ray.Direction = Utils::RandomOnHemisphere(hitrecord.SurfaceNormal);
+		}
+		else {
+			hitColor *= Utils::Lerp(ray.Direction, blue, white);
+			break;
+		}
 	}
 
 	return hitColor;
 }
 
-bool Renderer::Hittable(const Ray& ray, const std::vector<Sphere>& SphereList, Hitrec& hitrecord) {
+bool Renderer::Hittable(const Ray& ray, Hitrec& hitrecord) {
 
 	float closestHit = 101.0f; // hit out of range
-	float t_min = 0.0f; // minimum hit distance
-	float t_max = 100.0f; // maximum hit distance
-
-	int loopCount = 0;
 	int closestSphereIDX = -1;
 
 	glm::vec3 hitpoint = glm::vec3(0.0f);
 	glm::vec3 origin = glm::vec3(0.0f);
 
 	/// Check the hit
-	for (auto& sphere : SphereList) {
+	for (int loopCount = 0; loopCount < renderScene->SphereList.size(); loopCount++) {
+
+		const Sphere& sphere = renderScene->SphereList[loopCount];
 
 		/// Sphere Equation
 		/// (bx^2 + by^2 + bz^2)t^2 + 2 ( (ax*bx + ay*by + az*bz) + (ax^2 + ay^2 + az^2) - r^2 = 0
@@ -116,25 +124,22 @@ bool Renderer::Hittable(const Ray& ray, const std::vector<Sphere>& SphereList, H
 
 			float nearHit = (-b - std::sqrt(discriminant)) / (2.0f * a);
 
-			if (nearHit < closestHit && Utils::Inrange(nearHit, t_min, t_max)) {
+			if (nearHit < closestHit && Utils::Inrange(nearHit, near, far)) {
 				closestHit = nearHit;
 				closestSphereIDX = loopCount;
 			}
-
 		}
-
-		loopCount++;
 	}
 
 	/// Calculate & store hit details
 	if (closestSphereIDX != -1) {
 
-		glm::vec3 origin = ray.Origin - SphereList[closestSphereIDX].SphereOrigin;
+		glm::vec3 origin = ray.Origin - renderScene->SphereList[closestSphereIDX].SphereOrigin;
 		hitpoint = origin + ray.Direction * closestHit; // px = camera.x + direction.x * nt; py = camera.y + direction.y * nt; pz = camera.z + direction.z * nt;
-		hitrecord.Hitpoint = hitpoint;
-		hitrecord.Surfacenormal = glm::normalize(hitpoint);
-		hitrecord.Hitpoint += SphereList[closestSphereIDX].SphereOrigin;
-		hitrecord.Hitobjindex = closestSphereIDX;
+		hitrecord.HitPoint = hitpoint;
+		hitrecord.SurfaceNormal = glm::normalize(hitpoint);
+		hitrecord.HitPoint += renderScene->SphereList[closestSphereIDX].SphereOrigin;
+		hitrecord.HitObjId = closestSphereIDX;
 
 		return true;
 	}

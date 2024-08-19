@@ -47,8 +47,8 @@ void App::setUpScene() {
 	}
 
 	// Scene render specs
-	scene.setSampleCount(100);
-	scene.setSampleBounces(10);
+	scene.setSampleCount(10000);
+	scene.setSampleBounces(100);
 
 	// Camera setup
 	camera.SetViewPortWidth(width);

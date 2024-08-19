@@ -9,9 +9,8 @@
 #include <glm/gtx/quaternion.hpp>
 
 #include "Raether.h"
+#include "Scene.h"
 
-#define nearClip 0.001f
-#define farClip 10000.f
 #define camMotionSensitivity 0.01f
 #define camMovementSpeed 0.3f
 
