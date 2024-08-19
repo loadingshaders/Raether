@@ -10,6 +10,11 @@
 
 #include "Raether.h"
 
+#define nearClip 0.001f
+#define farClip 10000.f
+#define camMotionSensitivity 0.01f
+#define camMovementSpeed 0.3f
+
 enum struct CamMotion { STATIC, MOVED , FOV};
 
 class Camera
@@ -22,41 +27,23 @@ public:
 	void SetForwardDirection(glm::vec3 forward);
 	void SetViewPortWidth(int vp_Width);
 	void SetViewPortHeight(int vp_Height);
-
-	void SetMotionSensitivity(float sensitivity);
-	void SetMovementSpeed(float speed);
-
-	void SetProjection(float cv_fov, float nearclip, float farclip);
+	void SetProjection(float v_fov);
 	void SetView();
-	
 
-	const int GetViewPortWidth() const { return (int)viewportWidth; }
-	const int GetViewPortHeight() const { return (int)viewportHeight; }
-	
+	const int GetViewPortWidth() const { return viewportWidth; }
+	const int GetViewPortHeight() const { return viewportHeight; }
 	const glm::vec3& GetPosition() const { return cameraOrigin; }
-	/*const glm::vec3& GetOrientation() const { return cameraOrientation; }
-
-	const glm::mat4& GetProjection() const { return projection; }
-	const glm::mat4& GetInverseProjMatrix() const { return inverseProjection; }
-	const glm::mat4& GetInverseViewMatrix() const { return inverseView; }*/
-
 	const std::vector<glm::vec3>& GetRayDirection() const { return rayDirections; }
 
 	void CalculateRayDirections();
-
 	void HandleInput(class Raether& rae);
 
 private:
 
-	uint32_t viewportWidth = 700;
-	uint32_t viewportHeight = 620;
+	uint32_t viewportWidth;
+	uint32_t viewportHeight;
 
 	float V_FOV;
-	float aspect = (float)viewportWidth / (float)viewportHeight;
-	float nearClip;
-	float farClip;
-	float camMotionSensitivity;
-	float speed;
 
 	glm::vec3 cameraOrigin;
 	glm::vec3 cameraOrientation;

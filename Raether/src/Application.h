@@ -10,13 +10,18 @@
 #include "Scene.h"
 #include "Ray.h"
 
-class App
-{
+class App {
 public:
 	App();
 	~App();
 
 	void run();
+
+private:
+	void setWindow();
+	void setUpScene();
+	void updateScene();
+
 private:
 	const char* title;
 	const int width;
@@ -24,11 +29,6 @@ private:
 
 	Raether rae;
 	Scene scene;
-	Sphere sphere;
 	Camera camera;
 	Renderer renderer;
-
-	void setWindow();
-	void setUpScene();
-	void updateScene();
 };

@@ -1,29 +1,27 @@
 #include "Camera.h"
 
-Camera::Camera() {
-	cameraOrigin = glm::vec3(0.0f, 0.0f, 1.0f);
-	cameraOrientation = glm::vec3(0.0f, 0.0f, -1.0f);
-	forwardDirection = glm::vec3(cameraOrigin + cameraOrientation);
-	upDirection = glm::vec3(0.0f, 1.0f, 0.0f);
-	rightDirection = glm::cross(forwardDirection, upDirection);
+Camera::Camera() : viewportWidth(700),
+				   viewportHeight(620),
+				   V_FOV(45.f),
+				   cameraOrigin(glm::vec3(0.f, 0.f, -2.f)),
+				   forwardDirection(glm::vec3(0.f, 0.f, -1.f)),
+				   cameraOrientation(cameraOrigin + forwardDirection),
+				   upDirection(glm::vec3(0.f, 1.f, 0.f)),
+				   rightDirection(glm::vec3(1.f, 0.f, 0.f)),
+				   projection(glm::mat4(0.0f)),
+				   view(glm::mat4(0.0f)),
+				   inverseProjection(glm::mat4(0.0f)),
+				   inverseView(glm::mat4(0.0f))
+{
 }
-Camera::~Camera() {
-}
+Camera::~Camera() { }
 
 void Camera::SetPosition(glm::vec3 position) { cameraOrigin = position; }
 void Camera::SetForwardDirection(glm::vec3 forward) { forwardDirection = forward; }
 void Camera::SetViewPortWidth(int vp_Width) { viewportWidth = vp_Width; }
 void Camera::SetViewPortHeight(int vp_Height) { viewportHeight = vp_Height; }
-
-void Camera::SetMotionSensitivity(float sensitivity) { camMotionSensitivity = sensitivity; }
-void Camera::SetMovementSpeed(float spd) { speed = spd; }
-
-void Camera::SetProjection(float cv_fov, float n_Clip, float f_Clip) {
-	V_FOV = cv_fov;
-	// aspect = (float)viewportWidth / (float)viewportHeight;
-	nearClip = n_Clip;
-	farClip = f_Clip;
-
+void Camera::SetProjection(float v_fov) {
+	V_FOV = v_fov;
 	projection = glm::perspectiveFov(glm::radians(V_FOV), (float)viewportWidth, (float)viewportHeight, nearClip, farClip);
 	inverseProjection = glm::inverse(projection);
 }
@@ -56,27 +54,27 @@ void Camera::HandleInput(class Raether& rae) {
 
 	/// For Camera Movement
 	if (rae.keyState == Keystate::W) {
-		cameraOrigin += forwardDirection * speed;
+		cameraOrigin += forwardDirection * camMovementSpeed;
 		cam = CamMotion::MOVED;
 	}
 	else if (rae.keyState == Keystate::S) {
-		cameraOrigin -= forwardDirection * speed;
+		cameraOrigin -= forwardDirection * camMovementSpeed;
 		cam = CamMotion::MOVED;
 	}
 	if (rae.keyState == Keystate::A) {
-		cameraOrigin -= rightDirection * speed;
+		cameraOrigin -= rightDirection * camMovementSpeed;
 		cam = CamMotion::MOVED;
 	}
 	else if (rae.keyState == Keystate::D) {
-		cameraOrigin += rightDirection * speed;
+		cameraOrigin += rightDirection * camMovementSpeed;
 		cam = CamMotion::MOVED;
 	}
 	if (rae.keyState == Keystate::Q) {
-		cameraOrigin -= upDirection * speed;
+		cameraOrigin -= upDirection * camMovementSpeed;
 		cam = CamMotion::MOVED;
 	}
 	else if (rae.keyState == Keystate::E) {
-		cameraOrigin += upDirection * speed;
+		cameraOrigin += upDirection * camMovementSpeed;
 		cam = CamMotion::MOVED;
 	}
 
@@ -105,7 +103,7 @@ void Camera::HandleInput(class Raether& rae) {
 		else if (V_FOV >= 179.0f) {
 			V_FOV = 179.0f;
 		}
-		SetProjection(V_FOV, nearClip, farClip);
+		SetProjection(V_FOV);
 
 		cam = CamMotion::MOVED;
 	}

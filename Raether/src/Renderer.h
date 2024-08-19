@@ -20,19 +20,22 @@ public:
 
 	void Init(Raether& rae, const Scene& scene, Camera& camera);
 	void Render(const Scene& scene, Camera& camera);
-	void ResetFrameIdx() { FrameCount = 1; }
+	void ResetFrameIdx() { FrameCount = 0; }
 
-	const Camera* renderCam = nullptr;
-	const Scene* renderScene = nullptr;
-	Raether* raeObj = nullptr;
 private:
-	int FrameCount;
-
-	std::vector<glm::ui8_tvec4> PixelData;
-	std::vector<glm::vec4> AccumPixelData;
-private:
-	glm::vec4 PerPixel(int x, int y);
+	glm::vec3 PerPixel(glm::vec2 uv);
 	bool Hittable(const Ray& ray, const std::vector<Sphere>& SphereList, Hitrec& hitrecord);
+
+public:
+	Raether* raeObj;
+	const Scene* renderScene;
+	const Camera* renderCam;
+
 private:
-	glm::ui8_tvec4 GammaCorrection(glm::vec4 color);
+	uint32_t width;
+	uint32_t height;
+	uint32_t FrameCount;
+
+	std::vector<glm::ui8_tvec4> ImageData;
+	std::vector<glm::vec3> AccumImageData;
 };

@@ -61,7 +61,7 @@ void Raether::raeCreateWindow(const char* w_t, int w_width, int w_height) {
 	raeInit();
 }
 
-void Raether::raeDrawPix(std::vector<glm::ui8_tvec4>& PixData) {
+void Raether::raeDrawImage(std::vector<glm::ui8_tvec4>& PixData) {
 
 	uint32_t* pixels;
 	int pitch;
@@ -88,10 +88,12 @@ bool Raether::raeInputEvents() {
 
 	while (SDL_PollEvent(&event)) {
 
+		// Exit event
 		if (event.type == SDL_QUIT) {
 			windowState = RaeState::EXIT;
 			break;
 		}
+		// Mouse wheel event
 		else if (event.type == SDL_MOUSEWHEEL) {
 			// Hide the mouse cursor
 			SDL_ShowCursor(SDL_DISABLE);
@@ -105,6 +107,7 @@ bool Raether::raeInputEvents() {
 			
 			break;
 		}
+		// Mouse left button event
 		else if (event.button.button == SDL_BUTTON_LEFT) {
 
 			if (event.type == SDL_MOUSEMOTION) {
@@ -122,6 +125,7 @@ bool Raether::raeInputEvents() {
 				break;
 			}
 		}
+		// Keyboard event
 		else if (event.type == SDL_KEYDOWN) {
 
 			if (event.key.keysym.sym == SDLK_w) {

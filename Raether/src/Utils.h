@@ -1,6 +1,14 @@
 #pragma once
 
 #include <string>
+#include <random>
+
+#include <glm\glm.hpp>
+
+namespace glm {
+	typedef tvec4<uint8_t> ui8_tvec4;
+	typedef tvec2<Sint32> si32_tvec2;
+}
 
 namespace Utils {
 
@@ -8,10 +16,92 @@ namespace Utils {
 	inline void PrintError(std::string Error) {
 		std::cout << Error << std::endl;
 	}
-	
+	inline void PrintVec2(const char* vecName, glm::vec2 vec) {
+		std::cout << vecName << std::endl;
+		std::cout << "X => " << vec.r << std::endl;
+		std::cout << "Y => " << vec.g << std::endl;
+}
+	inline void PrintVec3(const char* vecName, glm::vec3 vec) {
+		std::cout << vecName << std::endl;
+		std::cout << "X => " << vec.r << std::endl;
+		std::cout << "Y => " << vec.g << std::endl;
+		std::cout << "Z => " << vec.b << std::endl;
+	}
+	inline void PrintVec4(const char* vecName, glm::vec4 vec) {
+		std::cout << vecName << std::endl;
+		std::cout << "X => " << vec.r << std::endl;
+		std::cout << "Y => " << vec.g << std::endl;
+		std::cout << "Z => " << vec.b << std::endl;
+		std::cout << "W => " << vec.a << std::endl;
+	}
 	#else
 	inline void PrintError(std::string Error) {
 		// Do Nothing!
 	}
+	inline void PrintVec2(const char* vecName, glm::vec2 vec) {
+		// Do Nothing!
+	}
+	inline void PrintVec3(const char* vecName, glm::vec3 vec) {
+		// Do Nothing!
+	}
+	inline void PrintVec4(const char* vecName, glm::vec4 vec) {
+		// Do Nothing!
+	}
 	#endif
+
+	inline glm::ui8_tvec4 converttoRGBA(glm::vec4& color) {
+
+		glm::ui8_tvec4 c;
+
+		c.r = (uint8_t)(glm::clamp(color.r, 0.f, 0.999f) * 255.0f);
+		c.g = (uint8_t)(glm::clamp(color.g, 0.f, 0.999f) * 255.0f);
+		c.b = (uint8_t)(glm::clamp(color.b, 0.f, 0.999f) * 255.0f);
+		c.a = (uint8_t)(glm::clamp(color.a, 0.f, 0.999f) * 255.0f);
+
+		return c;
+	}
+	inline glm::ui8_tvec4 GammaCorrection(glm::vec4 color) {
+
+		glm::vec4 c{ 0.0f };
+
+		c.r = glm::sqrt(color.r);
+		c.g = glm::sqrt(color.g);
+		c.b = glm::sqrt(color.b);
+		c.a = glm::sqrt(color.a);
+
+		return c;
+	}
+	inline glm::vec3 Randomoffset(float from, float to) {
+
+		static std::random_device rand_dev;
+		// Using Mersenne Twister algorithm for random num generation
+		static std::mt19937 generator(rand_dev());
+		static std::uniform_real_distribution<float> distr(from, to);
+
+		glm::vec3 offset(distr(generator), distr(generator), distr(generator));
+
+		return offset;
+	}
+	inline glm::vec3 Randomoffset1(float from, float to) {
+
+		static std::random_device rand_dev;
+		// Using Mersenne Twister algorithm for random num generation
+		static std::mt19937 generator(rand_dev());
+		static std::uniform_real_distribution<float> dist(from, to);
+
+		glm::vec3 offset(dist(generator), dist(generator), dist(generator));
+
+		return offset;
+	}
+	inline bool Inrange(float value, float low, float high) {
+		if (value > low && value < high) {
+			return true;
+		}
+		return false;
+	}
+	inline glm::vec3 Lerp(const glm::vec3& rayDirection, glm::vec3 start, glm::vec3 end) {
+		float t = 1.0f - ((rayDirection.y * 0.5f) + 0.5f);
+		/// Calculate linear color gradient using linear interpolation
+		return glm::vec3((1 - t) * start + t * end);
+	}
 };

@@ -22,12 +22,18 @@ struct Sphere {
 
 struct Scene {
 
-	float SampleCount;
-	int Bounces;
+	uint32_t SampleCount;
+	uint32_t Bounces;
 
 	std::vector<Sphere> SphereList;
 	std::vector<Material> Materials;
 
+	void setSampleCount(uint32_t count) {
+		SampleCount = count;
+	}
+	void setSampleBounces(uint32_t bounces) {
+		Bounces = bounces;
+	}
 	void addSpheres(Sphere sphere) {
 		SphereList.push_back(sphere);
 	}
