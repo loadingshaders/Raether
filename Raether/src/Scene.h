@@ -51,13 +51,14 @@ private:
 
 class Metal : public Material {
 public:
-	Metal(glm::vec3 albedo) : Albedo(albedo) { }
+	Metal(glm::vec3 albedo, float fuzzyness) : Albedo(albedo), Fuzzyness(fuzzyness) { }
 
 	bool Scatter(Ray& ray, Hitrec& hitrecord, glm::vec3& attenuation) const override {
 
 		ray.Origin = hitrecord.HitPoint;
-		// Non Uniform Lambertian Diffuse Scattering
+		// Metal shiny and fuzzy reflection
 		ray.Direction = glm::reflect(ray.Direction, hitrecord.SurfaceNormal);
+		ray.Direction = glm::normalize(ray.Direction) + Fuzzyness * Utils::RandomUnitVector();
 
 		attenuation = Albedo;
 		return true;
@@ -65,6 +66,7 @@ public:
 
 private:
 	glm::vec3 Albedo;
+	float Fuzzyness;
 };
 
 struct Sphere {
