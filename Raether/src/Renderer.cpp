@@ -18,8 +18,8 @@ void Renderer::Init(Raether& rae, const Scene& scene, Camera& camera) {
 
 void Renderer::Render(const Scene& scene, Camera& camera) {
 
-	uint32_t width = renderCam->GetViewPortWidth();
-	uint32_t height = renderCam->GetViewPortHeight();
+	width = renderCam->GetViewPortWidth();
+	height = renderCam->GetViewPortHeight();
 
 	ImageData.resize(width * height);
 	AccumImageData.resize(width * height);
@@ -65,21 +65,20 @@ glm::vec3 Renderer::PerPixel(glm::vec2 uv) {
 	Hitrec hitrecord;
 
 	glm::vec3 hitColor = glm::vec3(1.f);
-	float multiplier = 1.f;
-	float attenuation = 0.5f;
+	float attenuationFactor = 0.1f;
 
 	for (uint32_t bounces = 0; bounces < renderScene->Bounces; bounces++) {
 
 		if (Hittable(ray, hitrecord) == true) {
 
 			const Sphere& sphere = renderScene->SphereList[hitrecord.HitObjId];
-			const Material& mat = renderScene->Materials[sphere.MatIndex];
+			const std::shared_ptr<Material> mat = renderScene->Materials[sphere.MatIndex];
 
-			hitColor *= multiplier;
-			multiplier *= attenuation;
+			glm::vec3 attenuation;
 
-			ray.Origin = hitrecord.HitPoint;
-			ray.Direction = Utils::RandomOnHemisphere(hitrecord.SurfaceNormal);
+			if (mat->Scatter(ray, hitrecord, attenuation)) {
+				hitColor *= attenuation * attenuationFactor;
+			}
 		}
 		else {
 			hitColor *= Utils::Lerp(ray.Direction, blue, white);

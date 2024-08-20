@@ -21,14 +21,8 @@ void App::setUpScene() {
 
 	// Configure Materials
 	{
-		Material whiteSpheres;
-		whiteSpheres.Albedo = glm::vec3(1.f);
-		whiteSpheres.EmissionColor = glm::vec3(0.f, 0.f, 0.f);
-		whiteSpheres.EmissionStrength = 0.f;
-		whiteSpheres.Metallic = 0.f;
-		whiteSpheres.Roughness = 0.f;
-
-		scene.addMaterials(whiteSpheres);
+		std::shared_ptr<Material> lambertianDiffuse = std::make_shared<Lambertian>(glm::vec3(1.f, 1.f, 1.f));
+		scene.addMaterials(lambertianDiffuse);
 	}
 
 	{

@@ -60,25 +60,26 @@ namespace Utils {
 		/// Calculate linear color gradient using linear interpolation
 		return glm::vec3((1 - t) * start + t * end);
 	}
+	inline double GammaCorrect(double value) {
+		if (value > 0) {
+			return glm::sqrt(value);
+		}
+
+		return 0;
+	}
 	inline glm::ui8_tvec4 converttoRGBA(glm::vec4& color) {
 
 		glm::ui8_tvec4 c;
+
+		color.r = GammaCorrect(color.r);
+		color.g = GammaCorrect(color.g);
+		color.b = GammaCorrect(color.b);
+		color.a = GammaCorrect(color.a);
 
 		c.r = (uint8_t)(glm::clamp(color.r, 0.f, 0.999f) * 255.0f);
 		c.g = (uint8_t)(glm::clamp(color.g, 0.f, 0.999f) * 255.0f);
 		c.b = (uint8_t)(glm::clamp(color.b, 0.f, 0.999f) * 255.0f);
 		c.a = (uint8_t)(glm::clamp(color.a, 0.f, 0.999f) * 255.0f);
-
-		return c;
-	}
-	inline glm::ui8_tvec4 GammaCorrection(glm::vec4 color) {
-
-		glm::vec4 c{ 0.0f };
-
-		c.r = glm::sqrt(color.r);
-		c.g = glm::sqrt(color.g);
-		c.b = glm::sqrt(color.b);
-		c.a = glm::sqrt(color.a);
 
 		return c;
 	}

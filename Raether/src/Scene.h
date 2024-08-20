@@ -5,15 +5,48 @@
 
 #include <glm\glm.hpp>
 
+#include "Utils.h"
+#include "Ray.h"
+
 #define near 0.001f
 #define far 10000.f
 
-struct Material {
-	glm::vec3 Albedo{ 1.0f };
-	glm::vec3 EmissionColor{ 0.0f };
-	float EmissionStrength{ 0.0f };
-	float Roughness{ 0.1f };
-	float Metallic{ 0.0 };
+struct Hitrec {
+	glm::vec3 HitPoint;
+	glm::vec3 SurfaceNormal;
+	glm::vec3 HitColor;
+	int HitObjId;
+};
+
+class Material {
+public:
+	virtual ~Material() = default;
+
+	virtual bool Scatter(Ray& ray, Hitrec& hitrecord, glm::vec3& attenuation) const {
+		return false;
+	}
+};
+
+class Lambertian : public Material {
+public:
+	Lambertian(glm::vec3 albedo) : Albedo(albedo) { }
+
+	bool Scatter(Ray& ray, Hitrec& hitrecord, glm::vec3& attenuation) const override {
+
+		ray.Origin = hitrecord.HitPoint;
+		// Non Uniform Lambertian Diffuse Scattering
+		ray.Direction = hitrecord.SurfaceNormal + Utils::RandomUnitVector();
+
+		if (Utils::NearZero(ray.Direction)) {
+			ray.Direction = hitrecord.SurfaceNormal;
+		}
+
+		attenuation = Albedo;
+		return true;
+	}
+
+private:
+	glm::vec3 Albedo;
 };
 
 struct Sphere {
@@ -29,7 +62,7 @@ struct Scene {
 	uint32_t Bounces;
 
 	std::vector<Sphere> SphereList;
-	std::vector<Material> Materials;
+	std::vector<std::shared_ptr<Material>> Materials;
 
 	void setSampleCount(uint32_t count) {
 		SampleCount = count;
@@ -40,15 +73,7 @@ struct Scene {
 	void addSpheres(Sphere sphere) {
 		SphereList.push_back(sphere);
 	}
-	void addMaterials(Material mat) {
+	void addMaterials(std::shared_ptr<Material> mat) {
 		Materials.push_back(mat);
 	}
 };
-
-struct Hitrec {
-	glm::vec3 HitPoint;
-	glm::vec3 SurfaceNormal;
-	glm::vec3 HitColor;
-	int HitObjId;
-};
-
