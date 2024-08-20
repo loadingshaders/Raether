@@ -21,12 +21,12 @@ void Renderer::Render(const Scene& scene, Camera& camera) {
 	width = renderCam->GetViewPortWidth();
 	height = renderCam->GetViewPortHeight();
 
-	ImageData.resize(width * height);
-	AccumImageData.resize(width * height);
+	ImageData.resize((uint64_t)(width * height));
+	AccumImageData.resize((uint64_t)(width * height));
 
 	if (FrameCount == 0) {
 		/// Reset the Accumulate ImgaeBuffer
-		memset(&AccumImageData[0], 0, (width * height) * sizeof(glm::vec3));
+		memset(&AccumImageData[0], 0, width * height * sizeof(glm::vec3));
 	}
 
 	else if (FrameCount < renderScene->SampleCount) {
@@ -37,7 +37,7 @@ void Renderer::Render(const Scene& scene, Camera& camera) {
 				/// Accumulate the color
 				AccumImageData[x + y * width] += PerPixel(glm::vec2(x, (height - 1) - y));
 
-				glm::vec3 accumColor = AccumImageData[x + y * width];
+				glm::vec3 accumColor = AccumImageData[(uint64_t)(x + y * width)];
 
 				/// Adjust the brightness
 				accumColor /= (float)FrameCount;
@@ -45,7 +45,7 @@ void Renderer::Render(const Scene& scene, Camera& camera) {
 				accumColor = glm::clamp(accumColor, glm::vec3(0.0f), glm::vec3(1.0f));
 
 				/// Store the color data
-				ImageData[x + y * width] = Utils::converttoRGBA(glm::vec4(accumColor, 1.f));
+				ImageData[(uint64_t)(x + y * width)] = Utils::converttoRGBA(glm::vec4(accumColor, 1.f));
 			}
 		}
 		/// Draw the color using SDL
@@ -60,7 +60,7 @@ glm::vec3 Renderer::PerPixel(glm::vec2 uv) {
 
 	Ray ray;
 	ray.Origin = renderCam->GetPosition();
-	ray.Direction = renderCam->GetRayDirection()[uv.x + uv.y * renderCam->GetViewPortWidth()] + Utils::RandomOffset(-0.001f, 0.001f);
+	ray.Direction = renderCam->GetRayDirection()[(uint64_t)(uv.x + uv.y * renderCam->GetViewPortWidth())] + Utils::RandomOffset(-0.001f, 0.001f);
 
 	Hitrec hitrecord;
 
@@ -136,6 +136,7 @@ bool Renderer::Hittable(const Ray& ray, Hitrec& hitrecord) {
 		hitpoint = origin + ray.Direction * closestHit; // px = camera.x + direction.x * nt; py = camera.y + direction.y * nt; pz = camera.z + direction.z * nt;
 		hitrecord.HitPoint = hitpoint;
 		hitrecord.SurfaceNormal = glm::normalize(hitpoint);
+		hitrecord.SetFrontFace(ray.Direction, hitrecord.SurfaceNormal);
 		hitrecord.HitPoint += renderScene->SphereList[closestSphereIDX].SphereOrigin;
 		hitrecord.HitObjId = closestSphereIDX;
 

@@ -63,8 +63,8 @@ void Raether::raeCreateWindow(const char* w_t, int w_width, int w_height) {
 
 void Raether::raeDrawImage(std::vector<glm::ui8_tvec4>& PixData) {
 
-	uint32_t* pixels;
-	int pitch;
+	uint32_t* pixels = nullptr;
+	int pitch = 0;
 
 	// Lock the texture pixels for direct write access
 	if (SDL_LockTexture(texture, &screensize, (void**)&pixels, &pitch)) {

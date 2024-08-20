@@ -60,7 +60,7 @@ namespace Utils {
 		/// Calculate linear color gradient using linear interpolation
 		return glm::vec3((1 - t) * start + t * end);
 	}
-	inline double GammaCorrect(double value) {
+	inline float GammaCorrect(float value) {
 		if (value > 0) {
 			return glm::sqrt(value);
 		}

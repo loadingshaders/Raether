@@ -32,7 +32,7 @@ void Camera::SetView() {
 }
 
 void Camera::CalculateRayDirections() {
-	rayDirections.resize(viewportWidth * viewportHeight);
+	rayDirections.resize((uint64_t)(viewportWidth * viewportHeight));
 
 	for (uint32_t y = 0; y < viewportHeight; y++) {
 		for (uint32_t x = 0; x < viewportWidth; x++) {
@@ -41,7 +41,7 @@ void Camera::CalculateRayDirections() {
 
 			glm::vec4 target = inverseProjection * glm::vec4(coord.x, coord.y, 1.0f, 1.0f);
 			glm::vec3 rayDirection = glm::vec3 ( inverseView * glm::vec4(glm::normalize(glm::vec3(target) / target.w), 0));//world space
-			rayDirections[x + y * viewportWidth] = rayDirection;
+			rayDirections[(uint64_t)(x + y * viewportWidth)] = rayDirection;
 		}
 	}
 }

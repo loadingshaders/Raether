@@ -29,8 +29,8 @@ public:
 	void SetProjection(float v_fov);
 	void SetView();
 
-	const int GetViewPortWidth() const { return viewportWidth; }
-	const int GetViewPortHeight() const { return viewportHeight; }
+	const uint32_t GetViewPortWidth() const { return viewportWidth; }
+	const uint32_t GetViewPortHeight() const { return viewportHeight; }
 	const glm::vec3& GetPosition() const { return cameraOrigin; }
 	const std::vector<glm::vec3>& GetRayDirection() const { return rayDirections; }
 
