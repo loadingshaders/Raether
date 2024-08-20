@@ -21,22 +21,43 @@ void App::setUpScene() {
 
 	// Configure Materials
 	{
-		std::shared_ptr<Material> lambertianDiffuse = std::make_shared<Lambertian>(glm::vec3(1.f, 1.f, 1.f));
-		scene.addMaterials(lambertianDiffuse);
+		std::shared_ptr<Material> diffuseYeollow = std::make_shared<Lambertian>(glm::vec3(0.8f, 0.8f, 0.0f));
+		std::shared_ptr<Material> diffuseBlue = std::make_shared<Lambertian>(glm::vec3(0.1f, 0.2f, 0.5f));
+		std::shared_ptr<Material> metalGold = std::make_shared<Metal>(glm::vec3(1.f, 0.782f, 0.344f));
+		std::shared_ptr<Material> metalSilver = std::make_shared<Metal>(glm::vec3(0.972f, 0.960f, 0.915f));
+		scene.addMaterials(diffuseYeollow);
+		scene.addMaterials(diffuseBlue);
+		scene.addMaterials(metalGold);
+		scene.addMaterials(metalSilver);
 	}
 
-	{
-		Sphere sphere;
-		sphere.SphereOrigin = glm::vec3(0.0f, 0.0f, 0.0f);
-		sphere.Radius = 1.f;
-		sphere.MatIndex = 0;
-		scene.addSpheres(sphere);
-	}
+	// Configure Spheres
 	{
 		Sphere sphere;
 		sphere.SphereOrigin = glm::vec3(0.f, -101.f, 0.f);
 		sphere.Radius = 100.f;
 		sphere.MatIndex = 0;
+		scene.addSpheres(sphere);
+	}
+	{
+		Sphere sphere;
+		sphere.SphereOrigin = glm::vec3(0.0f, 0.0f, 0.0f);
+		sphere.Radius = 1.f;
+		sphere.MatIndex = 1;
+		scene.addSpheres(sphere);
+	}
+	{
+		Sphere sphere;
+		sphere.SphereOrigin = glm::vec3(2.01f, 0.0f, 0.0f);
+		sphere.Radius = 1.f;
+		sphere.MatIndex = 2;
+		scene.addSpheres(sphere);
+	}
+	{
+		Sphere sphere;
+		sphere.SphereOrigin = glm::vec3(-2.01f, 0.0f, 0.0f);
+		sphere.Radius = 1.f;
+		sphere.MatIndex = 3;
 		scene.addSpheres(sphere);
 	}
 

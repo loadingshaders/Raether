@@ -49,6 +49,24 @@ private:
 	glm::vec3 Albedo;
 };
 
+class Metal : public Material {
+public:
+	Metal(glm::vec3 albedo) : Albedo(albedo) { }
+
+	bool Scatter(Ray& ray, Hitrec& hitrecord, glm::vec3& attenuation) const override {
+
+		ray.Origin = hitrecord.HitPoint;
+		// Non Uniform Lambertian Diffuse Scattering
+		ray.Direction = glm::reflect(ray.Direction, hitrecord.SurfaceNormal);
+
+		attenuation = Albedo;
+		return true;
+	}
+
+private:
+	glm::vec3 Albedo;
+};
+
 struct Sphere {
 	glm::vec3 SphereOrigin{ 0.0f };
 	float Radius = 0.5f;

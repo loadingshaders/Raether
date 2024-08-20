@@ -65,7 +65,6 @@ glm::vec3 Renderer::PerPixel(glm::vec2 uv) {
 	Hitrec hitrecord;
 
 	glm::vec3 hitColor = glm::vec3(1.f);
-	float attenuationFactor = 0.1f;
 
 	for (uint32_t bounces = 0; bounces < renderScene->Bounces; bounces++) {
 
@@ -77,7 +76,7 @@ glm::vec3 Renderer::PerPixel(glm::vec2 uv) {
 			glm::vec3 attenuation;
 
 			if (mat->Scatter(ray, hitrecord, attenuation)) {
-				hitColor *= attenuation * attenuationFactor;
+				hitColor *= attenuation;
 			}
 		}
 		else {
