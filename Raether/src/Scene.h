@@ -97,7 +97,7 @@ public:
 
 		ray.Origin = hitrecord.HitPoint;
 
-		if (cannotRefract) {
+		if (cannotRefract || Reflectance(cosTheta, ri) > Utils::RandomFloat()) {
 			ray.Direction = glm::reflect(unitDirection, hitrecord.SurfaceNormal);
 		}
 		else {
@@ -111,6 +111,13 @@ public:
 
 private:
 	float RefractionIndex;
+
+	static float Reflectance(float cosine, float ri) {
+		// Use Schlick's approximation for reflectance.
+		auto r0 = (1.f - ri) / (1.f + ri);
+		r0 = r0 * r0;
+		return r0 + (1.f - r0) * std::pow((1.f - cosine), 5.f);
+	}
 };
 
 struct Sphere {
