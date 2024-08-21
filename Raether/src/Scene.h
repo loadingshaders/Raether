@@ -120,11 +120,13 @@ private:
 	}
 };
 
-struct Sphere {
+class Sphere {
+public:
+	Sphere(glm::vec3 origin, float radius, std::shared_ptr<Material> matid) : SphereOrigin(origin), Radius(radius), MaterialId(matid) { }
+
 	glm::vec3 SphereOrigin{ 0.0f };
 	float Radius = 0.5f;
-
-	int MatIndex = 0;
+	std::shared_ptr<Material> MaterialId;
 };
 
 struct Scene {
@@ -133,7 +135,6 @@ struct Scene {
 	uint32_t Bounces;
 
 	std::vector<Sphere> SphereList;
-	std::vector<std::shared_ptr<Material>> Materials;
 
 	void setSampleCount(uint32_t count) {
 		SampleCount = count;
@@ -142,9 +143,6 @@ struct Scene {
 		Bounces = bounces;
 	}
 	void addSpheres(Sphere sphere) {
-		SphereList.push_back(sphere);
-	}
-	void addMaterials(std::shared_ptr<Material> mat) {
-		Materials.push_back(mat);
+		SphereList.emplace_back(sphere);
 	}
 };

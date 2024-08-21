@@ -70,7 +70,7 @@ glm::vec3 Renderer::PerPixel(glm::vec2 uv) {
 		ray.Direction = glm::normalize(focusPoint - ray.Origin);
 	}
 
-	ray.Direction += Utils::RandomOffset(-0.004f, 0.004f) * renderCam->GetCamFovFraction();
+	ray.Direction += Utils::RandomOffset(-0.002f, 0.002f) * renderCam->GetCamFovFraction();
 
 	Hitrec hitrecord;
 
@@ -81,13 +81,15 @@ glm::vec3 Renderer::PerPixel(glm::vec2 uv) {
 		if (Hittable(ray, hitrecord) == true) {
 
 			const Sphere& sphere = renderScene->SphereList[hitrecord.HitObjId];
-			const std::shared_ptr<Material> mat = renderScene->Materials[sphere.MatIndex];
+			const std::shared_ptr<Material> mat = sphere.MaterialId;
 
 			glm::vec3 attenuation;
 
 			if (mat->Scatter(ray, hitrecord, attenuation)) {
 				hitColor *= attenuation;
 			}
+
+			ray.Direction += Utils::RandomOffset(-0.001f, 0.001f) * renderCam->GetCamFovFraction();
 		}
 		else {
 			hitColor *= Utils::Lerp(ray.Direction, blue, white);
