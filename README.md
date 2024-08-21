@@ -22,7 +22,7 @@ After cloning the repo click the `setup.bat` file to generate the **visual studi
 
 </br>
 
-![Raether](https://github.com/shreyosgit/Raether/assets/92203452/a0b99b6f-0d6e-406f-8a38-ee9e96948dc1)
+![Raether](https://github.com/user-attachments/assets/bfeb9b8d-b06a-4523-a496-154548c7ee40)
 
 </br>
 
