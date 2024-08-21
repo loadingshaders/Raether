@@ -26,11 +26,13 @@ void App::setUpScene() {
 		std::shared_ptr<Material> metalGold = std::make_shared<Metal>(glm::vec3(1.f, 0.782f, 0.344f), 0.f);
 		std::shared_ptr<Material> metalSilver = std::make_shared<Metal>(glm::vec3(0.972f, 0.960f, 0.915f), 0.3f);
 		std::shared_ptr<Material> dielectricGlass = std::make_shared<Dielectric>(1.52f);
+		std::shared_ptr<Material> dielectricBubble = std::make_shared<Dielectric>(1.003f/1.333f);
 		scene.addMaterials(diffuseYeollow);
 		scene.addMaterials(diffuseBlue);
 		scene.addMaterials(metalGold);
 		scene.addMaterials(metalSilver);
 		scene.addMaterials(dielectricGlass);
+		scene.addMaterials(dielectricBubble);
 	}
 
 	// Configure Spheres
@@ -59,7 +61,7 @@ void App::setUpScene() {
 		Sphere sphere;
 		sphere.SphereOrigin = glm::vec3(-2.01f, 0.0f, 0.0f);
 		sphere.Radius = 1.f;
-		sphere.MatIndex = 4;
+		sphere.MatIndex = 5;
 		scene.addSpheres(sphere);
 	}
 

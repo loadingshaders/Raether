@@ -88,9 +88,22 @@ public:
 
 		float ri = (hitrecord.FrontFace) ? (1.f / RefractionIndex) : (RefractionIndex);
 
+		glm::vec3 unitDirection = glm::normalize(ray.Direction);
+
+		float cosTheta = std::fmin(glm::dot(-unitDirection, hitrecord.SurfaceNormal), 1.f);
+		float sinTheta = std::sqrt(1.f - cosTheta * cosTheta);
+
+		bool cannotRefract = (ri * sinTheta) > 1.f;
+
 		ray.Origin = hitrecord.HitPoint;
-		// Dielectric refraction and reflections
-		ray.Direction = glm::refract(glm::normalize(ray.Direction), hitrecord.SurfaceNormal, ri);
+
+		if (cannotRefract) {
+			ray.Direction = glm::reflect(unitDirection, hitrecord.SurfaceNormal);
+		}
+		else {
+			// Dielectric refraction and reflections
+			ray.Direction = glm::refract(unitDirection, hitrecord.SurfaceNormal, ri);
+		}
 
 		attenuation = glm::vec3(1.f);
 		return true;
