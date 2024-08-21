@@ -3,6 +3,8 @@
 Camera::Camera() : viewportWidth(700),
 				   viewportHeight(620),
 				   V_FOV(45.f),
+				   defocusStrength(0.f),
+				   focusDistance(0.f),
 				   cameraOrigin(glm::vec3(0.f, 0.f, -2.f)),
 				   forwardDirection(glm::vec3(0.f, 0.f, -1.f)),
 				   cameraOrientation(cameraOrigin + forwardDirection),
@@ -29,6 +31,16 @@ void Camera::SetView() {
 	cameraOrientation = cameraOrigin + forwardDirection;
 	view = glm::lookAt(cameraOrigin, cameraOrientation, upDirection);
 	inverseView = glm::inverse(view);
+}
+
+void Camera::SetFocus(float strength, float distance) {
+	defocusStrength = strength;
+	focusDistance = distance;
+}
+
+glm::vec3 Camera::GetDefocusDiskSample() const {
+	glm::vec2 defocusJitter = Utils::RandomPointOnCircle() * (defocusStrength / viewportWidth);
+	return cameraOrigin + rightDirection * defocusJitter.r + upDirection * defocusJitter.g;
 }
 
 void Camera::CalculateRayDirections() {
@@ -97,11 +109,11 @@ void Camera::HandleInput(class Raether& rae) {
 	if (rae.mouseState == Mousestate::SCROLLING) {
 
 		V_FOV -= rae.scrollAmount * 1.5f;
-		if(V_FOV <= 1.0f) {
-			V_FOV = 1.0f;
+		if(V_FOV <= minFov) {
+			V_FOV = minFov;
 		}
-		else if (V_FOV >= 179.0f) {
-			V_FOV = 179.0f;
+		else if (V_FOV >= maxFov) {
+			V_FOV = maxFov;
 		}
 		SetProjection(V_FOV);
 
@@ -112,5 +124,12 @@ void Camera::HandleInput(class Raether& rae) {
 	if (cam == CamMotion::MOVED) {
 		SetView();
 		CalculateRayDirections();
+
+		/*
+		Utils::PrintVec3("camOrigin", cameraOrigin);
+		Utils::PrintVec3("camOrientation", cameraOrientation);
+		Utils::PrintVec3("Forward", forwardDirection);
+		Utils::PrintVec2("V_FOV", glm::vec2(V_FOV));
+		*/
 	}
 }

@@ -75,13 +75,26 @@ void App::setUpScene() {
 	// Scene render specs
 	scene.setSampleCount(10000);
 	scene.setSampleBounces(100);
-
+	
+	/*
 	// Camera setup
+	camera.SetFocus(100.f, 8.f);
 	camera.SetViewPortWidth(width);
 	camera.SetViewPortHeight(height);
 	camera.SetPosition(glm::vec3(0.f, 0.f, 8.f));
 	camera.SetForwardDirection(glm::vec3(0.0f, 0.0f, -1.0f));
 	camera.SetProjection(45.0f);
+	camera.SetView();
+	camera.CalculateRayDirections();
+	*/
+	
+	// Camera setup
+	camera.SetFocus(0.f, 62.f);
+	camera.SetViewPortWidth(width);
+	camera.SetViewPortHeight(height);
+	camera.SetPosition(glm::vec3(-34.93f, 35.6765, 36.7877)); //glm::vec3(0.f, 0.f, 8.f)
+	camera.SetForwardDirection(glm::vec3(0.562163f, -0.577032f, -0.592458f)); // glm::vec3(0.0f, 0.0f, -1.0f)
+	camera.SetProjection(4.5f); // 45.f
 	camera.SetView();
 	camera.CalculateRayDirections();
 }

@@ -11,6 +11,9 @@
 #include "Raether.h"
 #include "Scene.h"
 
+
+#define minFov 5.f
+#define maxFov 180.f
 #define camMotionSensitivity 0.01f
 #define camMovementSpeed 0.3f
 
@@ -33,7 +36,12 @@ public:
 	const uint32_t GetViewPortHeight() const { return viewportHeight; }
 	const glm::vec3& GetPosition() const { return cameraOrigin; }
 	const std::vector<glm::vec3>& GetRayDirection() const { return rayDirections; }
+	const float GetCamFovFraction() const { return (V_FOV / maxFov); /* Ranges From 0 - 1 */ }
+	const float GetDefocusStrength() const { return defocusStrength; }
+	const float GetFocusDistance() const { return focusDistance; };
+	glm::vec3 GetDefocusDiskSample() const;
 
+	void SetFocus(float strength, float distance);
 	void CalculateRayDirections();
 	void HandleInput(class Raether& rae);
 
@@ -43,6 +51,8 @@ private:
 	uint32_t viewportHeight;
 
 	float V_FOV;
+	float defocusStrength;
+	float focusDistance;
 
 	glm::vec3 cameraOrigin;
 	glm::vec3 cameraOrientation;

@@ -59,8 +59,18 @@ void Renderer::Render(const Scene& scene, Camera& camera) {
 glm::vec3 Renderer::PerPixel(glm::vec2 uv) {
 
 	Ray ray;
-	ray.Origin = renderCam->GetPosition();
-	ray.Direction = renderCam->GetRayDirection()[(uint64_t)(uv.x + uv.y * renderCam->GetViewPortWidth())] + Utils::RandomOffset(-0.0001f, 0.0001f);
+	ray.Direction = renderCam->GetRayDirection()[(uint64_t)(uv.x + uv.y * renderCam->GetViewPortWidth())];
+
+	if (renderCam->GetDefocusStrength() <= 0.f) {
+		ray.Origin = renderCam->GetPosition();
+	}
+	else {
+		glm::vec3 focusPoint = renderCam->GetPosition() + ray.Direction * renderCam->GetFocusDistance();
+		ray.Origin = renderCam->GetDefocusDiskSample();
+		ray.Direction = glm::normalize(focusPoint - ray.Origin);
+	}
+
+	ray.Direction += Utils::RandomOffset(-0.004f, 0.004f) * renderCam->GetCamFovFraction();
 
 	Hitrec hitrecord;
 

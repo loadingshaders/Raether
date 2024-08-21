@@ -12,7 +12,9 @@ namespace glm {
 
 namespace Utils {
 
-	#ifdef DEBUG
+	#define PI 3.1415f
+
+	#ifndef DEBUG
 	inline void PrintError(std::string Error) {
 		std::cout << Error << std::endl;
 	}
@@ -99,6 +101,9 @@ namespace Utils {
 		
 		return distr(generator);
 	}
+	inline double RandomFloatInRange(float min, float max) {
+		return min + (max - min) * RandomFloat();
+	}
 	inline glm::vec3 RandomOffset(float from, float to) {
 
 		std::random_device rand_dev;
@@ -143,5 +148,10 @@ namespace Utils {
 		else {
 			return -random;
 		}
+	}
+	inline glm::vec2 RandomPointOnCircle() {
+		float randAngle = RandomFloat() * 2.f * PI;
+		glm::vec2 pointOnCircle = glm::vec2(glm::cos(randAngle), glm::sin(randAngle));
+		return pointOnCircle * glm::sqrt(RandomFloat());
 	}
 };
