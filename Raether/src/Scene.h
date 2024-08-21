@@ -80,6 +80,26 @@ private:
 	float Fuzzyness;
 };
 
+class Dielectric : public Material {
+public:
+	Dielectric(float ri) : RefractionIndex(ri) { }
+
+	bool Scatter(Ray& ray, Hitrec& hitrecord, glm::vec3& attenuation) const override {
+
+		float ri = (hitrecord.FrontFace) ? (1.f / RefractionIndex) : (RefractionIndex);
+
+		ray.Origin = hitrecord.HitPoint;
+		// Dielectric refraction and reflections
+		ray.Direction = glm::refract(glm::normalize(ray.Direction), hitrecord.SurfaceNormal, ri);
+
+		attenuation = glm::vec3(1.f);
+		return true;
+	}
+
+private:
+	float RefractionIndex;
+};
+
 struct Sphere {
 	glm::vec3 SphereOrigin{ 0.0f };
 	float Radius = 0.5f;

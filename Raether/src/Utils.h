@@ -83,7 +83,22 @@ namespace Utils {
 
 		return c;
 	}
+	inline float LengthSquared(glm::vec3 vec) {
+		return (vec.r * vec.r + vec.g * vec.g + vec.b * vec.b);
+	}
+	inline bool NearZero(glm::vec3& rayDirection) {
+		double s = 1e-8;
+		return ((std::fabs(rayDirection.r) < s) && (std::fabs(rayDirection.g) < s) && (std::fabs(rayDirection.b) < s));
+	}
 
+	inline float RandomFloat() {
+		static std::random_device rand_dev;
+		// Using Mersenne Twister algorithm for random num generation
+		static std::mt19937 generator(rand_dev());
+		static std::uniform_real_distribution<float> distr(-1.f, 1.f);
+		
+		return distr(generator);
+	}
 	inline glm::vec3 RandomOffset(float from, float to) {
 
 		static std::random_device rand_dev;
@@ -105,9 +120,6 @@ namespace Utils {
 		glm::vec3 offset(dist(generator), dist(generator), dist(generator));
 
 		return offset;
-	}
-	inline float LengthSquared(glm::vec3 vec) {
-		return (vec.r * vec.r + vec.g * vec.g + vec.b * vec.b);
 	}
 	inline glm::vec3 RandomUnitVector() {
 
@@ -131,9 +143,5 @@ namespace Utils {
 		else {
 			return -random;
 		}
-	}
-	inline bool NearZero(glm::vec3& rayDirection) {
-		double s = 1e-8;
-		return ((std::fabs(rayDirection.r) < s) && (std::fabs(rayDirection.g) < s) && (std::fabs(rayDirection.b) < s));
 	}
 };
