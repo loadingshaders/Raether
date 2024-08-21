@@ -60,7 +60,7 @@ glm::vec3 Renderer::PerPixel(glm::vec2 uv) {
 
 	Ray ray;
 	ray.Origin = renderCam->GetPosition();
-	ray.Direction = renderCam->GetRayDirection()[(uint64_t)(uv.x + uv.y * renderCam->GetViewPortWidth())] + Utils::RandomOffset(-0.001f, 0.001f);
+	ray.Direction = renderCam->GetRayDirection()[(uint64_t)(uv.x + uv.y * renderCam->GetViewPortWidth())] + Utils::RandomOffset(-0.0001f, 0.0001f);
 
 	Hitrec hitrecord;
 

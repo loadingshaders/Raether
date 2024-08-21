@@ -92,16 +92,16 @@ namespace Utils {
 	}
 
 	inline float RandomFloat() {
-		static std::random_device rand_dev;
+		std::random_device rand_dev;
 		// Using Mersenne Twister algorithm for random num generation
 		static std::mt19937 generator(rand_dev());
-		static std::uniform_real_distribution<float> distr(-1.f, 1.f);
+		static std::uniform_real_distribution<float> distr(0.f, 1.f);
 		
 		return distr(generator);
 	}
 	inline glm::vec3 RandomOffset(float from, float to) {
 
-		static std::random_device rand_dev;
+		std::random_device rand_dev;
 		// Using Mersenne Twister algorithm for random num generation
 		static std::mt19937 generator(rand_dev());
 		static std::uniform_real_distribution<float> distr(from, to);
@@ -112,7 +112,7 @@ namespace Utils {
 	}
 	inline glm::vec3 RandomOffset1(float from, float to) {
 
-		static std::random_device rand_dev;
+		std::random_device rand_dev;
 		// Using Mersenne Twister algorithm for random num generation
 		static std::mt19937 generator(rand_dev());
 		static std::uniform_real_distribution<float> dist(from, to);

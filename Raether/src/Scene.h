@@ -86,19 +86,19 @@ public:
 
 	bool Scatter(Ray& ray, Hitrec& hitrecord, glm::vec3& attenuation) const override {
 
-		float ri = (hitrecord.FrontFace) ? (1.f / RefractionIndex) : (RefractionIndex);
+		float ri = (hitrecord.FrontFace) ? (1.0003f / RefractionIndex) : (RefractionIndex);
 
 		glm::vec3 unitDirection = glm::normalize(ray.Direction);
 
 		float cosTheta = std::fmin(glm::dot(-unitDirection, hitrecord.SurfaceNormal), 1.f);
-		float sinTheta = std::sqrt(1.f - cosTheta * cosTheta);
+		float sinTheta = std::sqrt(1.f - (cosTheta * cosTheta));
 
-		bool cannotRefract = (ri * sinTheta) > 1.f;
+		bool cannotRefract = ((ri * sinTheta) > 1.f);
 
 		ray.Origin = hitrecord.HitPoint;
 
 		if (cannotRefract || Reflectance(cosTheta, ri) > Utils::RandomFloat()) {
-			ray.Direction = glm::reflect(unitDirection, hitrecord.SurfaceNormal);
+			ray.Direction = glm::reflect(ray.Direction, hitrecord.SurfaceNormal);
 		}
 		else {
 			// Dielectric refraction and reflections
@@ -113,7 +113,7 @@ private:
 	float RefractionIndex;
 
 	static float Reflectance(float cosine, float ri) {
-		// Use Schlick's approximation for reflectance.
+		// Using Schlick's approximation for reflectance.
 		auto r0 = (1.f - ri) / (1.f + ri);
 		r0 = r0 * r0;
 		return r0 + (1.f - r0) * std::pow((1.f - cosine), 5.f);
