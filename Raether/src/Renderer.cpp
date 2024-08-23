@@ -124,17 +124,17 @@ bool Renderer::Hittable(const Ray& ray, Hitrec& hitrecord) {
 		glm::vec3 newrayOrigin = ray.Origin - sphere.SphereOrigin;
 
 		float a = glm::dot(ray.Direction, ray.Direction); // (bx^2 + by^2 + bz^2)
-		float b = 2.0f * (glm::dot(newrayOrigin, ray.Direction)); // 2 ((ax * bx + ay * by + az * bz)
+		float b = 2.f * (glm::dot(newrayOrigin, ray.Direction)); // 2 ((ax * bx + ay * by + az * bz)
 		float c = glm::dot(newrayOrigin, newrayOrigin) - sphere.Radius * sphere.Radius; // (ax^2 + ay^2 + az^2) - r^2
 
-		float discriminant = (b * b) - (4.0f * a * c);
+		float discriminant = (b * b) - (4.f * a * c);
 
 		/// Calculate if the ray hits the sphere or not
 		if (discriminant >= 0.0f) {
 
-			float nearHit = (-b - std::sqrt(discriminant)) / (2.0f * a);
+			float nearHit = (-b - std::sqrt(discriminant)) / (2.f * a);
 
-			if (nearHit < closestHit && Utils::Inrange(nearHit, near, far)) {
+			if (nearHit < closestHit && Utils::Inrange(nearHit, nearDist, farDist)) {
 				closestHit = nearHit;
 				closestSphereIDX = loopCount;
 			}

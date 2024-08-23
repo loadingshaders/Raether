@@ -8,9 +8,6 @@
 #include "Utils.h"
 #include "Ray.h"
 
-#define near 0.001f
-#define far 10000.f
-
 struct Hitrec {
 	glm::vec3 HitPoint;
 	glm::vec3 SurfaceNormal;

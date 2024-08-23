@@ -1,8 +1,8 @@
 #include "Application.h"
 
 App::App() : title("Raether"),
-			 width(800),
-			 height(800),
+			 width(1200), // 800
+			 height(800), // 800
 			 rae(),
 			 scene(),
 			 camera(),
@@ -92,8 +92,8 @@ void App::setUpScene() {
 		scene.addSpheres(Sphere(glm::vec3(0.f, -10000.f, 0.f), 10000.f, diffuseWhite));
 		scene.addSpheres(Sphere(glm::vec3(-4.f, 1.f, 0.f), 1.f, diffuseRed));
 		scene.addSpheres(Sphere(glm::vec3(0.f, 1.f, 0.f), 1.f, dielectricGlass));
-		// scene.addSpheres(Sphere(glm::vec3(0.f, 1.f, 0.f), 0.8f, dielectricBubble));
 		scene.addSpheres(Sphere(glm::vec3(4.f, 1.f, 0.f), 1.f, metalSteel));
+		scene.addSpheres(Sphere(glm::vec3(0.f, 1.f, 0.f), 0.6f, dielectricBubble));
 
 		static glm::vec3 lastOrigin;
 
@@ -103,10 +103,10 @@ void App::setUpScene() {
 				float chooseMat = Utils::RandomFloat();
 				glm::vec3 center = glm::vec3(a + Utils::RandomFloat(), 0.2f, b + Utils::RandomFloat());
 
-				if (glm::distance(glm::vec3(-4.f, 1.f, 0.f), center) > 1.23f &&
-					glm::distance(glm::vec3(0.f, 1.f, 0.f) , center) > 1.23f &&
-					glm::distance(glm::vec3(4.f, 1.f, 0.f) , center) > 1.23f &&
-					glm::distance(       lastOrigin        , center) > 0.45f) {
+				if (glm::distance(scene.SphereList[1].SphereOrigin, center) > 1.23f &&
+					glm::distance(scene.SphereList[2].SphereOrigin, center) > 1.23f &&
+					glm::distance(scene.SphereList[3].SphereOrigin, center) > 1.23f &&
+					glm::distance(           lastOrigin           , center) > 0.45f) {
 
 					std::shared_ptr<Material> sphereMat;
 

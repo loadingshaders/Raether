@@ -11,12 +11,6 @@
 #include "Raether.h"
 #include "Scene.h"
 
-
-#define minFov 5.f
-#define maxFov 180.f
-#define camMotionSensitivity 0.01f
-#define camMovementSpeed 0.3f
-
 enum struct CamMotion { STATIC, MOVED , FOV};
 
 class Camera
@@ -25,6 +19,7 @@ public:
 	Camera();
 	~Camera();
 
+	void SetFocus(float strength, float distance);
 	void SetPosition(glm::vec3 position);
 	void SetForwardDirection(glm::vec3 forward);
 	void SetViewPortWidth(int vp_Width);
@@ -41,7 +36,6 @@ public:
 	const float GetFocusDistance() const { return focusDistance; };
 	glm::vec3 GetDefocusDiskSample() const;
 
-	void SetFocus(float strength, float distance);
 	void CalculateRayDirections();
 	void HandleInput(class Raether& rae);
 

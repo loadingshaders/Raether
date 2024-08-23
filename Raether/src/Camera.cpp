@@ -18,24 +18,25 @@ Camera::Camera() : viewportWidth(700),
 }
 Camera::~Camera() { }
 
+void Camera::SetFocus(float strength, float distance) {
+	defocusStrength = strength;
+	focusDistance = distance;
+}
+
 void Camera::SetPosition(glm::vec3 position) { cameraOrigin = position; }
 void Camera::SetForwardDirection(glm::vec3 forward) { forwardDirection = forward; }
 void Camera::SetViewPortWidth(int vp_Width) { viewportWidth = vp_Width; }
 void Camera::SetViewPortHeight(int vp_Height) { viewportHeight = vp_Height; }
 void Camera::SetProjection(float v_fov) {
 	V_FOV = v_fov;
-	projection = glm::perspectiveFov(glm::radians(V_FOV), (float)viewportWidth, (float)viewportHeight, near, far);
+	projection = glm::perspectiveFov(glm::radians(V_FOV), (float)viewportWidth, (float)viewportHeight, nearDist, farDist);
 	inverseProjection = glm::inverse(projection);
 }
+
 void Camera::SetView() {
 	cameraOrientation = cameraOrigin + forwardDirection;
 	view = glm::lookAt(cameraOrigin, cameraOrientation, upDirection);
 	inverseView = glm::inverse(view);
-}
-
-void Camera::SetFocus(float strength, float distance) {
-	defocusStrength = strength;
-	focusDistance = distance;
 }
 
 glm::vec3 Camera::GetDefocusDiskSample() const {

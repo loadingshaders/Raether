@@ -5,6 +5,18 @@
 
 #include <glm\glm.hpp>
 
+#define black glm::vec3(0.0f, 0.0f, 0.0f)
+#define white glm::vec3(1.0f)
+#define blue glm::vec3(0.5294f, 0.8078f, 0.9215f) // glm::vec3(0.5f, 0.7f, 1.0f)
+
+#define nearDist 0.001f
+#define farDist 10000.f
+
+#define minFov 5.f
+#define maxFov 180.f
+#define camMotionSensitivity 0.01f
+#define camMovementSpeed 0.3f
+
 namespace glm {
 	typedef tvec4<uint8_t> ui8_tvec4;
 	typedef tvec2<Sint32> si32_tvec2;
@@ -63,11 +75,11 @@ namespace Utils {
 		return glm::vec3((1 - t) * start + t * end);
 	}
 	inline float GammaCorrect(float value) {
-		if (value > 0) {
+		if (value > 0.f) {
 			return glm::sqrt(value);
 		}
 
-		return 0;
+		return 0.f;
 	}
 	inline glm::ui8_tvec4 converttoRGBA(glm::vec4& color) {
 

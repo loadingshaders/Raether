@@ -10,10 +10,6 @@
 #include "Scene.h"
 #include "Utils.h"
 
-#define black glm::vec3(0.0f, 0.0f, 0.0f)
-#define white glm::vec3(1.0f)
-#define blue glm::vec3(0.5294f, 0.8078f, 0.9215f) // glm::vec3(0.5f, 0.7f, 1.0f)
-
 class Renderer {
 public:
 	Renderer();
