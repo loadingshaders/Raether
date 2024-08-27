@@ -137,7 +137,7 @@ void App::setUpScene() {
 		camera.SetViewPortHeight(height);
 		camera.SetPosition(glm::vec3(14.0218f, 2.0866f, 3.9276f)); //glm::vec3(0.f, 0.f, 8.f)
 		camera.SetForwardDirection(glm::vec3(-0.869436f, -0.0900598f, -0.228215f)); // glm::vec3(0.0f, 0.0f, -1.0f)
-		camera.SetProjection(35.f); // 45.f
+		camera.SetProjection(30.f); // 45.f
 		camera.SetView();
 		camera.CalculateRayDirections();
 	}
@@ -201,7 +201,7 @@ void App::setUpScene() {
 		camera.SetViewPortHeight(height);
 		camera.SetPosition(glm::vec3(14.0218f, 2.0866f, 3.9276f)); //glm::vec3(0.f, 0.f, 8.f)
 		camera.SetForwardDirection(glm::vec3(-0.869436f, -0.0900598f, -0.228215f)); // glm::vec3(0.0f, 0.0f, -1.0f)
-		camera.SetProjection(35.f); // 45.f
+		camera.SetProjection(30.f); // 45.f
 		camera.SetView();
 		camera.CalculateRayDirections();
 	}
