@@ -49,6 +49,8 @@ public:
 			ray.Direction = hitrecord.SurfaceNormal;
 		}
 
+		ray.Time = ray.GetTime();
+
 		attenuation = Albedo;
 		return true;
 	}
@@ -67,6 +69,7 @@ public:
 		// Metal shiny and fuzzy reflection
 		ray.Direction = glm::reflect(ray.Direction, hitrecord.SurfaceNormal);
 		ray.Direction = glm::normalize(ray.Direction) + Fuzzyness * Utils::RandomUnitVector();
+		ray.Time = ray.GetTime();
 
 		attenuation = Albedo;
 		return true;
@@ -102,6 +105,8 @@ public:
 			ray.Direction = glm::refract(unitDirection, hitrecord.SurfaceNormal, ri);
 		}
 
+		ray.Time = ray.GetTime();
+
 		attenuation = glm::vec3(1.f);
 		return true;
 	}
@@ -119,11 +124,32 @@ private:
 
 class Sphere {
 public:
-	Sphere(glm::vec3 origin, float radius, std::shared_ptr<Material> matid) : SphereOrigin(origin), Radius(radius), MaterialId(matid) { }
+	Sphere(glm::vec3 origin, float radius, std::shared_ptr<Material> matid) : SphereOrigin(origin),
+																			  Radius(radius),
+																			  MaterialId(matid),
+																			  IsMoving(false)
+	{ }
 
-	glm::vec3 SphereOrigin{ 0.0f };
+	Sphere(glm::vec3 origin1, glm::vec3 origin2, float radius, std::shared_ptr<Material> matid) : SphereOrigin(origin1),
+																								  Radius(radius),
+																								  MaterialId(matid),
+																								  IsMoving(true)
+	{
+		SphereMotion = origin2 - origin1;
+	}
+
+	const glm::vec3 GetSphereOrigin(float time) const {
+		// Linearly interpolate from center1 to center2 according to time,
+		// Where time = 0 yields Origin1, and time = 1 yields Origin2
+		return SphereOrigin + time * SphereMotion;
+	}
+
+public:
+	glm::vec3 SphereOrigin{ 0.f };
+	glm::vec3 SphereMotion{ 0.f };
 	float Radius = 0.5f;
 	std::shared_ptr<Material> MaterialId;
+	bool IsMoving;
 };
 
 struct Scene {

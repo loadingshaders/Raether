@@ -60,6 +60,7 @@ glm::vec3 Renderer::PerPixel(glm::vec2 uv) {
 
 	Ray ray;
 	ray.Direction = renderCam->GetRayDirection()[(uint64_t)(uv.x + uv.y * renderCam->GetViewPortWidth())];
+	ray.Time = renderCam->GetRayTime();
 
 	if (renderCam->GetDefocusStrength() <= 0.f) {
 		ray.Origin = renderCam->GetPosition();
@@ -121,7 +122,8 @@ bool Renderer::Hittable(const Ray& ray, Hitrec& hitrecord) {
 		// A , B , C = sphere origin
 		// r = sphere radius
 
-		glm::vec3 newrayOrigin = ray.Origin - sphere.SphereOrigin;
+		glm::vec3 sphereOrigin = (sphere.IsMoving) ? sphere.GetSphereOrigin(ray.GetTime()) : sphere.SphereOrigin;
+		glm::vec3 newrayOrigin = ray.Origin - sphereOrigin;
 
 		float a = glm::dot(ray.Direction, ray.Direction); // (bx^2 + by^2 + bz^2)
 		float b = 2.f * (glm::dot(newrayOrigin, ray.Direction)); // 2 ((ax * bx + ay * by + az * bz)

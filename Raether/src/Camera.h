@@ -31,6 +31,7 @@ public:
 	const uint32_t GetViewPortHeight() const { return viewportHeight; }
 	const glm::vec3& GetPosition() const { return cameraOrigin; }
 	const std::vector<glm::vec3>& GetRayDirection() const { return rayDirections; }
+	const float GetRayTime() const { return Utils::RandomFloat(); /* Ranges from 0.0f - 0.99f */ }
 	const float GetCamFovFraction() const { return (V_FOV / maxFov); /* Ranges From 0 - 1 */ }
 	const float GetDefocusStrength() const { return defocusStrength; }
 	const float GetFocusDistance() const { return focusDistance; };
