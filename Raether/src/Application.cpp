@@ -21,7 +21,7 @@ void App::setUpScene() {
 
 	#define SCENE4
 	
-	#ifdef SCENE1
+	#if defined(SCENE1)
 	{
 		///Scene-1
 
