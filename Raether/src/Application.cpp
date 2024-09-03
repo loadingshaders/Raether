@@ -21,7 +21,7 @@ void App::setUpScene() {
 
 	#define PrintPerFrameTime false
 	#define PrintFinalRenderTime true
-	#define SCENE4
+	#define SCENE3
 	
 	#if defined(SCENE1)
 	{
@@ -105,8 +105,8 @@ void App::setUpScene() {
 
 		static glm::vec3 lastOrigin;
 
-		for (int a = -23; a < 23; a++) {
-			for (int b = -23; b < 23; b++) {
+		for (int a = -43; a < 43; a++) {
+			for (int b = -43; b < 43; b++) {
 				
 				float chooseMat = Utils::RandomFloat();
 				glm::vec3 center = glm::vec3(a + Utils::RandomFloat(), 0.2f, b + Utils::RandomFloat());
@@ -143,7 +143,7 @@ void App::setUpScene() {
 		scene.BuildBVH();
 
 		// Camera setup
-		camera.SetFocus(50.f, 12.f);
+		camera.SetFocus(10.f, 12.f);
 		camera.SetViewPortWidth(width);
 		camera.SetViewPortHeight(height);
 		camera.SetPosition(glm::vec3(14.0218f, 2.0866f, 3.9276f)); //glm::vec3(0.f, 0.f, 8.f)
@@ -267,9 +267,9 @@ void App::updateScene() {
 
 	if (PrintFinalRenderTime) {
 		printf("_________________________________________________________________\n\n"
-			"\033[0;32m" "        Total Frames Renderer         " "\033[0m" "| " "\033[0;32m" "%-10d" "  ms\n"
-			"\033[0;33m" "        Avg Frame Render Time         " "\033[0m" "| " "\033[0;33m" "%-10.6f" " ms\n"
-			"\033[0;33m" "        Avg Frame Per Second          " "\033[0m" "| " "\033[0;33m" "%-10.6f" " fps\n"
+			"\033[0;32m" "        Total Frames Rendered         " "\033[0m" "| " "\033[0;32m" "%-10d " " \n"
+			"\033[0;33m" "        Avg Frame Render Time         " "\033[0m" "| " "\033[0;33m" "%-10.5f " " ms\n"
+			"\033[0;33m" "        Avg Frame Per Second          " "\033[0m" "| " "\033[0;33m" "%-10.5f " " fps\n"
 			"\033[0m"
 			"_________________________________________________________________\n\n",
 			frameCount, totalTime / frameCount, (1.0 / (totalTime / frameCount)) * 1000.f);
