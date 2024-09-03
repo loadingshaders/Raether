@@ -113,11 +113,12 @@ namespace Utils {
 		
 		return distr(generator);
 	}
-	inline double RandomFloatInRange(float min, float max) {
+	inline float RandomFloatInRange(float min, float max) {
 		return min + (max - min) * RandomFloat();
 	}
 	inline int RandomIntInRange(int min, int max) {
-		return (int)RandomFloatInRange((int)min, (int)max + 1);
+		// Use static_cast to ensure type safety
+		return static_cast<int>(RandomFloatInRange(static_cast<float>(min), static_cast<float>(max + 1)));
 	}
 	inline glm::vec3 RandomOffset(float from, float to) {
 
