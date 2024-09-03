@@ -110,6 +110,7 @@ public:
 
 	const uint32_t GetSampleCount() const { return SampleCount; }
 	const uint32_t GetSampleBounces() const { return Bounces; }
+	const std::vector<std::shared_ptr<Hittable>>& GetObjectList() const { return ObjectList; }
 
 	void Add(std::shared_ptr<Hittable> objects) {
 

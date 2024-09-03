@@ -19,9 +19,9 @@ void App::setUpScene() {
 	// Window Setup
 	setWindow();
 
-	#define PrintPerFrameTime true
+	#define PrintPerFrameTime false
 	#define PrintFinalRenderTime true
-	#define SCENE1
+	#define SCENE4
 	
 	#if defined(SCENE1)
 	{
@@ -111,10 +111,10 @@ void App::setUpScene() {
 				float chooseMat = Utils::RandomFloat();
 				glm::vec3 center = glm::vec3(a + Utils::RandomFloat(), 0.2f, b + Utils::RandomFloat());
 
-				if (glm::distance(scene.SphereList[1].SphereOrigin, center) > 1.23f &&
-					glm::distance(scene.SphereList[2].SphereOrigin, center) > 1.23f &&
-					glm::distance(scene.SphereList[3].SphereOrigin, center) > 1.23f &&
-					glm::distance(           lastOrigin           , center) > 0.45f) {
+				if (glm::distance(scene.GetObjectList()[1]->ObjectOrigin, center) > 1.23f &&
+					glm::distance(scene.GetObjectList()[2]->ObjectOrigin, center) > 1.23f &&
+					glm::distance(scene.GetObjectList()[3]->ObjectOrigin, center) > 1.23f &&
+					glm::distance(              lastOrigin              , center) > 0.45f) {
 
 					std::shared_ptr<Material> sphereMat;
 
@@ -178,10 +178,10 @@ void App::setUpScene() {
 				glm::vec3 center1 = glm::vec3(a + Utils::RandomFloat(), 0.2f, b + Utils::RandomFloat());
 				glm::vec3 center2 = center1 + glm::vec3(0.f, Utils::RandomFloatInRange(0.f, 0.5f), 0.f);
 
-				if (glm::distance(scene.SphereList[1].SphereOrigin, center1) > 1.23f &&
-					glm::distance(scene.SphereList[2].SphereOrigin, center1) > 1.23f &&
-					glm::distance(scene.SphereList[3].SphereOrigin, center1) > 1.23f &&
-					glm::distance(lastOrigin, center1) > 0.45f) {
+				if (glm::distance(scene.GetObjectList()[1]->ObjectOrigin, center1) > 1.23f &&
+					glm::distance(scene.GetObjectList()[2]->ObjectOrigin, center1) > 1.23f &&
+					glm::distance(scene.GetObjectList()[3]->ObjectOrigin, center1) > 1.23f &&
+					glm::distance(              lastOrigin              , center1) > 0.45f) {
 
 					std::shared_ptr<Material> sphereMat;
 
@@ -267,7 +267,7 @@ void App::updateScene() {
 
 	if (PrintFinalRenderTime) {
 		printf("_________________________________________________________________\n\n"
-			"\033[0;32m" "        Total Frames Renderer         " "\033[0m" "| " "\033[0;32m" "%-10d" " ms\n"
+			"\033[0;32m" "        Total Frames Renderer         " "\033[0m" "| " "\033[0;32m" "%-10d" "  ms\n"
 			"\033[0;33m" "        Avg Frame Render Time         " "\033[0m" "| " "\033[0;33m" "%-10.6f" " ms\n"
 			"\033[0;33m" "        Avg Frame Per Second          " "\033[0m" "| " "\033[0;33m" "%-10.6f" " fps\n"
 			"\033[0m"
