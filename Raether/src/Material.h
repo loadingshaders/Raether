@@ -1,7 +1,10 @@
 #pragma once
 
+#include <glm\glm.hpp>
+
 #include "Utils.h"
 #include "Ray.h"
+#include "Hittable.h"
 
 class Material {
 public:

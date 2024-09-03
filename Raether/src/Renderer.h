@@ -21,7 +21,6 @@ public:
 
 private:
 	glm::vec3 PerPixel(glm::vec2 uv);
-	bool Hittable(const Ray& ray, Hitrec& hitrecord);
 
 public:
 	Raether* raeObj;

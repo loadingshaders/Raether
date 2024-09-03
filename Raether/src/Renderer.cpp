@@ -29,7 +29,7 @@ void Renderer::Render(const Scene& scene, Camera& camera) {
 		memset(&AccumImageData[0], 0, width * height * sizeof(glm::vec3));
 	}
 
-	else if (FrameCount < renderScene->SampleCount) {
+	else if (FrameCount < renderScene->GetSampleCount()) {
 
 		for (uint32_t y = 0; y < height; y++) {
 			for (uint32_t x = 0; x < width; x++) {
@@ -51,7 +51,7 @@ void Renderer::Render(const Scene& scene, Camera& camera) {
 		/// Draw the color using SDL
 		raeObj->raeDrawImage(ImageData);
 	}
-	if (FrameCount <= renderScene->SampleCount) {
+	if (FrameCount <= renderScene->GetSampleCount()) {
 		FrameCount++;
 	}
 }
@@ -77,13 +77,11 @@ glm::vec3 Renderer::PerPixel(glm::vec2 uv) {
 
 	glm::vec3 hitColor = glm::vec3(1.f);
 
-	for (uint32_t bounces = 0; bounces < renderScene->Bounces; bounces++) {
+	for (uint32_t bounces = 0; bounces < renderScene->GetSampleBounces(); bounces++) {
 
-		if (Hittable(ray, hitrecord) == true) {
+		if (renderScene->Hit(ray, hitrecord)) {
 
-			const Sphere& sphere = renderScene->SphereList[hitrecord.HitObjId];
-			const std::shared_ptr<Material> mat = sphere.MaterialId;
-
+			const std::shared_ptr<Material>& mat = hitrecord.MatId;
 			glm::vec3 attenuation;
 
 			if (mat->Scatter(ray, hitrecord, attenuation)) {
@@ -99,66 +97,6 @@ glm::vec3 Renderer::PerPixel(glm::vec2 uv) {
 	}
 
 	return hitColor;
-}
-
-bool Renderer::Hittable(const Ray& ray, Hitrec& hitrecord) {
-
-	float closestHit = 101.0f; // hit out of range
-	int closestSphereIDX = -1;
-
-	glm::vec3 hitpoint = glm::vec3(0.0f);
-	glm::vec3 origin = glm::vec3(0.0f);
-
-	/// Check the hit
-	for (int loopCount = 0; loopCount < renderScene->SphereList.size(); loopCount++) {
-
-		const Sphere& sphere = renderScene->SphereList[loopCount];
-
-		/// Sphere Equation
-		/// (bx^2 + by^2 + bz^2)t^2 + 2 ( (ax*bx + ay*by + az*bz) + (ax^2 + ay^2 + az^2) - r^2 = 0
-		// a = camera/ray origin (ax, ay, az)
-		// b = ray direction (bx, by, bz)
-		// t = hit distance
-		// A , B , C = sphere origin
-		// r = sphere radius
-
-		glm::vec3 sphereOrigin = (sphere.IsMoving) ? sphere.GetSphereOrigin(ray.GetTime()) : sphere.SphereOrigin;
-		glm::vec3 newrayOrigin = ray.Origin - sphereOrigin;
-
-		float a = glm::dot(ray.Direction, ray.Direction); // (bx^2 + by^2 + bz^2)
-		float b = 2.f * (glm::dot(newrayOrigin, ray.Direction)); // 2 ((ax * bx + ay * by + az * bz)
-		float c = glm::dot(newrayOrigin, newrayOrigin) - sphere.Radius * sphere.Radius; // (ax^2 + ay^2 + az^2) - r^2
-
-		float discriminant = (b * b) - (4.f * a * c);
-
-		/// Calculate if the ray hits the sphere or not
-		if (discriminant >= 0.0f) {
-
-			float nearHit = (-b - std::sqrt(discriminant)) / (2.f * a);
-
-			if (nearHit < closestHit && Utils::Inrange(nearHit, nearDist, farDist)) {
-				closestHit = nearHit;
-				closestSphereIDX = loopCount;
-			}
-		}
-	}
-
-	/// Calculate & store hit details
-	if (closestSphereIDX != -1) {
-
-		glm::vec3 origin = ray.Origin - renderScene->SphereList[closestSphereIDX].SphereOrigin;
-		hitpoint = origin + ray.Direction * closestHit; // px = camera.x + direction.x * nt; py = camera.y + direction.y * nt; pz = camera.z + direction.z * nt;
-		hitrecord.HitPoint = hitpoint;
-		hitrecord.SurfaceNormal = glm::normalize(hitpoint);
-		hitrecord.SetFrontFace(ray.Direction, hitrecord.SurfaceNormal);
-		hitrecord.HitPoint += renderScene->SphereList[closestSphereIDX].SphereOrigin;
-		hitrecord.HitObjId = closestSphereIDX;
-
-		return true;
-	}
-	else {
-		return false;
-	}
 }
 
 
