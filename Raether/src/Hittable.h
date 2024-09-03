@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Ray.h"
+#include "Aabb.h"
 
 class Material;
 
@@ -32,6 +33,7 @@ class Hittable {
 public:
 	virtual ~Hittable() = default;
 	virtual bool Hit(const Ray& ray, Hitrec& hitrecord) const = 0;
+	virtual Aabb BoundingBox() const = 0;
 
 public:
 	glm::vec3 ObjectOrigin;

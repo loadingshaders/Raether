@@ -17,14 +17,36 @@ public:
 																			  Radius(radius),
 																			  MaterialId(matid),
 																			  IsMoving(false)
-	{ }
+	{
+		this->ObjectOrigin = SphereOrigin;
+		this->ObjectMatId = MaterialId;
+
+		/// Initialize the Bounding Volume for Stationary Sphere
+		glm::vec3 rvec = glm::vec3(Radius, Radius, Radius);
+		bbox = Aabb(origin - rvec, origin + rvec);
+	}
 
 	Sphere(glm::vec3 origin1, glm::vec3 origin2, float radius, std::shared_ptr<Material> matid) : SphereOrigin(origin1),
 																								  Radius(radius),
 																								  MaterialId(matid),
 																								  IsMoving(true)
 	{
+		this->ObjectOrigin = SphereOrigin;
+		this->ObjectMatId = MaterialId;
+
 		SphereMotion = origin2 - origin1;
+
+		/// Initialize the Bounding Volume for Non-Stationary Sphere
+		glm::vec3 rvec = glm::vec3(Radius, Radius, Radius);
+		Aabb bbox1 = Aabb(origin1 - rvec, origin1 + rvec);
+		Aabb bbox2 = Aabb(origin2 - rvec, origin2 + rvec);
+		bbox = Aabb(bbox1, bbox2);
+	}
+
+	const glm::vec3 GetSphereOrigin(float time) const {
+		// Linearly interpolate from center1 to center2 according to time,
+		// Where time = 0 yields Origin1, and time = 1 yields Origin2
+		return SphereOrigin + time * SphereMotion;
 	}
 
 	bool Hit(const Ray& ray, Hitrec& hitrecord) const override {
@@ -69,18 +91,15 @@ public:
 		return false;
 	}
 
-	const glm::vec3 GetSphereOrigin(float time) const {
-		// Linearly interpolate from center1 to center2 according to time,
-		// Where time = 0 yields Origin1, and time = 1 yields Origin2
-		return SphereOrigin + time * SphereMotion;
-	}
+	Aabb BoundingBox() const override { return bbox; }
 
-public:
+private:
 	glm::vec3 SphereOrigin{ 0.f };
 	glm::vec3 SphereMotion{ 0.f };
 	float Radius = 0.5f;
 	std::shared_ptr<Material> MaterialId;
 	bool IsMoving;
+	Aabb bbox;
 };
 
 class Scene : public Hittable {
@@ -116,9 +135,13 @@ public:
 		return hitrecord.HitObjId != -1;
 	}
 
+	Aabb BoundingBox() const override { return bbox; }
+
 private:
 	uint32_t SampleCount;
 	uint32_t Bounces;
 
 	std::vector<std::shared_ptr<Hittable>> ObjectList;
+
+	Aabb bbox;
 };
