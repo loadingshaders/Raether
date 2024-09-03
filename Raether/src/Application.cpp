@@ -40,6 +40,9 @@ void App::setUpScene() {
 		scene.Add(std::make_shared<Sphere>(glm::vec3(-2.01f, 0.0f, 0.0f), 1.f, dielectricGlass));
 		scene.Add(std::make_shared<Sphere>(glm::vec3(-2.01f, 0.0f, 0.0f), 0.65f, dielectricBubble));
 
+		// Build the BVH
+		scene.BuildBVH();
+
 		// Camera setup
 		camera.SetFocus(100.f, 8.f);
 		camera.SetViewPortWidth(width);
@@ -67,6 +70,9 @@ void App::setUpScene() {
 		scene.Add(std::make_shared<Sphere>(glm::vec3(2.01f, 0.0f, 0.0f), 1.f, metalGold));
 		scene.Add(std::make_shared<Sphere>(glm::vec3(-2.01f, 0.0f, 0.0f), 1.f, dielectricGlass));
 		scene.Add(std::make_shared<Sphere>(glm::vec3(-2.01f, 0.0f, 0.0f), 0.65f, dielectricBubble));
+
+		// Build the BVH
+		scene.BuildBVH();
 
 		// Camera setup
 		camera.SetFocus(0.f, 62.f);
@@ -131,6 +137,9 @@ void App::setUpScene() {
 			}
 		}
 
+		// Build the BVH
+		scene.BuildBVH();
+
 		// Camera setup
 		camera.SetFocus(50.f, 12.f);
 		camera.SetViewPortWidth(width);
@@ -194,6 +203,9 @@ void App::setUpScene() {
 				lastOrigin = center1;
 			}
 		}
+
+		// Build the BVH
+		scene.BuildBVH();
 
 		// Camera setup
 		camera.SetFocus(50.f, 12.f);

@@ -12,8 +12,6 @@ public:
 	glm::vec3 HitColor;
 
 	float ClosestHit;
-	int CurrentObjId;
-	int HitObjId;
 	bool FrontFace;
 
 	std::shared_ptr<Material> MatId;

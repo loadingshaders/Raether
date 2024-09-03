@@ -9,7 +9,7 @@
 #include "Ray.h"
 #include "Hittable.h"
 #include "Material.h"
-
+#include "Bvh.h"
 
 class Sphere : public Hittable {
 public:
@@ -82,7 +82,6 @@ public:
 				hitrecord.SetFrontFace(ray.Direction, hitrecord.SurfaceNormal);
 				hitrecord.MatId = MaterialId;
 				hitrecord.ClosestHit = nearHit;
-				hitrecord.HitObjId = hitrecord.CurrentObjId;
 
 				return true;
 			}
@@ -113,7 +112,14 @@ public:
 	const uint32_t GetSampleBounces() const { return Bounces; }
 
 	void Add(std::shared_ptr<Hittable> objects) {
+
 		ObjectList.emplace_back(objects);
+
+		bbox = Aabb(bbox, objects->BoundingBox());
+	}
+
+	void BuildBVH() {
+		RootNode = RootNode->SplitBvh(ObjectList, 0, ObjectList.size());
 	}
 
 	bool Hit(const Ray& ray, Hitrec& hitrecord) const override {
@@ -121,18 +127,8 @@ public:
 
 		/// Initialize hitrcord
 		hitrecord.ClosestHit = std::numeric_limits<float>::max();
-		hitrecord.HitObjId = -1;
 
-		for (int loopcount = 0; loopcount < ObjectList.size(); loopcount++) {
-
-			/// Pass the current object id
-			hitrecord.CurrentObjId = loopcount;
-
-			/// Check the hit
-			ObjectList[loopcount]->Hit(ray, hitrecord);
-		}
-
-		return hitrecord.HitObjId != -1;
+		return RootNode->Hit(ray, hitrecord);
 	}
 
 	Aabb BoundingBox() const override { return bbox; }
@@ -140,8 +136,7 @@ public:
 private:
 	uint32_t SampleCount;
 	uint32_t Bounces;
-
 	std::vector<std::shared_ptr<Hittable>> ObjectList;
-
 	Aabb bbox;
+	std::shared_ptr<BvhNode> RootNode;
 };

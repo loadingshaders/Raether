@@ -116,6 +116,9 @@ namespace Utils {
 	inline double RandomFloatInRange(float min, float max) {
 		return min + (max - min) * RandomFloat();
 	}
+	inline int RandomIntInRange(int min, int max) {
+		return (int)RandomFloatInRange((int)min, (int)max + 1);
+	}
 	inline glm::vec3 RandomOffset(float from, float to) {
 
 		std::random_device rand_dev;
