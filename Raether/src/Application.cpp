@@ -19,6 +19,8 @@ void App::setUpScene() {
 	// Window Setup
 	setWindow();
 
+	#define PrintPerFrameTime true
+	#define PrintFinalRenderTime true
 	#define SCENE1
 	
 	#if defined(SCENE1)
@@ -239,11 +241,38 @@ void App::updateScene() {
 			renderer.ResetFrameIdx();
 		}
 
+		/// Catch the start time
+		start = logtime;
+
 		/// Render the scene
 		renderer.Render(scene, camera);
 
+		/// Catch the end time
+		end = logtime;
+
+		totalTime += elapsed(end - start).count();
+		frameCount++;
+
+		if (PrintPerFrameTime) {
+			printf("_____________________________________________________\n\n"
+				"       Last Frame Rendere Time    |  %" PRId64 "              \n"
+				"       Avg Frame Rendere Time     |  %f              \n"
+				"       Avg Frame Per Second       |  %f              \n"
+				"" "_____________________________________________________\n\n", elapsed(end - start).count(), totalTime / frameCount, (1.0 / elapsed(end - start).count()) * 1000.f);
+		}
+
 		/// End the render
 		rae.raeRenderEnd();
+	}
+
+	if (PrintFinalRenderTime) {
+		printf("_________________________________________________________________\n\n"
+			"\033[0;32m" "        Total Frames Renderer         " "\033[0m" "| " "\033[0;32m" "%-10d" " ms\n"
+			"\033[0;33m" "        Avg Frame Render Time         " "\033[0m" "| " "\033[0;33m" "%-10.6f" " ms\n"
+			"\033[0;33m" "        Avg Frame Per Second          " "\033[0m" "| " "\033[0;33m" "%-10.6f" " fps\n"
+			"\033[0m"
+			"_________________________________________________________________\n\n",
+			frameCount, totalTime / frameCount, (1.0 / (totalTime / frameCount)) * 1000.f);
 	}
 
 	rae.raeQuit();
