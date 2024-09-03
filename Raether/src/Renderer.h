@@ -3,6 +3,7 @@
 #include <iostream>
 #include <random>
 #include <chrono>
+#include <execution>
 
 #include "Raether.h"
 #include "Camera.h"
@@ -21,6 +22,7 @@ public:
 
 private:
 	glm::vec3 PerPixel(glm::vec2 uv);
+	void SetBuffers();
 
 public:
 	Raether* raeObj;
@@ -34,4 +36,6 @@ private:
 
 	std::vector<glm::ui8_tvec4> ImageData;
 	std::vector<glm::vec3> AccumImageData;
+
+	std::vector<uint32_t> ImageHorizontalIter, ImageVerticalIter;
 };
