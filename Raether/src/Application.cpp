@@ -23,7 +23,7 @@ void App::setUpScene() {
 	#define PrintFinalRenderTime true
 
 	#define SCENE3
-	#define NumofSpheres 21
+	#define NumofProcSpheres 21
 
 	#if defined(SCENE1)
 	{
@@ -107,8 +107,8 @@ void App::setUpScene() {
 
 		static glm::vec3 lastOrigin;
 
-		for (int a = -NumofSpheres; a < NumofSpheres; a++) {
-			for (int b = -NumofSpheres; b < NumofSpheres; b++) {
+		for (int a = -NumofProcSpheres; a < NumofProcSpheres; a++) {
+			for (int b = -NumofProcSpheres; b < NumofProcSpheres; b++) {
 				
 				float chooseMat = Utils::RandomFloat();
 				glm::vec3 center = glm::vec3(a + Utils::RandomFloat(), 0.2f, b + Utils::RandomFloat());
@@ -173,8 +173,8 @@ void App::setUpScene() {
 
 		static glm::vec3 lastOrigin;
 
-		for (int a = -NumofSpheres; a < NumofSpheres; a++) {
-			for (int b = -NumofSpheres; b < NumofSpheres; b++) {
+		for (int a = -NumofProcSpheres; a < NumofProcSpheres; a++) {
+			for (int b = -NumofProcSpheres; b < NumofProcSpheres; b++) {
 
 				float chooseMat = Utils::RandomFloat();
 				glm::vec3 center1 = glm::vec3(a + Utils::RandomFloat(), 0.2f, b + Utils::RandomFloat());
