@@ -14,11 +14,6 @@ public:
 	std::shared_ptr<BvhNode> SplitBvh(std::vector<std::shared_ptr<Hittable>>& objects, size_t start, size_t end) {
 		auto node = std::make_shared<BvhNode>();
 
-		// Split the BVH in Random Axis
-		int randomAxis = Utils::RandomIntInRange(0, 2);
-		auto comparator = (randomAxis == 0) ? BoxXCompare :
-			(randomAxis == 1) ? BoxYCompare : BoxZCompare;
-
 		size_t listSpan = end - start;
 
 		if (listSpan == 1) {
@@ -29,6 +24,11 @@ public:
 			node->RightNode = objects[start + 1];
 		}
 		else {
+			// Split the BVH in Random Axis
+			int randomAxis = Utils::RandomIntInRange(0, 2);
+			auto comparator = (randomAxis == 0) ? BoxXCompare :
+				(randomAxis == 1) ? BoxYCompare : BoxZCompare;
+
 			std::sort(objects.begin() + start, objects.begin() + end, comparator);
 			size_t mid = start + listSpan / 2;
 			node->LeftNode = SplitBvh(objects, start, mid);
