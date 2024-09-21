@@ -29,7 +29,7 @@ void Renderer::SetBuffers() {
 		ImageHorizontalIter[i] = i;
 	}
 	for (uint32_t j = 0; j < height; j++) {
-		ImageHorizontalIter[j] = j;
+		ImageVerticalIter[j] = j;
 	}
 
 	ImageData.resize((uint64_t)(width * height));
@@ -65,7 +65,6 @@ void Renderer::Render(const Scene& scene, Camera& camera) {
 					ImageData[(uint64_t)(x + y * width)] = Utils::converttoRGBA(glm::vec4(accumColor, 1.f));
 				}
 			});
-
 		#else
 		for (uint32_t y = 0; y < height; y++) {
 			for (uint32_t x = 0; x < width; x++) {
