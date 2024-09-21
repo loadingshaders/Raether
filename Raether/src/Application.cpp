@@ -21,8 +21,10 @@ void App::setUpScene() {
 
 	#define PrintPerFrameTime false
 	#define PrintFinalRenderTime true
+
 	#define SCENE3
-	
+	#define NumofSpheres 21
+
 	#if defined(SCENE1)
 	{
 		///Scene-1
@@ -105,8 +107,8 @@ void App::setUpScene() {
 
 		static glm::vec3 lastOrigin;
 
-		for (int a = -43; a < 43; a++) {
-			for (int b = -43; b < 43; b++) {
+		for (int a = -NumofSpheres; a < NumofSpheres; a++) {
+			for (int b = -NumofSpheres; b < NumofSpheres; b++) {
 				
 				float chooseMat = Utils::RandomFloat();
 				glm::vec3 center = glm::vec3(a + Utils::RandomFloat(), 0.2f, b + Utils::RandomFloat());
@@ -171,8 +173,8 @@ void App::setUpScene() {
 
 		static glm::vec3 lastOrigin;
 
-		for (int a = -18; a < 18; a++) {
-			for (int b = -18; b < 18; b++) {
+		for (int a = -NumofSpheres; a < NumofSpheres; a++) {
+			for (int b = -NumofSpheres; b < NumofSpheres; b++) {
 
 				float chooseMat = Utils::RandomFloat();
 				glm::vec3 center1 = glm::vec3(a + Utils::RandomFloat(), 0.2f, b + Utils::RandomFloat());
@@ -221,7 +223,7 @@ void App::setUpScene() {
 	}
 	#endif
 
-	// Scene render specs
+	// Scene Render Specs
 	scene.SetSampleCount(10000);
 	scene.SetSampleBounces(100);
 }
@@ -267,12 +269,13 @@ void App::updateScene() {
 
 	if (PrintFinalRenderTime) {
 		printf("_________________________________________________________________\n\n"
+			"\033[0;32m" "        Total Objects Drawn           " "\033[0m" "| " "\033[0;32m" "%-10" PRIu64 " \n"
 			"\033[0;32m" "        Total Frames Rendered         " "\033[0m" "| " "\033[0;32m" "%-10d " " \n"
-			"\033[0;33m" "        Avg Frame Render Time         " "\033[0m" "| " "\033[0;33m" "%-10.5f " " ms\n"
+			"\033[0;33m" "        Avg Frame Render Time         " "\033[0m" "| " "\033[0;33m" "%-10.5f " "  ms\n"
 			"\033[0;33m" "        Avg Frame Per Second          " "\033[0m" "| " "\033[0;33m" "%-10.5f " " fps\n"
 			"\033[0m"
 			"_________________________________________________________________\n\n",
-			frameCount, totalTime / frameCount, (1.0 / (totalTime / frameCount)) * 1000.f);
+			scene.GetObjectList().size(), frameCount, totalTime / frameCount, (1.0 / (totalTime / frameCount)) * 1000.f);
 	}
 
 	rae.raeQuit();
