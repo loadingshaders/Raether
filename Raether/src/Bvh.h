@@ -26,11 +26,14 @@ public:
 		else {
 
 			#if RBVH==1
+
 			// Split the BVH in Random Axis
 			int randomAxis = Utils::RandomIntInRange(0, 2);
 			auto comparator = (randomAxis == 0) ? BoxXCompare :
 				(randomAxis == 1) ? BoxYCompare : BoxZCompare;
+			
 			#else
+			
 			Aabb box = objects[start]->BoundingBox();
 
 			// Build the BVH
@@ -42,6 +45,7 @@ public:
 			int longestAxis = box.LongestAxis();
 			auto comparator = (longestAxis == 0) ? BoxXCompare :
 				(longestAxis == 1) ? BoxYCompare : BoxZCompare;
+			
 			#endif
 
 			std::sort(objects.begin() + start, objects.begin() + end, comparator);

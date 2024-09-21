@@ -46,6 +46,7 @@ void Renderer::Render(const Scene& scene, Camera& camera) {
 	else if (FrameCount < renderScene->GetSampleCount()) {
 
 		#if MT == 1
+		
 		std::for_each(std::execution::par, ImageHorizontalIter.begin(), ImageHorizontalIter.end(),
 			[this](uint32_t y){
 				for (uint32_t x = 0; x < width; x++) {
@@ -64,7 +65,9 @@ void Renderer::Render(const Scene& scene, Camera& camera) {
 					ImageData[(uint64_t)(x + y * width)] = Utils::converttoRGBA(glm::vec4(accumColor, 1.f));
 				}
 			});
+		
 		#else
+		
 		for (uint32_t y = 0; y < height; y++) {
 			for (uint32_t x = 0; x < width; x++) {
 
@@ -82,6 +85,7 @@ void Renderer::Render(const Scene& scene, Camera& camera) {
 				ImageData[(uint64_t)(x + y * width)] = Utils::converttoRGBA(glm::vec4(accumColor, 1.f));
 			}
 		}
+		
 		#endif
 
 		/// Draw the color using SDL
