@@ -29,6 +29,14 @@ public:
 		else if (axis == 2) return z;
 		return x;
 	}
+	int LongestAxis() const {
+		if (x.Size() > y.Size()) {
+			return (x.Size() > z.Size()) ? 0 : 2;
+		}
+		else {
+			return (y.Size() > z.Size()) ? 1 : 2;
+		}
+	}
 
 	bool Hit(const Ray& ray, Interval& interval) const {
 		const glm::vec3 rayOrigin = ray.Origin;
