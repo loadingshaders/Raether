@@ -22,7 +22,7 @@ public:
 		}
 		return val;
 	}
-	const float Size(float val) const {
+	const float Size() const {
 		return Max - Min;
 	}
 	bool Contains(float val) const {
