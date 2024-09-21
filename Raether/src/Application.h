@@ -11,6 +11,7 @@
 #include "Scene.h"
 #include "Ray.h"
 #include "Timer.h"
+#include "Config.h"
 
 class App {
 public:

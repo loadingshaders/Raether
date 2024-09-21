@@ -44,8 +44,7 @@ void Renderer::Render(const Scene& scene, Camera& camera) {
 	}
 
 	else if (FrameCount < renderScene->GetSampleCount()) {
-		
-		#define MT 0
+
 		#if MT == 1
 		std::for_each(std::execution::par, ImageHorizontalIter.begin(), ImageHorizontalIter.end(),
 			[this](uint32_t y){

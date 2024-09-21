@@ -19,12 +19,6 @@ void App::setUpScene() {
 	// Window Setup
 	setWindow();
 
-	#define PrintPerFrameTime false
-	#define PrintFinalRenderTime true
-
-	#define SCENE3
-	#define NumofProcSpheres 21
-
 	#if defined(SCENE1)
 	{
 		///Scene-1

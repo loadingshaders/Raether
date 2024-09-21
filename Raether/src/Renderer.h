@@ -10,6 +10,7 @@
 #include "Ray.h"
 #include "Scene.h"
 #include "Utils.h"
+#include "Config.h"
 
 class Renderer {
 public:
