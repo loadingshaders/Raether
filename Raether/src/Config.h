@@ -17,6 +17,9 @@
 // Multithreading Related Macros
 #define MT 0 // Enables Multithreading
 
+// Bvh Build Related Macros
+#define RBVH 0 // Enable Random Axis BVH Split (The Default is Longest Axis Split)
+
 // Scene Related Macros
 #define SCENE3 // Enable a Particular Scene
 #define NumofProcSpheres 21 // Represents Total Number of Procedural Spheres

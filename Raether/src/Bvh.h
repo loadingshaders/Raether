@@ -24,10 +24,25 @@ public:
 			node->RightNode = objects[start + 1];
 		}
 		else {
+
+			#if RBVH==1
 			// Split the BVH in Random Axis
 			int randomAxis = Utils::RandomIntInRange(0, 2);
 			auto comparator = (randomAxis == 0) ? BoxXCompare :
 				(randomAxis == 1) ? BoxYCompare : BoxZCompare;
+			#else
+			Aabb box = objects[start]->BoundingBox();
+
+			// Build the BVH
+			for (size_t objectIdx = start + 1; objectIdx < end; objectIdx++) {
+				box = Aabb(box, objects[objectIdx]->BoundingBox());
+			}
+
+			// Split the BVH in Longest Axis
+			int longestAxis = box.LongestAxis();
+			auto comparator = (longestAxis == 0) ? BoxXCompare :
+				(longestAxis == 1) ? BoxYCompare : BoxZCompare;
+			#endif
 
 			std::sort(objects.begin() + start, objects.begin() + end, comparator);
 			size_t mid = start + listSpan / 2;
