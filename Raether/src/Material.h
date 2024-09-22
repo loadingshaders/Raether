@@ -5,6 +5,7 @@
 #include "Utils.h"
 #include "Ray.h"
 #include "Hittable.h"
+#include "Texture.h"
 
 class Material {
 public:
@@ -17,7 +18,8 @@ public:
 
 class Lambertian : public Material {
 public:
-	Lambertian(glm::vec3 albedo) : Albedo(albedo) { }
+	Lambertian(glm::vec3 albedo) : Tex(std::make_shared<SolidColor>(albedo)) { }
+	Lambertian(std::shared_ptr<Texture> texture) : Tex(texture) {}
 
 	bool Scatter(Ray& ray, Hitrec& hitrecord, glm::vec3& attenuation) const override {
 
@@ -31,12 +33,12 @@ public:
 
 		ray.Time = ray.GetTime();
 
-		attenuation = Albedo;
+		attenuation = Tex->value(hitrecord.U, hitrecord.V, hitrecord.HitPoint);
 		return true;
 	}
 
 private:
-	glm::vec3 Albedo;
+	std::shared_ptr<Texture> Tex;
 };
 
 class Metal : public Material {

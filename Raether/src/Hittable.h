@@ -14,6 +14,8 @@ public:
 	float ClosestHit;
 	bool FrontFace;
 
+	double U, V;
+
 	std::shared_ptr<Material> MatId;
 
 	void SetFrontFace(const glm::vec3& rayDirection, glm::vec3& normal) {
