@@ -350,6 +350,34 @@ void App::setUpScene() {
 		camera.SetView();
 		camera.CalculateRayDirections();
 	}
+	#elif defined(SCENE7)
+	{
+		///Scene-7
+		// Configure Materials
+		std::shared_ptr<Material> diffuseWhite = std::make_shared<Lambertian>(glm::vec3(0.5f, 0.5f, 0.5f));
+		std::shared_ptr<Material> diffuseRed = std::make_shared<Lambertian>(glm::vec3(0.4f, 0.2f, 0.1f));
+		std::shared_ptr<Material> dielectricGlass = std::make_shared<Dielectric>(1.5f);
+		std::shared_ptr<Material> dielectricBubble = std::make_shared<Dielectric>(1.0003f / 1.5f);
+		std::shared_ptr<Material> metalSteel = std::make_shared<Metal>(glm::vec3(0.7f, 0.6f, 0.5f), 0.0f);
+		std::shared_ptr<CheckerTexture> checkerTexture = std::make_shared<CheckerTexture>(0.32f, glm::vec3(0.2f, 0.3f, 0.1f), glm::vec3(0.9f));
+
+		// Configure Spheres
+		scene.Add(std::make_shared<Sphere>(glm::vec3(4.f, 10.f, 0.f), 10.f, std::make_shared<Lambertian>(checkerTexture)));
+		scene.Add(std::make_shared<Sphere>(glm::vec3(4.f, -10.f, 0.f), 10.f, std::make_shared<Lambertian>(checkerTexture)));
+
+		// Build the BVH
+		scene.BuildBVH();
+
+		// Camera setup
+		camera.SetFocus(0.f, 12.f);
+		camera.SetViewPortWidth(width);
+		camera.SetViewPortHeight(height);
+		camera.SetPosition(glm::vec3(18.8951f, 1.88632f, 3.44855f)); //glm::vec3(0.f, 0.f, 8.f)
+		camera.SetForwardDirection(glm::vec3(-0.873826f, -0.0900598f, -0.210782f)); // glm::vec3(0.0f, 0.0f, -1.0f)
+		camera.SetProjection(30.f);
+		camera.SetView();
+		camera.CalculateRayDirections();
+	}
 	#endif
 
 	// Scene Render Specs
