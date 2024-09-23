@@ -64,7 +64,8 @@ private:
 
 class Dielectric : public Material {
 public:
-	Dielectric(float ri) : RefractionIndex(ri) { }
+	Dielectric(float ri) : RefractionIndex(ri), Fuzzyness(0.f) { }
+	Dielectric(float ri, float fuzzyness) : RefractionIndex(ri), Fuzzyness(fuzzyness) { }
 
 	bool Scatter(Ray& ray, Hitrec& hitrecord, glm::vec3& attenuation) const override {
 
@@ -87,6 +88,7 @@ public:
 			ray.Direction = glm::refract(unitDirection, hitrecord.SurfaceNormal, ri);
 		}
 
+		ray.Direction = glm::normalize(ray.Direction) + Fuzzyness * Utils::RandomUnitVector();
 		ray.Time = ray.GetTime();
 
 		attenuation = glm::vec3(1.f);
@@ -95,6 +97,7 @@ public:
 
 private:
 	float RefractionIndex;
+	float Fuzzyness;
 
 	static float Reflectance(float cosine, float ri) {
 		// Using Schlick's approximation for reflectance.
