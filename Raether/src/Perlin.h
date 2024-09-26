@@ -9,12 +9,12 @@ public:
 	Perlin() {
 
 		for (int i = 0; i < TileWidth; i++) {
-			for (int j = 0; j < TileWidth; j++) {
-				for (int k = 0; k < TileWidth; k++) {
-					RandomDoubles[i][j][k] = Utils::RandomDouble();
-				}
-			}
+			RandomDoubles[i] = Utils::RandomDouble();
 		}
+
+		PerlinGenPermute(PermuteX);
+		PerlinGenPermute(PermuteY);
+		PerlinGenPermute(PermuteZ);
 	}
 
 	double Noise(const glm::vec3& point, double scale) const {
@@ -23,11 +23,31 @@ public:
 		int j = int(scale * point.y) & (TileWidth - 1);
 		int k = int(scale * point.z) & (TileWidth - 1);
 
-		return RandomDoubles[i][j][k];
+		return RandomDoubles[PermuteX[i] ^ PermuteY[j] ^ PermuteZ[k]];
 	}
 
 private:
-	static constexpr int TileWidth = 4;
-	double RandomDoubles[TileWidth][TileWidth][TileWidth];
+	void PerlinGenPermute(int* p) {
+		for (int i = 0; i < TileWidth; i++) {
+			p[i] = i;
+		}
+
+		Permute(p, TileWidth);
+	}
+	void Permute(int* p, int count) {
+		for (int i = count - 1; i >= 0; i--) {
+			int target = Utils::RandomIntInRange(0, i);
+			int temp = p[i];
+			p[i] = p[target];
+			p[target] = temp;
+		}
+	}
+
+private:
 	double Scale;
+	static constexpr int TileWidth = 256;
+	double RandomDoubles[TileWidth];
+	int PermuteX[TileWidth];
+	int PermuteY[TileWidth];
+	int PermuteZ[TileWidth];
 };
