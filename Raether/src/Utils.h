@@ -14,7 +14,7 @@ namespace glm {
 
 namespace Utils {
 
-	#define PI 3.1415f
+	#define PI 3.14159265359
 
 	#ifndef DEBUG
 	inline void PrintError(std::string Error) {
@@ -167,7 +167,7 @@ namespace Utils {
 		}
 	}
 	inline glm::vec2 RandomPointOnCircle() {
-		float randAngle = RandomFloat() * 2.f * PI;
+		float randAngle = RandomFloat() * 2.f * float(PI);
 		glm::vec2 pointOnCircle = glm::vec2(glm::cos(randAngle), glm::sin(randAngle));
 		return pointOnCircle * glm::sqrt(RandomFloat());
 	}
