@@ -95,6 +95,17 @@ namespace Utils {
 		return ((std::fabs(rayDirection.r) < s) && (std::fabs(rayDirection.g) < s) && (std::fabs(rayDirection.b) < s));
 	}
 
+	inline double RandomDouble() {
+		std::random_device rand_dev;
+		// Using Mersenne Twister algorithm for random num generation
+		static std::mt19937 generator(rand_dev());
+		static std::uniform_real_distribution<double> distr(0.f, 1.f);
+
+		return distr(generator);
+	}
+	inline double RandomDoubleInRange(double min, double max) {
+		return min + (max - min) * RandomDouble();
+	}
 	inline float RandomFloat() {
 		std::random_device rand_dev;
 		// Using Mersenne Twister algorithm for random num generation
