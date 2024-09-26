@@ -19,9 +19,9 @@ public:
 
 	double Noise(const glm::vec3& point, double scale) const {
 
-		int i = int(scale * point.x) & (TileWidth - 1);
-		int j = int(scale * point.y) & (TileWidth - 1);
-		int k = int(scale * point.z) & (TileWidth - 1);
+		int i = int(glm::floor(scale * point.x)) & (TileWidth - 1);
+		int j = int(glm::floor(scale * point.y)) & (TileWidth - 1);
+		int k = int(glm::floor(scale * point.z)) & (TileWidth - 1);
 
 		return RandomDoubles[PermuteX[i] ^ PermuteY[j] ^ PermuteZ[k]];
 	}
