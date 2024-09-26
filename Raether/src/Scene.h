@@ -80,6 +80,7 @@ public:
 				hitrecord.HitPoint = hitPoint;
 				hitrecord.SurfaceNormal = glm::normalize(hitPoint - sphereOrigin);
 				hitrecord.SetFrontFace(ray.Direction, hitrecord.SurfaceNormal);
+				GetSphereUV(hitrecord.SurfaceNormal, hitrecord.U, hitrecord.V);
 				hitrecord.MatId = MaterialId;
 				hitrecord.ClosestHit = nearHit;
 
@@ -99,6 +100,28 @@ private:
 	std::shared_ptr<Material> MaterialId;
 	bool IsMoving;
 	Aabb bbox;
+
+	static void GetSphereUV(const glm::vec3& point, double& u, double& v) {
+		// Calculate phi and theta
+		// phi -> denotes longitude or how far around the point is on equator
+		// theta -> denotes latitude or how far up or down
+
+		// The atan2(y, x) function gives you the angle between the positive x - axis and the point(x, y) on a 2D plane.
+		/// In this case, we’re looking at the x and z coordinates because we want to know the angle around the Y - axis.
+		/// By adding PI(180 degrees), we ensure that PHI will always be in the range[0, 2*PI](a full circle).
+		/// Which matches what we need for u(the texture's horizontal position).
+		double phi = std::atan2(-point.z, point.x) + PI;
+
+		// The y - coordinate of the point tells you how far "up" the point is on the sphere.
+		/// The arccos(acos) function gives the angle whose cosine is the given value. Since the y - coordinate tells the vertical position,
+		/// we use it to calculate how far up or down the point is.
+		/// We use - y because THETA measures from the bottom of the sphere(the South Pole), and the y - coordinate gets smaller as you move down
+		/// from the top.
+		double theta = std::acos(-point.y);
+
+		u = phi / (2.0 * PI);
+		v = theta / PI;
+	}
 };
 
 class Scene : public Hittable {
