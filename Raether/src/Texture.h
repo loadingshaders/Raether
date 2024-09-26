@@ -5,6 +5,7 @@
 #include <glm\glm.hpp>
 
 #include "Image.h"
+#include "Perlin.h"
 
 class Texture {
 public:
@@ -75,4 +76,17 @@ public:
 
 private:
 	Image Img;
+};
+
+class NoiseTexture : public Texture {
+public:
+	NoiseTexture(double scale) : Scale( 1.0 / scale){}
+
+	glm::vec3 value(double u, double v, glm::vec3& point) const override {
+		return glm::dvec3(1.0) * Noise.Noise(point, Scale);
+	}
+
+private:
+	Perlin Noise;
+	double Scale;
 };
