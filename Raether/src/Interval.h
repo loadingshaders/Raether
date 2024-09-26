@@ -13,6 +13,15 @@ public:
 		Max = (a.Max >= b.Max) ? a.Max : b.Max;
 	}
 
+	const double Clamp(double val) const {
+		if (val < Min) {
+			return Min;
+		}
+		else if (val > Max) {
+			return Max;
+		}
+		return val;
+	}
 	const float Clamp(float val) const {
 		if (val < Min) {
 			return Min;
