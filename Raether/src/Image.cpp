@@ -9,6 +9,7 @@
 #include "stb\stb_image.h"
 
 Image::Image() :
+	BytesPerPixel(3),
 	FloatImagePtr(nullptr),
 	RGBImagePtr(nullptr),
 	BytesPerScanline(0),
@@ -17,6 +18,7 @@ Image::Image() :
 {}
 
 Image::Image(const char* imageFilename) :
+	BytesPerPixel(3),
 	FloatImagePtr(nullptr),
 	RGBImagePtr(nullptr),
 	BytesPerScanline(0),

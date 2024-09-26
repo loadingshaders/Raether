@@ -22,7 +22,7 @@ private:
 	int Clamp(int value, int min, int max) const;
 
 private:
-	int BytesPerPixel = 3;
+	const int BytesPerPixel;
 	float* FloatImagePtr;
 	unsigned char* RGBImagePtr;
 	uint64_t BytesPerScanline;
