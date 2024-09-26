@@ -4,6 +4,8 @@
 
 #include <glm\glm.hpp>
 
+#include "Image.h"
+
 class Texture {
 public:
 	virtual ~Texture() = default;
@@ -47,4 +49,30 @@ private:
 	double InvScale;
 	std::shared_ptr<Texture> Even;
 	std::shared_ptr<Texture> Odd;
+};
+
+class ImageTexture : public Texture {
+public:
+	ImageTexture() : Img("UVChecker_2K.png") {}
+	ImageTexture(const char* imagePath) : Img(imagePath) {}
+
+	glm::vec3 value(double u, double v, glm::vec3& point) const override {
+
+		// If no image is loaded return color-cyan
+		if (Img.GetWidth() == 0) return glm::vec3(0.f, 1.f, 1.f);
+		
+		u = Interval(0.0, 1.0).Clamp(u);
+		v = 1.0 - Interval(0.0, 1.0).Clamp(v);
+
+		auto i = int(u * Img.GetWidth());
+		auto j = int(v * Img.GetHeight());
+
+		float colorScale = 1.f / 255.f;
+		const unsigned char* pixel = Img.PixelData(i, j);
+
+		return glm::vec3(colorScale * pixel[0], colorScale * pixel[1], colorScale * pixel[2]);
+	}
+
+private:
+	Image Img;
 };
