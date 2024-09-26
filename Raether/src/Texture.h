@@ -80,13 +80,13 @@ private:
 
 class NoiseTexture : public Texture {
 public:
-	NoiseTexture(double scale) : Scale( 1.0 / scale){}
+	NoiseTexture(double scale) : InvScale( 1.0 / scale){}
 
 	glm::vec3 value(double u, double v, glm::vec3& point) const override {
-		return glm::dvec3(1.0) * Noise.Noise(point, Scale);
+		return glm::dvec3(1.0) * Noise.Noise(point, InvScale);
 	}
 
 private:
 	Perlin Noise;
-	double Scale;
+	double InvScale;
 };
