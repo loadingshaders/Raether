@@ -378,6 +378,30 @@ void App::setUpScene() {
 		camera.SetView();
 		camera.CalculateRayDirections();
 	}
+	#elif defined(SCENE8)
+	{
+		///Scene-8
+		// Configure Materials
+		std::shared_ptr<CheckerTexture> checkerTexture = std::make_shared<CheckerTexture>(0.32f, glm::vec3(0.3f), glm::vec3(0.9f));
+		std::shared_ptr<ImageTexture> checkerImageTexture = std::make_shared<ImageTexture>("UVChecker_4K.png");
+
+		// Configure Spheres
+		scene.Add(std::make_shared<Sphere>(glm::vec3(0.f, -10000.f, 0.f), 10000.f, std::make_shared<Lambertian>(checkerTexture)));
+		scene.Add(std::make_shared<Sphere>(glm::vec3(4.f, 1.01f, 0.f), 1.f, std::make_shared<Lambertian>(checkerImageTexture)));
+
+		// Build the BVH
+		scene.BuildBVH();
+
+		// Camera setup
+		camera.SetFocus(10.f, 12.f);
+		camera.SetViewPortWidth(width);
+		camera.SetViewPortHeight(height);
+		camera.SetPosition(glm::vec3(14.0218f, 2.0866f, 3.9276f)); //glm::vec3(0.f, 0.f, 8.f)
+		camera.SetForwardDirection(glm::vec3(-0.869436f, -0.0900598f, -0.228215f)); // glm::vec3(0.0f, 0.0f, -1.0f)
+		camera.SetProjection(30.f); // 45.f
+		camera.SetView();
+		camera.CalculateRayDirections();
+	}
 	#endif
 
 	// Scene Render Specs
