@@ -17,11 +17,11 @@ public:
 		PerlinGenPermute(PermuteZ);
 	}
 
-	double Noise(const glm::vec3& point, double scale) const {
+	double Noise(const glm::vec3& point) const {
 
-		int i = int(glm::floor(scale * point.x)) & (TileWidth - 1);
-		int j = int(glm::floor(scale * point.y)) & (TileWidth - 1);
-		int k = int(glm::floor(scale * point.z)) & (TileWidth - 1);
+		int i = int(glm::floor(point.x)) & (TileWidth - 1);
+		int j = int(glm::floor(point.y)) & (TileWidth - 1);
+		int k = int(glm::floor(point.z)) & (TileWidth - 1);
 
 		return RandomDoubles[PermuteX[i] ^ PermuteY[j] ^ PermuteZ[k]];
 	}
@@ -44,7 +44,6 @@ private:
 	}
 
 private:
-	double Scale;
 	static constexpr int TileWidth = 256;
 	double RandomDoubles[TileWidth];
 	int PermuteX[TileWidth];
