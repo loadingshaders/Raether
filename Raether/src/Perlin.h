@@ -23,6 +23,11 @@ public:
 		double v = point.y - glm::floor(point.y);
 		double w = point.z - glm::floor(point.z);
 
+		// Hermitian Cubic Smoothing
+		u = u * u * (3.0 - 2.0 * u);
+		v = v * v * (3.0 - 2.0 * v);
+		w = w * w * (3.0 - 2.0 * w);
+
 		int i = int(glm::floor(point.x));
 		int j = int(glm::floor(point.y));
 		int k = int(glm::floor(point.z));
