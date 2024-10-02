@@ -83,7 +83,8 @@ public:
 	NoiseTexture(double scale) : InvScale( 1.0 / scale){}
 
 	glm::vec3 value(double u, double v, glm::vec3& point) const override {
-		return glm::dvec3(1.0) * Noise.Noise(glm::dvec3(point) * InvScale);
+		// Mapping [-1 to 1] range to [0 to 1]
+		return glm::dvec3(1.0) * 0.5 * ( 1.0 + Noise.Noise(glm::dvec3(point) * InvScale));
 	}
 
 private:
