@@ -406,11 +406,11 @@ void App::setUpScene() {
 	{
 		///Scene-9
 		// Configure Materials
-		std::shared_ptr<NoiseTexture> tiledNoise = std::make_shared<NoiseTexture>(0.20);
+		std::shared_ptr<NoiseTexture> perlinNoise = std::make_shared<NoiseTexture>(0.20);
 
 		// Configure Spheres
-		scene.Add(std::make_shared<Sphere>(glm::vec3(0.f, -10000.f, 0.f), 10000.f, std::make_shared<Lambertian>(tiledNoise)));
-		scene.Add(std::make_shared<Sphere>(glm::vec3(4.f, 1.01f, 0.f), 1.f, std::make_shared<Lambertian>(tiledNoise)));
+		scene.Add(std::make_shared<Sphere>(glm::vec3(0.f, -10000.f, 0.f), 10000.f, std::make_shared<Lambertian>(perlinNoise)));
+		scene.Add(std::make_shared<Sphere>(glm::vec3(4.f, 1.01f, 0.f), 1.f, std::make_shared<Lambertian>(perlinNoise)));
 
 		// Build the BVH
 		scene.BuildBVH();
