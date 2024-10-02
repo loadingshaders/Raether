@@ -73,9 +73,9 @@ private:
 			for (int j = 0; j < size; j++) {
 				for (int k = 0; k < size; k++) {
 					Accum +=
-						(i * u + (1 - i) * (1 - u)) * // Lero(u, v0, v1) = (1-u) * v0 + u * v1 => Lerp(u, 1-i, i) => (1-u) * (1-i) + u * i
-						(j * v + (1 - j) * (1 - v)) * // Lero(v, v0, v1) = (1-v) * v0 + v * v1 => Lerp(v, 1-j, j) => (1-v) * (1-j) + v * j
-						(k * w + (1 - k) * (1 - w)) * // Lero(w, v0, v1) = (1-w) * v0 + w * v1 => Lerp(w, 1-k, k) => (1-w) * (1-k) + w * k
+						((1 - u) * (1 - i) + u * i) * // Lero(u, v0, v1) = (1-u) * v0 + u * v1 => Lerp(u, 1-i, i) => (1-u) * (1-i) + u * i
+						((1 - v) * (1 - j) + v * j) * // Lero(v, v0, v1) = (1-v) * v0 + v * v1 => Lerp(v, 1-j, j) => (1-v) * (1-j) + v * j
+						((1 - w) * (1 - k) + w * k) * // Lero(w, v0, v1) = (1-w) * v0 + w * v1 => Lerp(w, 1-k, k) => (1-w) * (1-k) + w * k
 						lerp[i * size * size + j * size + k];
 				}
 			}
@@ -100,9 +100,9 @@ private:
 					                                                     // is the fractional part
 
 					Accum +=
-						(i * uu + (1 - i) * (1 - uu)) *
-						(j * vv + (1 - j) * (1 - vv)) *
-						(k * ww + (1 - k) * (1 - ww)) *
+						((1 - uu) * (1 - i) + uu * i) *
+						((1 - vv) * (1 - j) + vv * j) *
+						((1 - ww) * (1 - k) + ww * k) *
 						glm::dot(lerp[i * size * size + j * size + k], Weight);
 				}
 			}
