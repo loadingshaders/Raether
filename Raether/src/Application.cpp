@@ -406,7 +406,7 @@ void App::setUpScene() {
 	{
 		///Scene-9
 		// Configure Materials
-		std::shared_ptr<NoiseTexture> perlinNoise = std::make_shared<NoiseTexture>(0.4);
+		std::shared_ptr<NoiseTexture> perlinNoise = std::make_shared<NoiseTexture>(0.2);
 
 		// Configure Spheres
 		scene.Add(std::make_shared<Sphere>(glm::vec3(0.f, -10000.f, 0.f), 10000.f, std::make_shared<Lambertian>(perlinNoise)));
