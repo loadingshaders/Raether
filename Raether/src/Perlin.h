@@ -110,8 +110,8 @@ private:
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
 				for (int k = 0; k < size; k++) {
-					glm::dvec3 Weight = glm::dvec3(u - i, v - j, w - k); // Here, i, j, k represents values from (0,0,0) to (1, 1, 1) and (u, v, w)
-					                                                     // is the fractional part
+					glm::dvec3 Weight = glm::dvec3(u - i, v - j, w - k); // Here, i, j, k represents the lattice points from (0,0,0) to (1, 1, 1)
+					                                                     // And (u, v, w) is the fractional part of a point
 
 					Accum +=
 						((1 - uu) * (1 - i) + uu * i) * // Lero(uu, v0, v1) = (1-uu) * v0 + uu * v1 => Lerp(uu, 1-i, i) => (1-uu) * (1-i) + uu * i
