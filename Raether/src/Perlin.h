@@ -50,6 +50,21 @@ public:
 		return PerlinInterp(&Lerp[0][0][0], 2, u, v, w);
 	}
 
+	double Turbulence(const glm::vec3& point, int depth) const {
+		
+		double Accum = 0.0;
+		double Weight = 1.0;
+		glm::dvec3 TempPoint = point;
+		
+		for (int i = 0; i < depth; i++) {
+			Accum += Weight * Noise(TempPoint);
+			Weight *= 0.5;
+			TempPoint *= 2.0;
+		}
+
+		return std::fabs(Accum);
+	}
+
 private:
 	void PerlinGenPermute(int* p) {
 		for (int i = 0; i < TileWidth; i++) {
@@ -83,7 +98,6 @@ private:
 
 		return Accum;
 	}
-
 	static double PerlinInterp(const glm::dvec3* lerp, int size, double u, double v, double w) {
 
 		// Hermitian Cubic Smoothing
@@ -100,9 +114,9 @@ private:
 					                                                     // is the fractional part
 
 					Accum +=
-						((1 - uu) * (1 - i) + uu * i) *
-						((1 - vv) * (1 - j) + vv * j) *
-						((1 - ww) * (1 - k) + ww * k) *
+						((1 - uu) * (1 - i) + uu * i) * // Lero(uu, v0, v1) = (1-uu) * v0 + uu * v1 => Lerp(uu, 1-i, i) => (1-uu) * (1-i) + uu * i
+						((1 - vv) * (1 - j) + vv * j) * // Lero(vv, v0, v1) = (1-vv) * v0 + vv * v1 => Lerp(vv, 1-j, j) => (1-vv) * (1-j) + vv * j
+						((1 - ww) * (1 - k) + ww * k) * // Lero(ww, v0, v1) = (1-ww) * v0 + ww * v1 => Lerp(ww, 1-k, k) => (1-ww) * (1-k) + ww * k
 						glm::dot(lerp[i * size * size + j * size + k], Weight);
 				}
 			}
