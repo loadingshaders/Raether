@@ -83,7 +83,7 @@ public:
 	NoiseTexture(double scale) : InvScale( 1.0 / scale){}
 
 	glm::vec3 value(double u, double v, glm::vec3& point) const override {
-		return glm::dvec3(1.0) * Noise.Turbulence(glm::dvec3(point) * InvScale, 7);
+		return glm::dvec3(0.5) * (1.0 + glm::sin(InvScale * point.z + 10 * Noise.Turbulence(glm::dvec3(point), 7)));
 	}
 
 private:
