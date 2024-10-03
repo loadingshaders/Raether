@@ -383,7 +383,7 @@ void App::setUpScene() {
 		///Scene-8
 		// Configure Materials
 		std::shared_ptr<CheckerTexture> checkerTexture = std::make_shared<CheckerTexture>(0.32f, glm::vec3(0.3f), glm::vec3(0.9f));
-		std::shared_ptr<ImageTexture> checkerImageTexture = std::make_shared<ImageTexture>("UVChecker_4K.png");
+		std::shared_ptr<ImageTexture> checkerImageTexture = std::make_shared<ImageTexture>("Checker/UVChecker_4K.png");
 
 		// Configure Spheres
 		scene.Add(std::make_shared<Sphere>(glm::vec3(0.f, -10000.f, 0.f), 10000.f, std::make_shared<Lambertian>(checkerTexture)));
@@ -406,7 +406,7 @@ void App::setUpScene() {
 	{
 		///Scene-9
 		// Configure Materials
-		std::shared_ptr<NoiseTexture> perlinNoise = std::make_shared<NoiseTexture>(0.20);
+		std::shared_ptr<NoiseTexture> perlinNoise = std::make_shared<NoiseTexture>(0.4);
 
 		// Configure Spheres
 		scene.Add(std::make_shared<Sphere>(glm::vec3(0.f, -10000.f, 0.f), 10000.f, std::make_shared<Lambertian>(perlinNoise)));
