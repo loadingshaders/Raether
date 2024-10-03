@@ -128,9 +128,7 @@ namespace Utils {
 		static std::mt19937 generator(rand_dev());
 		static std::uniform_real_distribution<float> distr(from, to);
 
-		glm::vec3 offset(distr(generator), distr(generator), distr(generator));
-
-		return offset;
+		return glm::vec3(distr(generator), distr(generator), distr(generator));
 	}
 	inline glm::vec3 RandomOffset1(float from, float to) {
 
@@ -139,9 +137,7 @@ namespace Utils {
 		static std::mt19937 generator(rand_dev());
 		static std::uniform_real_distribution<float> dist(from, to);
 
-		glm::vec3 offset(dist(generator), dist(generator), dist(generator));
-
-		return offset;
+		return glm::vec3(dist(generator), dist(generator), dist(generator));
 	}
 	inline glm::dvec3 RandomVector(double from, double to) {
 
