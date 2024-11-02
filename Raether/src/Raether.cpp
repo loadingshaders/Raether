@@ -9,7 +9,7 @@ Raether::Raether() : windowTitle("Raether"),
 					 screensize(SDL_Rect{ 0, 0, windowWidth, windowHeight }),
 					 windowState(RaeState::ACTIVE),
 					 keyState(Keystate::STANDBY),
-					 mouseDelta(glm::si32_tvec2(0.f, 0.f)),
+					 mouseDelta(GLM::si32_tvec2(0.f, 0.f)),
 					 scrollAmount(0)
 {
 }
@@ -61,7 +61,7 @@ void Raether::raeCreateWindow(const char* w_t, int w_width, int w_height) {
 	raeInit();
 }
 
-void Raether::raeDrawImage(std::vector<glm::ui8_tvec4>& PixData) {
+void Raether::raeDrawImage(std::vector<GLM::ui8_tvec4>& PixData) {
 
 	uint32_t* pixels = nullptr;
 	int pitch = 0;
@@ -72,7 +72,7 @@ void Raether::raeDrawImage(std::vector<glm::ui8_tvec4>& PixData) {
 	}
 
 	// Copy the pixel data to the locked texture
-	memcpy(pixels, PixData.data(), PixData.size() * sizeof(glm::ui8_tvec4));
+	memcpy(pixels, PixData.data(), PixData.size() * sizeof(GLM::ui8_tvec4));
 
 	// Unlock the texture to allow rendering
 	SDL_UnlockTexture(texture);

@@ -9,7 +9,7 @@
 
 #include "Config.h"
 
-namespace glm {
+namespace GLM {
 	typedef glm::tvec4<uint8_t> ui8_tvec4;
 	typedef glm::tvec2<int32_t> si32_tvec2;
 }
@@ -25,7 +25,7 @@ namespace Utils {
 	inline void PrintVec2(const char* vecName, glm::vec2 vec) {
 		std::cout << vecName << std::endl;
 		std::cout << "(X, Y) => " << vec.r << ", " << vec.g << std::endl;
-}
+	}
 	inline void PrintVec3(const char* vecName, glm::vec3 vec) {
 		std::cout << vecName << std::endl;
 		std::cout << "(X, Y, Z) => " << vec.r << ", " << vec.g << ", " << vec.b << std::endl;
@@ -67,9 +67,9 @@ namespace Utils {
 
 		return 0.f;
 	}
-	inline glm::ui8_tvec4 converttoRGBA(glm::vec4& color) {
+	inline GLM::ui8_tvec4 converttoRGBA(glm::vec4& color) {
 
-		glm::ui8_tvec4 c;
+		GLM::ui8_tvec4 c;
 
 		color.r = GammaCorrect(color.r);
 		color.g = GammaCorrect(color.g);

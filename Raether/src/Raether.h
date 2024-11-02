@@ -21,7 +21,7 @@ public:
 
 	void raeCreateWindow(const char* w_t, int w_width, int w_height);
 	void raeRenderBegin();
-	void raeDrawImage(std::vector<glm::ui8_tvec4>& PixData);
+	void raeDrawImage(std::vector<GLM::ui8_tvec4>& PixData);
 	void raeRenderEnd();
 	bool raeInputEvents();
 	void raeQuit();
@@ -34,7 +34,7 @@ public:
 	Keystate keyState;
 	Mousestate mouseState;
 
-	glm::si32_tvec2 mouseDelta;
+	GLM::si32_tvec2 mouseDelta;
 	Sint32 scrollAmount;
 
 private:

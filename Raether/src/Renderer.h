@@ -35,7 +35,7 @@ private:
 	uint32_t height;
 	uint32_t FrameCount;
 
-	std::vector<glm::ui8_tvec4> ImageData;
+	std::vector<GLM::ui8_tvec4> ImageData;
 	std::vector<glm::vec3> AccumImageData;
 
 	std::vector<uint32_t> ImageHorizontalIter, ImageVerticalIter;
