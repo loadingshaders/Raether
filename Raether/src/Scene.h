@@ -67,28 +67,23 @@ public:
 		float b = 2.f * (glm::dot(newrayOrigin, ray.Direction)); // 2 ((ax * bx + ay * by + az * bz)
 		float c = glm::dot(newrayOrigin, newrayOrigin) - Radius * Radius; // (ax^2 + ay^2 + az^2) - r^2
 
+		/// Case-1: Calculate if the ray hits the sphere or not
 		float discriminant = (b * b) - (4.f * a * c);
+		if (discriminant < 0.0f) return false;
 
-		/// Calculate if the ray hits the sphere or not
-		if (discriminant >= 0.0f) {
-			float nearHit = (-b - std::sqrt(discriminant)) / (2.f * a);
+		/// Case-2: Check if this is the closest hit
+		float nearHit = (-b - std::sqrt(discriminant)) / (2.f * a);
+		if (!(nearHit < hitrecord.ClosestHit) || !Utils::Inrange(nearHit, nearDist, farDist)) return false;
 
-			// Check if this is the closest hit
-			if (nearHit < hitrecord.ClosestHit && Utils::Inrange(nearHit, nearDist, farDist)) {
+		glm::vec3 hitPoint = ray.Origin + nearHit * ray.Direction;
+		hitrecord.HitPoint = hitPoint;
+		hitrecord.SurfaceNormal = glm::normalize(hitPoint - sphereOrigin);
+		hitrecord.SetFrontFace(ray.Direction, hitrecord.SurfaceNormal);
+		GetSphereUV(hitrecord.SurfaceNormal, hitrecord.U, hitrecord.V);
+		hitrecord.MatId = MaterialId;
+		hitrecord.ClosestHit = nearHit;
 
-				glm::vec3 hitPoint = ray.Origin + nearHit * ray.Direction;
-				hitrecord.HitPoint = hitPoint;
-				hitrecord.SurfaceNormal = glm::normalize(hitPoint - sphereOrigin);
-				hitrecord.SetFrontFace(ray.Direction, hitrecord.SurfaceNormal);
-				GetSphereUV(hitrecord.SurfaceNormal, hitrecord.U, hitrecord.V);
-				hitrecord.MatId = MaterialId;
-				hitrecord.ClosestHit = nearHit;
-
-				return true;
-			}
-		}
-
-		return false;
+		return true;
 	}
 
 	Aabb BoundingBox() const override { return bbox; }
