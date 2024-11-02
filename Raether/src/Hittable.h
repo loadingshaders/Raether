@@ -11,7 +11,7 @@ public:
 	glm::vec3 SurfaceNormal;
 	glm::vec3 HitColor;
 
-	float ClosestHit;
+	double ClosestHit;
 	bool FrontFace;
 
 	double U, V;

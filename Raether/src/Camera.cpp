@@ -29,7 +29,7 @@ void Camera::SetViewPortWidth(int vp_Width) { viewportWidth = vp_Width; }
 void Camera::SetViewPortHeight(int vp_Height) { viewportHeight = vp_Height; }
 void Camera::SetProjection(float v_fov) {
 	V_FOV = v_fov;
-	projection = glm::perspectiveFov(glm::radians(V_FOV), (float)viewportWidth, (float)viewportHeight, nearDist, farDist);
+	projection = glm::perspectiveFov(glm::radians(V_FOV), (float)viewportWidth, (float)viewportHeight, (float)nearDist, (float)farDist);
 	inverseProjection = glm::inverse(projection);
 }
 

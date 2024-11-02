@@ -60,24 +60,24 @@ public:
 		// A , B , C = sphere origin
 		// r = sphere radius
 
-		glm::vec3 sphereOrigin = (IsMoving) ? GetSphereOrigin(ray.GetTime()) : SphereOrigin;
-		glm::vec3 newrayOrigin = ray.Origin - sphereOrigin;
+		glm::dvec3 sphereOrigin = (IsMoving) ? glm::dvec3(GetSphereOrigin(ray.GetTime())) : glm::dvec3(SphereOrigin);
+		glm::dvec3 newrayOrigin = glm::dvec3(ray.Origin) - sphereOrigin;
 
-		float a = glm::dot(ray.Direction, ray.Direction); // (bx^2 + by^2 + bz^2)
-		float b = 2.f * (glm::dot(newrayOrigin, ray.Direction)); // 2 ((ax * bx + ay * by + az * bz)
-		float c = glm::dot(newrayOrigin, newrayOrigin) - Radius * Radius; // (ax^2 + ay^2 + az^2) - r^2
+		double a = glm::dot(glm::dvec3(ray.Direction), glm::dvec3(ray.Direction)); // (bx^2 + by^2 + bz^2)
+		double b = 2.0 * (glm::dot(newrayOrigin, glm::dvec3(ray.Direction))); // 2 ((ax * bx + ay * by + az * bz)
+		double c = glm::dot(newrayOrigin, newrayOrigin) - Radius * Radius; // (ax^2 + ay^2 + az^2) - r^2
 
 		/// Case-1: Calculate if the ray hits the sphere or not
-		float discriminant = (b * b) - (4.f * a * c);
+		double discriminant = (b * b) - (4.0 * a * c);
 		if (discriminant < 0.0f) return false;
 
 		/// Case-2: Check if this is the closest hit
-		float nearHit = (-b - std::sqrt(discriminant)) / (2.f * a);
+		double nearHit = (-b - std::sqrt(discriminant)) / (2.0 * a);
 		if (!(nearHit < hitrecord.ClosestHit) || !Utils::Inrange(nearHit, nearDist, farDist)) return false;
 
-		glm::vec3 hitPoint = ray.Origin + nearHit * ray.Direction;
+		glm::vec3 hitPoint = ray.Origin + (float)nearHit * ray.Direction;
 		hitrecord.HitPoint = hitPoint;
-		hitrecord.SurfaceNormal = glm::normalize(hitPoint - sphereOrigin);
+		hitrecord.SurfaceNormal = glm::normalize(hitPoint - glm::vec3(sphereOrigin));
 		hitrecord.SetFrontFace(ray.Direction, hitrecord.SurfaceNormal);
 		GetSphereUV(hitrecord.SurfaceNormal, hitrecord.U, hitrecord.V);
 		hitrecord.MatId = MaterialId;

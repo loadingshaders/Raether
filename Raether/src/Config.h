@@ -5,8 +5,8 @@
 #define white glm::vec3(1.0f)
 #define blue glm::vec3(0.5294f, 0.8078f, 0.9215f) // glm::vec3(0.5f, 0.7f, 1.0f)
 
-#define nearDist 0.001f
-#define farDist 10000.f
+#define nearDist 0.001
+#define farDist 10000.0
 
 // Camera Related Macros
 #define minFov 5.f

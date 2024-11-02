@@ -8,6 +8,7 @@ class Interval {
 public:
 	Interval() : Min(std::numeric_limits<float>::min()), Max(std::numeric_limits<float>::max()) { }
 	Interval(float min, float max) : Min(min), Max(max) { }
+	Interval(double min, double max) : Min((float)min), Max((float)max) { }
 	Interval(const Interval& a, const Interval& b) {
 		Min = (a.Min <= b.Min) ? a.Min : b.Min;
 		Max = (a.Max >= b.Max) ? a.Max : b.Max;

@@ -55,6 +55,12 @@ namespace Utils {
 		}
 		return false;
 	}
+	inline bool Inrange(double value, double low, double high) {
+		if (value > low && value < high) {
+			return true;
+		}
+		return false;
+	}
 	inline glm::vec3 Lerp(const glm::vec3& rayDirection, glm::vec3 start, glm::vec3 end) {
 		float t = 1.0f - ((rayDirection.y * 0.5f) + 0.5f);
 		/// Calculate linear color gradient using linear interpolation
