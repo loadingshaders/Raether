@@ -1,15 +1,17 @@
 #pragma once
 
+#include <iostream>
 #include <string>
 #include <random>
 
+#include <SDL\SDL.h>
 #include <glm\glm.hpp>
 
 #include "Config.h"
 
 namespace glm {
-	typedef tvec4<uint8_t> ui8_tvec4;
-	typedef tvec2<Sint32> si32_tvec2;
+	typedef glm::tvec4<uint8_t> ui8_tvec4;
+	typedef glm::tvec2<int32_t> si32_tvec2;
 }
 
 namespace Utils {
@@ -22,21 +24,15 @@ namespace Utils {
 	}
 	inline void PrintVec2(const char* vecName, glm::vec2 vec) {
 		std::cout << vecName << std::endl;
-		std::cout << "X => " << vec.r << std::endl;
-		std::cout << "Y => " << vec.g << std::endl;
+		std::cout << "(X, Y) => " << vec.r << ", " << vec.g << std::endl;
 }
 	inline void PrintVec3(const char* vecName, glm::vec3 vec) {
 		std::cout << vecName << std::endl;
-		std::cout << "X => " << vec.r << std::endl;
-		std::cout << "Y => " << vec.g << std::endl;
-		std::cout << "Z => " << vec.b << std::endl;
+		std::cout << "(X, Y, Z) => " << vec.r << ", " << vec.g << ", " << vec.b << std::endl;
 	}
 	inline void PrintVec4(const char* vecName, glm::vec4 vec) {
 		std::cout << vecName << std::endl;
-		std::cout << "X => " << vec.r << std::endl;
-		std::cout << "Y => " << vec.g << std::endl;
-		std::cout << "Z => " << vec.b << std::endl;
-		std::cout << "W => " << vec.a << std::endl;
+		std::cout << "(X, Y, Z, W) => " << vec.r << ", " << vec.g << ", " << vec.b << ", " << vec.a << std::endl;
 	}
 	#else
 	inline void PrintError(std::string Error) {
