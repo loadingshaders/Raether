@@ -458,7 +458,7 @@ void App::setUpScene() {
 	#endif
 
 	// Scene Render Specs
-	scene.SetSampleCount(10000);
+	scene.SetSampleCount(100000);
 	scene.SetSampleBounces(100);
 }
 
