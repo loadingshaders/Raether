@@ -425,6 +425,36 @@ void App::setUpScene() {
 		camera.SetView();
 		camera.CalculateRayDirections();
 	}
+	#elif defined(SCENE10)
+	{
+		///Scene-10
+		// Configure Materials
+		auto leftRed = std::make_shared<Lambertian>(glm::vec3(1.0f, 0.2f, 0.2f));
+		auto backGreen = std::make_shared<Lambertian>(glm::vec3(0.2f, 1.0f, 0.2f));
+		auto rightBlue = std::make_shared<Lambertian>(glm::vec3(0.2f, 0.2f, 1.0f));
+		auto upperOrange = std::make_shared<Lambertian>(glm::vec3(1.0f, 0.5f, 0.0f));
+		auto lowerTeal = std::make_shared<Lambertian>(glm::vec3(0.2f, 0.8f, 0.8f));
+
+		// Configure Planes
+		scene.Add(std::make_shared<Quad>(glm::vec3(-2.0f, -1.5f, -5.0f), glm::vec3(0.0f, 0.0f, 3.0f), glm::vec3(0.0f, 3.0f, 0.0f), leftRed));
+		scene.Add(std::make_shared<Quad>(glm::vec3(-1.5f, -1.5f, -5.5f), glm::vec3(3.0f, 0.0f, 0.0f), glm::vec3(0.0f, 3.0f, 0.0f), backGreen));
+		scene.Add(std::make_shared<Quad>(glm::vec3(2.0f, -1.5f, -5.0f), glm::vec3(0.0f, 0.0f, 3.0f), glm::vec3(0.0f, 3.0f, 0.0f), rightBlue));
+		scene.Add(std::make_shared<Quad>(glm::vec3(-1.5f, 2.0f, -5.0f), glm::vec3(3.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 3.0f), upperOrange));
+		scene.Add(std::make_shared<Quad>(glm::vec3(-1.5f, -2.0f, -5.0f), glm::vec3(3.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 3.0f), lowerTeal));
+
+		// Build the BVH
+		scene.BuildBVH();
+
+		// Camera setup
+		camera.SetFocus(10.f, 12.f);
+		camera.SetViewPortWidth(width);
+		camera.SetViewPortHeight(height);
+		camera.SetPosition(glm::vec3(0.0f, 0.0f, 8.0f)); //glm::vec3(0.f, 0.f, 8.f)
+		camera.SetForwardDirection(glm::vec3(0.0f, 0.0f, -1.0f)); // glm::vec3(0.0f, 0.0f, -1.0f)
+		camera.SetProjection(30.f); // 45.f
+		camera.SetView();
+		camera.CalculateRayDirections();
+	}
 	#endif
 
 	// Scene Render Specs
