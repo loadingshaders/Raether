@@ -10,7 +10,6 @@
 #include "Hittable.h"
 #include "Material.h"
 #include "Bvh.h"
-#include "Sphere.h"
 
 class Scene : public Hittable {
 public:
