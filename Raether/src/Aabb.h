@@ -12,11 +12,15 @@ public:
 	Interval x, y, z;
 public:
 	Aabb() { } // The default AABB is empty
-	Aabb(const Interval& x, const Interval& y, const Interval& z) : x(x), y(y), z(z) { }
+	Aabb(const Interval& x, const Interval& y, const Interval& z) : x(x), y(y), z(z) {
+		PadToMinimum();
+	}
 	Aabb(const glm::vec3 a, const glm::vec3 b) {
 		x = (a[0] <= b[0]) ? (Interval(a[0], b[0])) : (Interval(b[0], a[0]));
 		y = (a[1] <= b[1]) ? (Interval(a[1], b[1])) : (Interval(b[1], a[1]));
 		z = (a[2] <= b[2]) ? (Interval(a[2], b[2])) : (Interval(b[2], a[2]));
+
+		PadToMinimum();
 	}
 	Aabb(const Aabb& box1, const Aabb& box2) {
 		x = Interval(box1.x, box2.x);
@@ -64,5 +68,14 @@ public:
 		}
 
 		return true;
+	}
+
+	void PadToMinimum() {
+		// Adjusting the AABB so that no side is narrower than the value Delta
+
+		float Delta = 0.0001f;
+		if (x.Size() < Delta) x = x.Expand(Delta);
+		if (y.Size() < Delta) y = y.Expand(Delta);
+		if (z.Size() < Delta) z = z.Expand(Delta);
 	}
 };
