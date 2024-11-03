@@ -56,12 +56,13 @@ bool Sphere::Hit(const Ray& ray, Hitrec& hitrecord) const {
 
 	/// Case-1: Calculate if the ray hits the sphere or not
 	double discriminant = (b * b) - (4.0 * a * c);
-	if (discriminant < 0.0f) return false;
+	if (discriminant < 0.0) return false;
 
 	/// Case-2: Check if this is the closest hit
 	double nearHit = (-b - std::sqrt(discriminant)) / (2.0 * a);
 	if (!(nearHit < hitrecord.ClosestHit) || !Utils::Inrange(nearHit, nearDist, farDist)) return false;
 
+	/// Case-3: Ray hits the Sphere; set the rest of the hit record and return true
 	glm::vec3 hitPoint = ray.Origin + (float)nearHit * ray.Direction;
 	hitrecord.HitPoint = hitPoint;
 	hitrecord.SurfaceNormal = glm::normalize(hitPoint - glm::vec3(sphereOrigin));
