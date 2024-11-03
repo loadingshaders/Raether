@@ -12,6 +12,8 @@
 #include "Ray.h"
 #include "Timer.h"
 #include "Config.h"
+#include "Sphere.h"
+#include "Quad.h"
 
 class App {
 public:
