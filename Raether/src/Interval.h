@@ -38,6 +38,9 @@ public:
 	bool Contains(float val) const {
 		return (val >= Min) && (val <= Max);
 	}
+	bool Contains(double val) const {
+		return (val >= Min) && (val <= Max);
+	}
 	Interval Expand(float delta) {
 		float padding = delta / 2.f;
 		return Interval(Min - padding, Max + padding);
