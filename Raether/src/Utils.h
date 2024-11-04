@@ -23,16 +23,13 @@ namespace Utils {
 		std::cout << Error << std::endl;
 	}
 	inline void PrintVec2(const char* vecName, glm::vec2 vec) {
-		std::cout << vecName << std::endl;
-		std::cout << "(X, Y) => " << vec.r << ", " << vec.g << std::endl;
+		std::cout << vecName << " glm::vec2(" << vec.r << ", " << vec.g << ")" << std::endl;
 	}
 	inline void PrintVec3(const char* vecName, glm::vec3 vec) {
-		std::cout << vecName << std::endl;
-		std::cout << "(X, Y, Z) => " << vec.r << ", " << vec.g << ", " << vec.b << std::endl;
+		std::cout << vecName << " glm::vec3(" << vec.r << ", " << vec.g << ", " << vec.b << ")" << std::endl;
 	}
 	inline void PrintVec4(const char* vecName, glm::vec4 vec) {
-		std::cout << vecName << std::endl;
-		std::cout << "(X, Y, Z, W) => " << vec.r << ", " << vec.g << ", " << vec.b << ", " << vec.a << std::endl;
+		std::cout << vecName << " glm::vec4(" << vec.r << ", " << vec.g << ", " << vec.b << ", " << vec.a << ")" << std::endl;
 	}
 	#else
 	inline void PrintError(std::string Error) {
@@ -49,20 +46,15 @@ namespace Utils {
 	}
 	#endif
 	
-	inline bool Inrange(float value, float low, float high) {
-		if (value > low && value < high) {
-			return true;
-		}
-		return false;
+	inline float Inrange(float value, float low, float high) {
+		return (value > low && value < high);
 	}
-	inline bool Inrange(double value, double low, double high) {
-		if (value > low && value < high) {
-			return true;
-		}
-		return false;
+	inline double Inrange(double value, double low, double high) {
+		return (value > low && value < high);
 	}
 	inline glm::vec3 Lerp(const glm::vec3& rayDirection, glm::vec3 start, glm::vec3 end) {
 		float t = 1.0f - ((rayDirection.y * 0.5f) + 0.5f);
+
 		/// Calculate linear color gradient using linear interpolation
 		return glm::vec3((1 - t) * start + t * end);
 	}
