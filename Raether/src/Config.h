@@ -1,12 +1,18 @@
 #pragma once
 
+// For Enabling Camera Specs
+#define camDetails 0
+
 // Utility Macros
 #define black glm::vec3(0.0f, 0.0f, 0.0f)
 #define white glm::vec3(1.0f)
 #define blue glm::vec3(0.5294f, 0.8078f, 0.9215f) // glm::vec3(0.5f, 0.7f, 1.0f)
 
-#define nearDist 0.001
-#define farDist 10000.0
+#define camNearDist 0.001
+#define camFarDist 1000.0
+
+#define rayNearDist 0.00001
+#define rayFarDist 10000.0
 
 // Camera Related Macros
 #define minFov 5.f

@@ -29,7 +29,7 @@ void Camera::SetViewPortWidth(int vp_Width) { viewportWidth = vp_Width; }
 void Camera::SetViewPortHeight(int vp_Height) { viewportHeight = vp_Height; }
 void Camera::SetProjection(float v_fov) {
 	V_FOV = v_fov;
-	projection = glm::perspectiveFov(glm::radians(V_FOV), (float)viewportWidth, (float)viewportHeight, (float)nearDist, (float)farDist);
+	projection = glm::perspectiveFov(glm::radians(V_FOV), (float)viewportWidth, (float)viewportHeight, (float)camNearDist, (float)camFarDist);
 	inverseProjection = glm::inverse(projection);
 }
 
@@ -126,11 +126,14 @@ void Camera::HandleInput(class Raether& rae) {
 		SetView();
 		CalculateRayDirections();
 
-		/*
-		Utils::PrintVec3("camOrigin", cameraOrigin);
-		Utils::PrintVec3("camOrientation", cameraOrientation);
-		Utils::PrintVec3("Forward", forwardDirection);
-		Utils::PrintVec2("V_FOV", glm::vec2(V_FOV));
-		*/
+		#if camDetails == 1
+
+		Utils::PrintVec3("\ncamOrigin     : ", cameraOrigin);
+		Utils::PrintVec3("\ncamOrientation: ", cameraOrientation);
+		Utils::PrintVec3("\nForward       : ", forwardDirection);
+		Utils::PrintVec2("\nV_FOV         : ", glm::vec2(V_FOV));
+		Utils::PrintError("\n");
+
+		#endif
 	}
 }
