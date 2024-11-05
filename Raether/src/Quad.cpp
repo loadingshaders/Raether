@@ -7,9 +7,10 @@ Quad::Quad(const glm::vec3& q, const glm::vec3& u, const glm::vec3& v, std::shar
 	MaterialId(matid)
 {
 	/// Calculate Normal And D
-	Normal = glm::cross(U, V);
+	glm::dvec3 N = glm::cross(U, V);
+	Normal = glm::normalize(N);
 	D = glm::dot(Normal, Q);
-	W = Normal / glm::dot(Normal, Normal);
+	W = N / glm::dot(N, N);
 
 	/// Initialize the Bounding Volume for Quad
 	Aabb bboxDiagonal1 = Aabb(glm::vec3(Q), glm::vec3(Q + U + V));
@@ -56,6 +57,7 @@ bool Quad::Hit(const Ray& ray, Hitrec& hitrecord) const {
 
 	/// Case-4: Ray hits the 2D shape; set the rest of the hit record and return true
 	hitrecord.HitPoint = glm::vec3(hitPoint);
+	hitrecord.SurfaceNormal = Normal;
 	hitrecord.SetFrontFace(ray.Direction, hitrecord.SurfaceNormal);
 	hitrecord.MatId = MaterialId;
 	hitrecord.ClosestHit = t;
