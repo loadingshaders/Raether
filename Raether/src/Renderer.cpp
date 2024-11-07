@@ -156,7 +156,7 @@ glm::vec3 Renderer::PerPixel(glm::vec2 uv) {
 		ray.Direction = glm::normalize(focusPoint - ray.Origin);
 	}
 
-	ray.Direction += Utils::RandomOffset(-0.006f, 0.006f) * renderCam->GetCamFovFraction();
+	ray.Direction += Utils::RandomOffset(-0.004f, 0.004f) * renderCam->GetCamFovFraction();
 
 	Hitrec hitrecord;
 	glm::vec3 accumColor(0.0f);        // Accumulated color
