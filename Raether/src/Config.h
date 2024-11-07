@@ -21,13 +21,13 @@
 #define camMovementSpeed 0.3f
 
 // Multithreading Related Macros
-#define MT 0 // Enables Multithreading
+#define MT 1 // Enables Multithreading
 
 // Bvh Build Related Macros
 #define RBVH 0 // Enable Random Axis BVH Split (The Default is Longest Axis Split)
 
 // Scene Related Macros
-#define SCENE10 // Enable a Particular Scene
+#define SCENE11 // Enable a Particular Scene
 #define NumofProcSpheres 40 // Represents Total Number of Procedural Spheres
 
 // Logging Related Macros
