@@ -38,6 +38,9 @@ void App::setUpScene() {
 		scene.Add(std::make_shared<Sphere>(glm::vec3(-2.01f, 0.0f, 0.0f), 1.f, dielectricGlass));
 		scene.Add(std::make_shared<Sphere>(glm::vec3(-2.01f, 0.0f, 0.0f), 0.65f, dielectricBubble));
 
+		// Set Background Color
+		scene.SetBackgroundColor(blue, white);
+
 		// Build the BVH
 		scene.BuildBVH();
 
@@ -68,6 +71,9 @@ void App::setUpScene() {
 		scene.Add(std::make_shared<Sphere>(glm::vec3(2.01f, 0.0f, 0.0f), 1.f, metalGold));
 		scene.Add(std::make_shared<Sphere>(glm::vec3(-2.01f, 0.0f, 0.0f), 1.f, dielectricGlass));
 		scene.Add(std::make_shared<Sphere>(glm::vec3(-2.01f, 0.0f, 0.0f), 0.65f, dielectricBubble));
+
+		// Set Background Color
+		scene.SetBackgroundColor(blue, white);
 
 		// Build the BVH
 		scene.BuildBVH();
@@ -134,6 +140,9 @@ void App::setUpScene() {
 				lastOrigin = center;
 			}
 		}
+
+		// Set Background Color
+		scene.SetBackgroundColor(blue, white);
 
 		// Build the BVH
 		scene.BuildBVH();
@@ -202,6 +211,9 @@ void App::setUpScene() {
 			}
 		}
 
+		// Set Background Color
+		scene.SetBackgroundColor(blue, white);
+
 		// Build the BVH
 		scene.BuildBVH();
 
@@ -268,6 +280,9 @@ void App::setUpScene() {
 				lastOrigin = center;
 			}
 		}
+
+		// Set Background Color
+		scene.SetBackgroundColor(blue, white);
 
 		// Build the BVH
 		scene.BuildBVH();
@@ -337,6 +352,9 @@ void App::setUpScene() {
 			}
 		}
 
+		// Set Background Color
+		scene.SetBackgroundColor(blue, white);
+
 		// Build the BVH
 		scene.BuildBVH();
 
@@ -365,6 +383,9 @@ void App::setUpScene() {
 		scene.Add(std::make_shared<Sphere>(glm::vec3(4.f, 10.f, 0.f), 10.f, std::make_shared<Lambertian>(checkerTexture)));
 		scene.Add(std::make_shared<Sphere>(glm::vec3(4.f, -10.f, 0.f), 10.f, std::make_shared<Lambertian>(checkerTexture)));
 
+		// Set Background Color
+		scene.SetBackgroundColor(blue, white);
+
 		// Build the BVH
 		scene.BuildBVH();
 
@@ -389,6 +410,9 @@ void App::setUpScene() {
 		scene.Add(std::make_shared<Sphere>(glm::vec3(0.f, -10000.f, 0.f), 10000.f, std::make_shared<Lambertian>(checkerTexture)));
 		scene.Add(std::make_shared<Sphere>(glm::vec3(4.f, 1.01f, 0.f), 1.f, std::make_shared<Lambertian>(checkerImageTexture)));
 
+		// Set Background Color
+		scene.SetBackgroundColor(blue, white);
+
 		// Build the BVH
 		scene.BuildBVH();
 
@@ -411,6 +435,9 @@ void App::setUpScene() {
 		// Configure Spheres
 		scene.Add(std::make_shared<Sphere>(glm::vec3(0.f, -10000.f, 0.f), 10000.f, std::make_shared<Lambertian>(perlinNoise)));
 		scene.Add(std::make_shared<Sphere>(glm::vec3(4.f, 1.01f, 0.f), 1.f, std::make_shared<Lambertian>(perlinNoise)));
+
+		// Set Background Color
+		scene.SetBackgroundColor(blue, white);
 
 		// Build the BVH
 		scene.BuildBVH();
@@ -442,6 +469,9 @@ void App::setUpScene() {
 		scene.Add(std::make_shared<Quad>(glm::vec3(-1.5f, 2.0f, -5.0f), glm::vec3(3.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 3.0f), upperOrange));
 		scene.Add(std::make_shared<Quad>(glm::vec3(-1.5f, -2.0f, -5.0f), glm::vec3(3.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 3.0f), lowerTeal));
 
+		// Set Background Color
+		scene.SetBackgroundColor(blue, white);
+
 		// Build the BVH
 		scene.BuildBVH();
 
@@ -455,11 +485,43 @@ void App::setUpScene() {
 		camera.SetView();
 		camera.CalculateRayDirections();
 	}
+	#elif defined(SCENE11)
+	{
+		///Scene-11
+		// Configure Materials
+		std::shared_ptr<NoiseTexture> tiledNoise = std::make_shared<NoiseTexture>(0.32);
+		std::shared_ptr<Material> dielectricGlass = std::make_shared<Dielectric>(1.5f, 0.99f);
+		std::shared_ptr<DiffuseLight> diffusedLight = std::make_shared<DiffuseLight>(glm::vec3(5.f));
+
+		// Configure Planes
+		scene.Add(std::make_shared<Quad>(glm::vec3(3.28f, 0.2f, 2.3f), glm::vec3(1.5f, 0.0f, 0.0f), glm::vec3(0.0f, 1.5f, 0.0f), diffusedLight));
+
+		// Configure Spheres
+		scene.Add(std::make_shared<Sphere>(glm::vec3(0.f, -10000.f, 0.f), 10000.f, std::make_shared<Lambertian>(tiledNoise)));
+		scene.Add(std::make_shared<Sphere>(glm::vec3(4.f, 1.01f, 0.f), 1.f, std::make_shared<Lambertian>(tiledNoise)));
+		scene.Add(std::make_shared<Sphere>(glm::vec3(4.f, 3.2f, 0.f), 0.65f, diffusedLight));
+
+		// Set Background Color
+		scene.SetBackgroundColor(black, black);
+
+		// Build the BVH
+		scene.BuildBVH();
+
+		// Camera setup
+		camera.SetFocus(0.f, 0.f);
+		camera.SetViewPortWidth(width);
+		camera.SetViewPortHeight(height);
+		camera.SetPosition(glm::vec3(-6.89692, 1.89061, -1.04361)); //glm::vec3(0.f, 0.f, 8.f)
+		camera.SetForwardDirection(glm::vec3(0.895924f, -0.0334501f, 0.110963f)); // glm::vec3(0.0f, 0.0f, -1.0f)
+		camera.SetProjection(30.f); // 45.f
+		camera.SetView();
+		camera.CalculateRayDirections();
+	}
 	#endif
 
 	// Scene Render Specs
 	scene.SetSampleCount(100000);
-	scene.SetSampleBounces(100);
+	scene.SetSampleBounces(1000);
 }
 
 void App::updateScene() {
