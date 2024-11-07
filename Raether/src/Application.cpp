@@ -517,6 +517,41 @@ void App::setUpScene() {
 		camera.SetView();
 		camera.CalculateRayDirections();
 	}
+	#elif defined(SCENE12)
+	{
+		///Scene-12
+		// Configure Materials
+		std::shared_ptr<DiffuseLight> diffusedHighLight = std::make_shared<DiffuseLight>(glm::vec3(10.0f));
+
+		auto diffusedRed = std::make_shared<Lambertian>(glm::vec3(0.65f, 0.05f, 0.05f));
+		auto diffusedGreen = std::make_shared<Lambertian>(glm::vec3(0.12f, 0.45f, 0.15f));
+		auto diffusedWhite = std::make_shared<Lambertian>(glm::vec3(0.73f, 0.73f, 0.73f));
+
+		// Configure Planes
+		scene.Add(std::make_shared<Quad>(glm::vec3(-2.0f, -2.0f, -3.8f), glm::vec3(0.0f, 0.0f, 4.0f), glm::vec3(0.0f, 4.0f, 0.0f), diffusedRed)); // Left Quad
+		scene.Add(std::make_shared<Quad>(glm::vec3(2.0f, -2.0f, -3.8f), glm::vec3(0.0f, 0.0f, 4.0f), glm::vec3(0.0f, 4.0f, 0.0f), diffusedGreen)); // Right Quad
+		scene.Add(std::make_shared<Quad>(glm::vec3(-2.0f, -2.0f, -3.8f), glm::vec3(4.0f, 0.0f, 0.0f), glm::vec3(0.0f, 4.0f, 0.0f), diffusedWhite)); // Back Quad
+		scene.Add(std::make_shared<Quad>(glm::vec3(-2.0f, -2.0f, -3.8f), glm::vec3(4.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 4.0f), diffusedWhite)); // Bottom Quad
+		scene.Add(std::make_shared<Quad>(glm::vec3(-2.0f, 2.0f, -3.8f), glm::vec3(4.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 4.0f), diffusedWhite)); // Upper Quad
+
+		scene.Add(std::make_shared<Quad>(glm::vec3(-1.0f, 1.99f, -2.8f), glm::vec3(2.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 2.0f), diffusedHighLight)); // Light Quad
+
+		// Set Background Color
+		scene.SetBackgroundColor(black, black);
+
+		// Build the BVH
+		scene.BuildBVH();
+
+		// Camera setup
+		camera.SetFocus(0.f, 0.f);
+		camera.SetViewPortWidth(width);
+		camera.SetViewPortHeight(height);
+		camera.SetPosition(glm::vec3(0.0f, 0.0f, 8.0f)); //glm::vec3(0.f, 0.f, 8.f)
+		camera.SetForwardDirection(glm::vec3(0.0f, 0.0f, -1.0f)); // glm::vec3(0.0f, 0.0f, -1.0f)
+		camera.SetProjection(30.f); // 45.f
+		camera.SetView();
+		camera.CalculateRayDirections();
+	}
 	#endif
 
 	// Scene Render Specs
