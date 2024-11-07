@@ -169,6 +169,10 @@ glm::vec3 Renderer::PerPixel(glm::vec2 uv) {
 			const std::shared_ptr<Material>& mat = hitrecord.MatId;
 			glm::vec3 scatterAttenuation;
 
+			// Adding Emission Contribution
+			glm::vec3 Emission = mat->Emitted(hitrecord.U, hitrecord.V, hitrecord.HitPoint);
+			accumColor += attenuation * Emission;
+
 			// Adding Scatter Contribution
 			if (mat->Scatter(ray, hitrecord, scatterAttenuation)) {
 				attenuation *= scatterAttenuation;
