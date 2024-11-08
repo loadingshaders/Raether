@@ -609,6 +609,10 @@ void App::updateScene() {
 			scene.GetObjectList().size(), frameCount, totalTime / frameCount, (1.0 / (totalTime / frameCount)) * 1000.f);
 	}
 
+	/// Clear the Scene Buffer
+	scene.Clear();
+
+	/// Quit the Backend
 	rae.raeQuit();
 }
 
