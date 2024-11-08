@@ -96,51 +96,6 @@ void Renderer::Render(const Scene& scene, Camera& camera) {
 	}
 }
 
-/*
-glm::vec3 Renderer::PerPixel(glm::vec2 uv) {
-
-	Ray ray;
-	ray.Direction = renderCam->GetRayDirection()[(uint64_t)(uv.x + uv.y * renderCam->GetViewPortWidth())];
-	ray.Time = renderCam->GetRayTime();
-
-	if (renderCam->GetDefocusStrength() <= 0.f) {
-		ray.Origin = renderCam->GetPosition();
-	}
-	else {
-		glm::vec3 focusPoint = renderCam->GetPosition() + ray.Direction * renderCam->GetFocusDistance();
-		ray.Origin = renderCam->GetDefocusDiskSample();
-		ray.Direction = glm::normalize(focusPoint - ray.Origin);
-	}
-
-	ray.Direction += Utils::RandomOffset(-0.002f, 0.002f) * renderCam->GetCamFovFraction();
-
-	Hitrec hitrecord;
-
-	glm::vec3 hitColor = glm::vec3(1.f);
-
-	for (uint32_t bounces = 0; bounces < renderScene->GetSampleBounces(); bounces++) {
-
-		if (renderScene->Hit(ray, hitrecord)) {
-
-			const std::shared_ptr<Material>& mat = hitrecord.MatId;
-			glm::vec3 attenuation;
-
-			if (mat->Scatter(ray, hitrecord, attenuation)) {
-				hitColor *= attenuation;
-			}
-
-			ray.Direction += Utils::RandomOffset(-0.001f, 0.001f) * renderCam->GetCamFovFraction();
-		}
-		else {
-			hitColor *= Utils::Lerp(ray.Direction, blue, white);
-			break;
-		}
-	}
-
-	return hitColor;
-}
-*/
-
 glm::vec3 Renderer::PerPixel(glm::vec2 uv) {
 
 	Ray ray;
