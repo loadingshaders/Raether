@@ -29,10 +29,13 @@ public:
 	const std::vector<std::shared_ptr<Hittable>>& GetObjectList() const { return ObjectList; }
 
 	void Add(std::shared_ptr<Hittable> objects) {
-
 		ObjectList.emplace_back(objects);
 
 		bbox = Aabb(bbox, objects->BoundingBox());
+	}
+
+	void Clear() {
+		ObjectList.clear();
 	}
 
 	void BuildBVH() {
