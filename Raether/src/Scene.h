@@ -28,10 +28,16 @@ public:
 	const uint32_t GetSampleBounces() const { return Bounces; }
 	const std::vector<std::shared_ptr<Hittable>>& GetObjectList() const { return ObjectList; }
 
-	void Add(std::shared_ptr<Hittable> objects) {
-		ObjectList.emplace_back(objects);
+	void Add(std::shared_ptr<Hittable> object) {
+		ObjectList.emplace_back(object);
 
-		bbox = Aabb(bbox, objects->BoundingBox());
+		bbox = Aabb(bbox, object->BoundingBox());
+	}
+
+	void Add(std::vector<std::shared_ptr<Hittable>> objects) {
+		for (auto object : objects) {
+			Add(object);
+		}
 	}
 
 	void Clear() {
