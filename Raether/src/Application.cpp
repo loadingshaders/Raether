@@ -543,7 +543,7 @@ void App::setUpScene() {
 		scene.BuildBVH();
 
 		// Camera setup
-		camera.SetFocus(0.f, 0.f);
+		camera.SetFocus(10.f, 9.7f);
 		camera.SetViewPortWidth(width);
 		camera.SetViewPortHeight(height);
 		camera.SetPosition(glm::vec3(0.0f, 0.0f, 7.7f)); //glm::vec3(0.f, 0.f, 8.f)
