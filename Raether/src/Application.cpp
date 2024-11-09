@@ -534,7 +534,7 @@ void App::setUpScene() {
 		scene.Add(std::make_shared<Quad>(glm::vec3(-2.0f, -2.0f, -4.0f), glm::vec3(4.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 4.0f), diffusedWhite)); // Bottom Quad
 		scene.Add(std::make_shared<Quad>(glm::vec3(-2.0f, 2.0f, -4.0f), glm::vec3(4.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 4.0f), diffusedWhite)); // Upper Quad
 
-		scene.Add(std::make_shared<Quad>(glm::vec3(-1.0f, 1.99f, -2.9f), glm::vec3(2.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 2.0f), diffusedHighLight)); // Light Quad
+		scene.Add(std::make_shared<Quad>(glm::vec3(-1.0f, 1.99f, -3.0f), glm::vec3(2.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 2.0f), diffusedHighLight)); // Light Quad
 
 		// Set Background Color
 		scene.SetBackgroundColor(black, black);
@@ -569,7 +569,7 @@ void App::setUpScene() {
 		scene.Add(std::make_shared<Quad>(glm::vec3(-2.0f, -2.0f, -4.0f), glm::vec3(4.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 4.0f), diffusedWhite)); // Bottom Quad
 		scene.Add(std::make_shared<Quad>(glm::vec3(-2.0f, 2.0f, -4.0f), glm::vec3(4.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 4.0f), diffusedWhite)); // Upper Quad
 
-		scene.Add(std::make_shared<Quad>(glm::vec3(-1.0f, 1.99f, -2.9f), glm::vec3(2.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 2.0f), diffusedHighLight)); // Light Quad
+		scene.Add(std::make_shared<Quad>(glm::vec3(-1.0f, 1.99f, -3.0f), glm::vec3(2.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 2.0f), diffusedHighLight)); // Light Quad
 
 		// Configure Instances
 		scene.Add(Box(glm::vec3(-1.14f, -2.0f, -2.2f), glm::vec3(0.06f, 0.4f, -3.4f), diffusedWhite));
