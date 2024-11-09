@@ -490,7 +490,6 @@ void App::setUpScene() {
 		///Scene-11
 		// Configure Materials
 		std::shared_ptr<NoiseTexture> tiledNoise = std::make_shared<NoiseTexture>(0.32);
-		std::shared_ptr<Material> dielectricGlass = std::make_shared<Dielectric>(1.5f, 0.99f);
 		std::shared_ptr<DiffuseLight> diffusedLight = std::make_shared<DiffuseLight>(glm::vec3(5.f));
 
 		// Configure Planes
