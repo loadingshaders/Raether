@@ -6,6 +6,9 @@ Quad::Quad(const glm::vec3& q, const glm::vec3& u, const glm::vec3& v, std::shar
 	V(glm::dvec3(v)),
 	MaterialId(matid)
 {
+	this->ObjectOrigin = Q + (U + V) * 0.5f;
+	this->ObjectMatId = MaterialId;
+
 	/// Calculate Normal And D
 	glm::dvec3 N = glm::cross(U, V);
 	Normal = glm::normalize(N);
