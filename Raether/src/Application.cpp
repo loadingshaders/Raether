@@ -571,8 +571,8 @@ void App::setUpScene() {
 		scene.Add(std::make_shared<Quad>(glm::vec3(-1.0f, 1.99f, -3.0f), glm::vec3(2.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 2.0f), diffusedHighLight)); // Light Quad
 
 		// Configure Instances
-		scene.Add(Box(glm::vec3(-1.14f, -2.0f, -2.2f), glm::vec3(0.06f, 0.4f, -3.4f), diffusedWhite));
-		scene.Add(Box(glm::vec3(-0.06f, -2.0f, -0.6f), glm::vec3(1.14f, -0.8f, -1.8f), diffusedWhite));
+		scene.Add(Box3D(glm::vec3(-1.14f, -2.0f, -2.2f), glm::vec3(0.06f, 0.4f, -3.4f), diffusedWhite));
+		scene.Add(Box3D(glm::vec3(-0.06f, -2.0f, -0.6f), glm::vec3(1.14f, -0.8f, -1.8f), diffusedWhite));
 
 		// Set Background Color
 		scene.SetBackgroundColor(black, black);
@@ -600,7 +600,7 @@ void App::setUpScene() {
 void App::updateScene() {
 	renderer.Init(rae, scene, camera);
 
-	// Main event loop
+	/// Main event loop
 	while (rae.windowState == RaeState::ACTIVE) {
 
 		/// Start the render

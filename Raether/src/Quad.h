@@ -30,7 +30,7 @@ private:
 	double D;
 };
 
-inline std::vector<std::shared_ptr<Hittable>> Box(const glm::vec3& a, const glm::vec3& b, std::shared_ptr<Material> matid) {
+inline std::vector<std::shared_ptr<Hittable>> Box3D(const glm::vec3& a, const glm::vec3& b, std::shared_ptr<Material> matid) {
 	
 	/// Returns the 3D box (six sides) that contains the two opposite vertices a & b.
 	std::vector<std::shared_ptr<Hittable>> quads;
