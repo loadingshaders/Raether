@@ -14,6 +14,7 @@
 #include "Config.h"
 #include "Sphere.h"
 #include "Quad.h"
+#include "Box.h"
 
 class App {
 public:
