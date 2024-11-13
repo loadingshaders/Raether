@@ -12,9 +12,9 @@ Box::Box(const glm::vec3& a, const glm::vec3& b, std::shared_ptr<Material> matid
 	this->ObjectMatId = MaterialId;
 
 	/// Calculate the Axis Interval
-	glm::vec3 dx = glm::vec3(Max.x - Min.x, 0.0, 0.0);
-	glm::vec3 dy = glm::vec3(0.0, Max.y - Min.y, 0.0);
-	glm::vec3 dz = glm::vec3(0.0, 0.0, Max.z - Min.z);
+	glm::vec3 dx = glm::vec3(Max.x - Min.x, 0.0f, 0.0f);
+	glm::vec3 dy = glm::vec3(0.0f, Max.y - Min.y, 0.0f);
+	glm::vec3 dz = glm::vec3(0.0f, 0.0f, Max.z - Min.z);
 
 	Quads.emplace_back(std::make_shared<Quad>(glm::vec3(Min.x, Min.y, Min.z), dz, dy, matid)); /// Left Quad
 	Quads.emplace_back(std::make_shared<Quad>(glm::vec3(Max.x, Min.y, Min.z), dz, dy, matid)); /// Right Quad
