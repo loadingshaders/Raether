@@ -617,7 +617,7 @@ void App::setUpScene() {
 		scene.Add(box1);
 
 		std::shared_ptr<Hittable> box2 = std::make_shared<Box>(glm::vec3(-0.06f, -2.0f, -0.6f), glm::vec3(1.14f, -0.8f, -1.8f), diffusedWhite);
-		box2 = std::make_shared<Translate>(box2, glm::vec3(-0.22f, 0.1f, 0.0f));
+		box2 = std::make_shared<Translate>(box2, glm::vec3(-0.22f, 0.0f, 0.0f));
 		box2 = std::make_shared<RotateY>(box2, -18.0f);
 		box2 = std::make_shared<RotateZ>(box2, 7.0f);
 		scene.Add(box2);
