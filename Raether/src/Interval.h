@@ -49,3 +49,11 @@ public:
 public:
 	float Min, Max;
 };
+
+inline Interval operator+(const Interval& interval, const float& displacement) {
+	return Interval(interval.Min + displacement, interval.Max + displacement);
+}
+
+inline Interval operator+(const float& displacement, const Interval& interval) {
+	return interval + displacement;
+}
