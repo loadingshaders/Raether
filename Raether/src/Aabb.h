@@ -79,3 +79,11 @@ public:
 		if (z.Size() < Delta) z = z.Expand(Delta);
 	}
 };
+
+inline Aabb operator+(const Aabb& bbox, const glm::vec3& offset) {
+	return Aabb(bbox.x + offset.x, bbox.y + offset.y, bbox.z + offset.z);
+}
+
+inline Aabb operator+(const glm::vec3& offset, const Aabb& bbox) {
+	return bbox + offset;
+}
