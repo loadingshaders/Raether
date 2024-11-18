@@ -59,11 +59,11 @@ bool Quad::Hit(const Ray& ray, Hitrec& hitrecord) const {
 	if (!isInterior(Alpha, Beta, hitrecord)) return false;
 
 	/// Case-4: Ray hits the 2D shape; set the rest of the hit record and return true
+	hitrecord.ClosestHit = t;
 	hitrecord.HitPoint = glm::vec3(hitPoint);
 	hitrecord.SurfaceNormal = glm::vec3(Normal);
 	hitrecord.SetFrontFace(ray.Direction, hitrecord.SurfaceNormal);
 	hitrecord.MatId = MaterialId;
-	hitrecord.ClosestHit = t;
 
 	return true;
 }

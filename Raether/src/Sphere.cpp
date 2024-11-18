@@ -60,16 +60,21 @@ bool Sphere::Hit(const Ray& ray, Hitrec& hitrecord) const {
 
 	/// Case-2: Check if this is the closest hit
 	double nearHit = (-b - std::sqrt(discriminant)) / (2.0 * a);
-	if (!(nearHit < hitrecord.ClosestHit) || !Utils::Inrange(nearHit, rayNearDist, rayFarDist)) return false;
+	if (!Utils::Inrange(nearHit, rayNearDist, hitrecord.ClosestHit)) {
+		nearHit = (-b + std::sqrt(discriminant)) / (2.0 * a);
+		if (!Utils::Inrange(nearHit, rayNearDist, hitrecord.ClosestHit)) {
+			return false;
+		}
+	}
 
 	/// Case-3: Ray hits the Sphere; set the rest of the hit record and return true
-	glm::vec3 hitPoint = ray.Origin + (float)nearHit * ray.Direction;
+	hitrecord.ClosestHit = nearHit;
+	glm::vec3 hitPoint = ray.Origin + (float)hitrecord.ClosestHit * ray.Direction;
 	hitrecord.HitPoint = hitPoint;
-	hitrecord.SurfaceNormal = glm::normalize(hitPoint - glm::vec3(sphereOrigin));
+	hitrecord.SurfaceNormal = glm::normalize(hitrecord.HitPoint - glm::vec3(sphereOrigin));
 	hitrecord.SetFrontFace(ray.Direction, hitrecord.SurfaceNormal);
 	GetSphereUV(hitrecord.SurfaceNormal, hitrecord.U, hitrecord.V);
 	hitrecord.MatId = MaterialId;
-	hitrecord.ClosestHit = nearHit;
 
 	return true;
 }
