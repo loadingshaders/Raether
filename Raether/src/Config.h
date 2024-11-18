@@ -14,6 +14,8 @@
 #define rayNearDist 0.00001
 #define rayFarDist 10000.0
 
+#define Infinity std::numeric_limits<double>::infinity()
+
 // Camera Related Macros
 #define minFov 5.f
 #define maxFov 180.f
@@ -27,7 +29,7 @@
 #define RBVH 0 // Enable Random Axis BVH Split (The Default is Longest Axis Split)
 
 // Scene Related Macros
-#define SCENE14 // Enable a Particular Scene
+#define SCENE15 // Enable a Particular Scene
 #define NumofProcSpheres 40 // Represents Total Number of Procedural Spheres
 
 // Logging Related Macros
