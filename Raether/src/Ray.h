@@ -19,6 +19,10 @@ public:
 		return Time;
 	}
 
+	glm::vec3 At(float distance) const {
+		return Origin + distance * Direction;
+	}
+
 public:
 	glm::vec3 Origin;
 	glm::vec3 Direction;
