@@ -52,7 +52,7 @@ public:
 		/// Check if the ray hits anything in the scene
 
 		/// Initialize hitrcord
-		hitrecord.ClosestHit = std::numeric_limits<float>::max();
+		hitrecord.ClosestHit = Infinity;
 
 		return RootNode->Hit(ray, hitrecord);
 	}
