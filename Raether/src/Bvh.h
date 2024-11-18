@@ -64,7 +64,10 @@ public:
 			return false;
 		}
 
+		double originalClosestHit = hitrecord.ClosestHit;
+
 		bool hit_left = LeftNode->Hit(ray, hitrecord);
+		hitrecord.ClosestHit = hit_left ? hitrecord.ClosestHit : originalClosestHit;
 		bool hit_right = RightNode->Hit(ray, hitrecord);
 
 		return hit_left || hit_right;
