@@ -113,11 +113,29 @@ private:
 
 class DiffuseLight : public Material {
 public:
-	DiffuseLight(glm::vec3 albedo) : Tex(std::make_shared<SolidColor>(albedo)) { }
+	DiffuseLight(glm::vec3 albedo) : Tex(std::make_shared<SolidColor>(albedo)) {}
 	DiffuseLight(std::shared_ptr<Texture> texture) : Tex(texture) {}
 
 	glm::vec3 Emitted(double u, double v, glm::vec3& point) const override {
 		return Tex->value(u, v, point);
+	}
+
+private:
+	std::shared_ptr<Texture> Tex;
+};
+
+class Isotropic : public Material {
+public:
+	Isotropic(glm::vec3 albedo) : Tex(std::make_shared<SolidColor>(albedo)) {}
+	Isotropic(std::shared_ptr<Texture> texture) : Tex(texture) {}
+
+	bool Scatter(Ray& ray, Hitrec& hitrecord, glm::vec3& attenuation) const override {
+
+		ray = Ray(hitrecord.HitPoint, Utils::RandomUnitVector(), ray.GetTime());
+		
+		attenuation = Tex->value(hitrecord.U, hitrecord.V, hitrecord.HitPoint);
+		
+		return true;
 	}
 
 private:
