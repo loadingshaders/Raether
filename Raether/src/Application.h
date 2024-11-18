@@ -15,6 +15,7 @@
 #include "Sphere.h"
 #include "Quad.h"
 #include "Box.h"
+#include "Volume.h"
 
 class App {
 public:
