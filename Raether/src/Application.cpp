@@ -638,6 +638,54 @@ void App::setUpScene() {
 		camera.SetView();
 		camera.CalculateRayDirections();
 	}
+	#elif defined(SCENE15)
+	{
+		///Scene-15
+		// Configure Materials
+		auto diffusedHighLight = std::make_shared<DiffuseLight>(glm::vec3(9.0f));
+		auto diffusedRed = std::make_shared<Lambertian>(glm::vec3(0.65f, 0.05f, 0.05f));
+		auto diffusedGreen = std::make_shared<Lambertian>(glm::vec3(0.12f, 0.45f, 0.15f));
+		auto diffusedWhite = std::make_shared<Lambertian>(glm::vec3(0.73f, 0.73f, 0.73f));
+
+		// Configure Planes
+		scene.Add(std::make_shared<Quad>(glm::vec3(-2.0f, -2.0f, -4.0f), glm::vec3(0.0f, 0.0f, 4.0f), glm::vec3(0.0f, 4.0f, 0.0f), diffusedRed)); // Left Quad
+		scene.Add(std::make_shared<Quad>(glm::vec3(2.0f, -2.0f, -4.0f), glm::vec3(0.0f, 0.0f, 4.0f), glm::vec3(0.0f, 4.0f, 0.0f), diffusedGreen)); // Right Quad
+		scene.Add(std::make_shared<Quad>(glm::vec3(-2.0f, -2.0f, -4.0f), glm::vec3(4.0f, 0.0f, 0.0f), glm::vec3(0.0f, 4.0f, 0.0f), diffusedWhite)); // Back Quad
+		scene.Add(std::make_shared<Quad>(glm::vec3(-2.0f, -2.0f, -4.0f), glm::vec3(4.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 4.0f), diffusedWhite)); // Bottom Quad
+		scene.Add(std::make_shared<Quad>(glm::vec3(-2.0f, 2.0f, -4.0f), glm::vec3(4.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 4.0f), diffusedWhite)); // Upper Quad
+
+		scene.Add(std::make_shared<Quad>(glm::vec3(-1.0f, 1.99f, -3.0f), glm::vec3(2.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 2.0f), diffusedHighLight)); // Light Quad
+
+		// Configure Instances
+		std::shared_ptr<Hittable> box1 = std::make_shared<Box>(glm::vec3(-1.14f, -2.0f, -2.2f), glm::vec3(0.06f, 0.4f, -3.4f), diffusedWhite);
+		box1 = std::make_shared<Translate>(box1, glm::vec3(0.72f, -0.4f, 0.0f));
+		box1 = std::make_shared<RotateX>(box1, 15.0f);
+		box1 = std::make_shared<RotateY>(box1, 18.0f);
+
+		std::shared_ptr<Hittable> box2 = std::make_shared<Box>(glm::vec3(-0.06f, -2.0f, -0.6f), glm::vec3(1.14f, -0.8f, -1.8f), diffusedWhite);
+		box2 = std::make_shared<Translate>(box2, glm::vec3(-0.22f, 0.0f, 0.0f));
+		box2 = std::make_shared<RotateY>(box2, -18.0f);
+		box2 = std::make_shared<RotateZ>(box2, 7.0f);
+
+		scene.Add(std::make_shared<Volume>(box1, 1.5f, glm::vec3(0.0f)));
+		scene.Add(std::make_shared<Volume>(box2, 1.5f, glm::vec3(1.0f)));
+
+		// Set Background Color
+		scene.SetBackgroundColor(black, black);
+
+		// Build the BVH
+		scene.BuildBVH();
+
+		// Camera setup
+		camera.SetFocus(10.f, 9.7f);
+		camera.SetViewPortWidth(width);
+		camera.SetViewPortHeight(height);
+		camera.SetPosition(glm::vec3(0.0f, 0.0f, 7.7f)); //glm::vec3(0.f, 0.f, 8.f)
+		camera.SetForwardDirection(glm::vec3(0.0f, 0.0f, -1.0f)); // glm::vec3(0.0f, 0.0f, -1.0f)
+		camera.SetProjection(30.f); // 45.f
+		camera.SetView();
+		camera.CalculateRayDirections();
+	}
 	#endif
 
 	// Scene Render Specs
