@@ -20,6 +20,8 @@ public:
 	~Camera();
 
 	void SetFocus(float strength, float distance);
+	void SetFovRange(float minfov, float maxfov);
+	void SetCamMovement(float motionsensitivity, float movementspeed);
 	void SetPosition(glm::vec3 position);
 	void SetForwardDirection(glm::vec3 forward);
 	void SetViewPortWidth(int vp_Width);
@@ -48,6 +50,12 @@ private:
 	float V_FOV;
 	float defocusStrength;
 	float focusDistance;
+
+	float minFOV;
+	float maxFOV;
+
+	float motionSensitivity;
+	float movementSpeed;
 
 	glm::vec3 cameraOrigin;
 	glm::vec3 cameraOrientation;

@@ -5,6 +5,10 @@ Camera::Camera() : viewportWidth(700),
 				   V_FOV(45.f),
 				   defocusStrength(0.f),
 				   focusDistance(0.f),
+				   minFOV(minFov),
+				   maxFOV(maxFov),
+				   motionSensitivity(camMotionSensitivity),
+				   movementSpeed(camMovementSpeed),
 				   cameraOrigin(glm::vec3(0.f, 0.f, -2.f)),
 				   forwardDirection(glm::vec3(0.f, 0.f, -1.f)),
 				   cameraOrientation(cameraOrigin + forwardDirection),
@@ -21,6 +25,16 @@ Camera::~Camera() { }
 void Camera::SetFocus(float strength, float distance) {
 	defocusStrength = strength;
 	focusDistance = distance;
+}
+
+void Camera::SetFovRange(float minfov, float maxfov) {
+	minFOV = minfov;
+	maxFOV = maxfov;
+}
+
+void Camera::SetCamMovement(float motionsensitivity, float movementspeed) {
+	motionSensitivity = motionsensitivity;
+	movementSpeed = movementspeed;
 }
 
 void Camera::SetPosition(glm::vec3 position) { cameraOrigin = position; }
@@ -67,27 +81,27 @@ void Camera::HandleInput(class Raether& rae) {
 
 	/// For Camera Movement
 	if (rae.keyState == Keystate::W) {
-		cameraOrigin += forwardDirection * camMovementSpeed;
+		cameraOrigin += forwardDirection * movementSpeed;
 		cam = CamMotion::MOVED;
 	}
 	else if (rae.keyState == Keystate::S) {
-		cameraOrigin -= forwardDirection * camMovementSpeed;
+		cameraOrigin -= forwardDirection * movementSpeed;
 		cam = CamMotion::MOVED;
 	}
 	if (rae.keyState == Keystate::A) {
-		cameraOrigin -= rightDirection * camMovementSpeed;
+		cameraOrigin -= rightDirection * movementSpeed;
 		cam = CamMotion::MOVED;
 	}
 	else if (rae.keyState == Keystate::D) {
-		cameraOrigin += rightDirection * camMovementSpeed;
+		cameraOrigin += rightDirection * movementSpeed;
 		cam = CamMotion::MOVED;
 	}
 	if (rae.keyState == Keystate::Q) {
-		cameraOrigin -= upDirection * camMovementSpeed;
+		cameraOrigin -= upDirection * movementSpeed;
 		cam = CamMotion::MOVED;
 	}
 	else if (rae.keyState == Keystate::E) {
-		cameraOrigin += upDirection * camMovementSpeed;
+		cameraOrigin += upDirection * movementSpeed;
 		cam = CamMotion::MOVED;
 	}
 
@@ -95,8 +109,8 @@ void Camera::HandleInput(class Raether& rae) {
 	if (rae.mouseState == Mousestate::INMOTION) {
 		if (rae.mouseDelta.x != 0.0f || rae.mouseDelta.y != 0.0f) {
 
-			float yawDelta = rae.mouseDelta.x * camMotionSensitivity;
-			float pitchDelta = rae.mouseDelta.y * camMotionSensitivity;
+			float yawDelta = rae.mouseDelta.x * motionSensitivity;
+			float pitchDelta = rae.mouseDelta.y * motionSensitivity;
 
 			/// Don't really know what's happening here :/
 			glm::quat q = glm::normalize(glm::cross(glm::angleAxis(-pitchDelta, rightDirection), glm::angleAxis(-yawDelta, upDirection)));
@@ -110,11 +124,11 @@ void Camera::HandleInput(class Raether& rae) {
 	if (rae.mouseState == Mousestate::SCROLLING) {
 
 		V_FOV -= rae.scrollAmount * 1.5f;
-		if(V_FOV <= minFov) {
-			V_FOV = minFov;
+		if(V_FOV <= minFOV) {
+			V_FOV = minFOV;
 		}
-		else if (V_FOV >= maxFov) {
-			V_FOV = maxFov;
+		else if (V_FOV >= maxFOV) {
+			V_FOV = maxFOV;
 		}
 		SetProjection(V_FOV);
 
