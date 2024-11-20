@@ -136,6 +136,15 @@ namespace Utils {
 
 		return glm::vec3(dist(generator), dist(generator), dist(generator));
 	}
+	inline glm::vec3 RandomOffset2(float from, float to) {
+
+		std::random_device rand_dev;
+		// Using Mersenne Twister algorithm for random num generation
+		static std::mt19937 generator(rand_dev());
+		static std::uniform_real_distribution<float> dist(from, to);
+
+		return glm::vec3(dist(generator), dist(generator), dist(generator));
+	}
 	inline glm::dvec3 RandomVector(double from, double to) {
 
 		std::random_device rand_dev;
