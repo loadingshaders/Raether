@@ -686,6 +686,91 @@ void App::setUpScene() {
 		camera.SetView();
 		camera.CalculateRayDirections();
 	}
+	#elif defined(SCENE16)
+	{
+		///Scene-16
+		// Configure Materials
+		auto diffusedLight = std::make_shared<DiffuseLight>(glm::vec3(10.0f));
+		auto diffusedBlack = std::make_shared<Lambertian>(glm::vec3(0.0f));
+		auto diffusedGreen = std::make_shared<Lambertian>(glm::vec3(0.48f, 0.83f, 0.53f));
+		auto diffusedBurntOrange = std::make_shared<Lambertian>(glm::vec3(0.7f, 0.3f, 0.1f));
+		auto diffusedWhite = std::make_shared<Lambertian>(glm::vec3(0.73f));
+		auto diffusedBlue = std::make_shared<Lambertian>(glm::vec3(0.2f, 0.4f, 0.9f));
+		auto dielectricGlass = std::make_shared<Dielectric>(1.5f, 0.0f);
+		auto brushedAluminum = std::make_shared<Metal>(glm::vec3(0.8f, 0.8f, 0.9f), 1.0f);
+		auto earthTopoMap = std::make_shared<Lambertian>(std::make_shared<ImageTexture>("Earthmap/EarthTopoMap.png"));
+		auto perlinNoise = std::make_shared<Lambertian>(std::make_shared<NoiseTexture>(5.0f));
+
+		// Configure Boxes
+		auto box1 = std::make_shared<HittableList>();
+
+		int boxesPerSide = 20;
+		float boxWidth = 100.0f;
+		float axisOffset = (boxesPerSide * boxWidth) / 2.0f;
+		for (int i = 0; i < boxesPerSide; i++) {
+			for (int j = 0; j < boxesPerSide; j++) {
+				float x0 = -axisOffset + i * boxWidth;
+				float y0 = 0.0f;
+				float z0 = -axisOffset + j * boxWidth;
+				float x1 = x0 + boxWidth - 0.1f;
+				float y1 = Utils::RandomFloatInRange(0.01f * boxWidth, boxWidth - (0.01f * boxWidth));
+				float z1 = z0 + boxWidth - 0.1f;
+
+				box1->Add(std::make_shared<Box>(glm::vec3(x0, y0, z0), glm::vec3(x1, y1, z1), diffusedGreen));
+			}
+		}
+
+		box1->BuildBVH();
+		scene.Add(box1);
+
+		// Configure Quads
+		scene.Add(std::make_shared<Quad>(glm::vec3(123.0f, 554.01f, 147.0f), glm::vec3(300.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 265.0f), diffusedBlack));
+		scene.Add(std::make_shared<Quad>(glm::vec3(123.0f, 554.0f, 147.0f), glm::vec3(300.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 265.0f), diffusedLight)); // Light Quad
+
+		// Configure Spheres
+		scene.Add(std::make_shared<Sphere>(glm::vec3(400.0f, 400.0f, 200.0f), glm::vec3(430.0f, 400.0f, 200.0f), 50.0f, diffusedBurntOrange));
+		scene.Add(std::make_shared<Sphere>(glm::vec3(0.0f, 150.0f, 145.0f), 50.0f, brushedAluminum));
+		scene.Add(std::make_shared<Sphere>(glm::vec3(260.0f, 150.0f, 45.0f), 50.0f, dielectricGlass));
+
+		auto boundary = std::make_shared<Sphere>(glm::vec3(360.0f, 150.0f, 145.0f), 69.95f, dielectricGlass);
+		scene.Add(std::make_shared<Volume>(boundary, 0.2f, glm::vec3(0.2f, 0.4f, 0.9f)));
+		boundary = std::make_shared<Sphere>(glm::vec3(360.0f, 150.0f, 145.0f), 70.0f, dielectricGlass);
+		scene.Add(boundary);
+
+		boundary = std::make_shared<Sphere>(glm::vec3(0.0f), 5000.0f, dielectricGlass);
+		scene.Add(std::make_shared<Volume>(boundary, 0.00008f, glm::vec3(1.0f)));
+
+		scene.Add(std::make_shared<Sphere>(glm::vec3(400.0f, 200.0f, 400.0f), 100.0f, earthTopoMap));
+		scene.Add(std::make_shared<Sphere>(glm::vec3(220.0f, 280.0f, 300.0f), 80.0f, perlinNoise));
+
+		// Configure Boxes of Spheres
+		auto box2 = std::make_shared<HittableList>();
+
+		int sphereCount = 1000;
+		for (int i = 0; i < sphereCount; i++) {
+			box2->Add(std::make_shared<Sphere>(Utils::RandomOffset2(0.0f, 165.0f), 10.0f, diffusedWhite));
+		}
+
+		box2->BuildBVH();
+		scene.Add(std::make_shared<Translate>(std::make_shared<RotateY>(box2, 15.0f), glm::vec3(-100.0f, 270.0f, 395.0f)));
+
+		// Set Background Color
+		scene.SetBackgroundColor(black, black);
+
+		// Build the BVH
+		scene.BuildBVH();
+
+		// Camera setup
+		camera.SetCamMovement(0.01f, 60.0f);
+		camera.SetFocus(10.f, 801.21f);
+		camera.SetViewPortWidth(width);
+		camera.SetViewPortHeight(height);
+		camera.SetPosition(glm::vec3(470.0f, 278.0f, -600.0f)); //glm::vec3(555.928, 257.911, -691.695)
+		camera.SetForwardDirection(glm::vec3(-0.29f, 0.01f, 0.95f)); // glm::vec3(-0.342436, 0.0428016, 0.938567)
+		camera.SetProjection(40.0f); // 45.f
+		camera.SetView();
+		camera.CalculateRayDirections();
+	}
 	#endif
 
 	// Scene Render Specs
