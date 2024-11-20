@@ -8,6 +8,8 @@
 #define white glm::vec3(1.0f)
 #define blue glm::vec3(0.5294f, 0.8078f, 0.9215f) // glm::vec3(0.5f, 0.7f, 1.0f)
 
+#define JitterStrength 0.0035f
+
 #define camNearDist 0.001
 #define camFarDist 1000.0
 
