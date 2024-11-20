@@ -1,8 +1,8 @@
 #pragma once
 
-#pragma once
-
 #include <limits>
+
+#include "Utils.h"
 
 class Interval {
 public:
@@ -45,10 +45,20 @@ public:
 		float padding = delta / 2.f;
 		return Interval(Min - padding, Max + padding);
 	}
+	bool Surrounds(float val) const {
+		return (Min < val) && (val < Max);
+	}
+	bool Surrounds(double val) const {
+		return (Min < val) && (val < Max);
+	}
 
 public:
 	float Min, Max;
+	static const Interval Empty, Universe;
 };
+
+inline const Interval Interval::Empty = Interval(+Infinity, -Infinity);
+inline const Interval Interval::Universe = Interval(-Infinity, +Infinity);
 
 inline Interval operator+(const Interval& interval, const float& displacement) {
 	return Interval(interval.Min + displacement, interval.Max + displacement);
