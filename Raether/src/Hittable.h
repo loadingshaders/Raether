@@ -19,12 +19,7 @@ public:
 	std::shared_ptr<Material> MatId;
 
 	void SetFrontFace(const glm::vec3& rayDirection, glm::vec3& normal) {
-		if (glm::dot(rayDirection, normal) > 0.f) {
-			FrontFace = false;
-		}
-		else {
-			FrontFace = true;
-		}
+		FrontFace = glm::dot(rayDirection, normal) < 0.f;
 		normal = FrontFace ? (normal) : (-normal);
 	}
 };
