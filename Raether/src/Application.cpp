@@ -667,8 +667,8 @@ void App::setUpScene() {
 		box2 = std::make_shared<RotateY>(box2, -18.0f);
 		box2 = std::make_shared<RotateZ>(box2, 7.0f);
 
-		scene.Add(std::make_shared<Volume>(box1, 1.5f, glm::vec3(0.0f)));
-		scene.Add(std::make_shared<Volume>(box2, 1.5f, glm::vec3(1.0f)));
+		scene.Add(std::make_shared<Volume>(box1, 1.8f, glm::vec3(0.0f)));
+		scene.Add(std::make_shared<Volume>(box2, 1.8f, glm::vec3(1.0f)));
 
 		// Set Background Color
 		scene.SetBackgroundColor(black, black);
