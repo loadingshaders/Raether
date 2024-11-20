@@ -42,7 +42,7 @@ bool Quad::Hit(const Ray& ray, Interval hitdist, Hitrec& hitrecord) const {
 	double Denom = glm::dot(Normal, glm::dvec3(ray.Direction));
 
 	/// Case-1: The Ray is Parallel to the Plane
-	if (std::fabs(Denom) < 1e-8) return false;
+	if (std::fabs(Denom) < 1e-7) return false;
 
 	/// Case-2: If the Ray Hit Distance is outside the Ray Interval
 	double t = (D - glm::dot(Normal, glm::dvec3(ray.Origin))) / Denom;
@@ -63,6 +63,7 @@ bool Quad::Hit(const Ray& ray, Interval hitdist, Hitrec& hitrecord) const {
 	hitrecord.HitPoint = glm::vec3(hitPoint);
 	hitrecord.SurfaceNormal = glm::vec3(Normal);
 	hitrecord.SetFrontFace(ray.Direction, hitrecord.SurfaceNormal);
+	hitrecord.HitPoint += hitrecord.SurfaceNormal * 0.00001f;
 	hitrecord.MatId = MaterialId;
 
 	return true;
