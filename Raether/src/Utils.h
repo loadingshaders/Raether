@@ -81,6 +81,9 @@ namespace Utils {
 
 		return c;
 	}
+	inline double LengthSquared(glm::dvec3 vec) {
+		return (vec.r * vec.r + vec.g * vec.g + vec.b * vec.b);
+	}
 	inline float LengthSquared(glm::vec3 vec) {
 		return (vec.r * vec.r + vec.g * vec.g + vec.b * vec.b);
 	}
