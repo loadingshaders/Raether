@@ -58,17 +58,14 @@ public:
 		return node;
 	}
 
-	bool Hit(const Ray& ray, Hitrec& hitrecord) const override {
+	bool Hit(const Ray& ray, Interval hitdist, Hitrec& hitrecord) const override {
 		// Create an Interval for the AABB hit check
-		if (!bbox.Hit(ray, Interval(rayNearDist, hitrecord.ClosestHit))) {
+		if (!bbox.Hit(ray, Interval(rayNearDist, (double)hitdist.Max))) {
 			return false;
 		}
 
-		double originalClosestHit = hitrecord.ClosestHit;
-
-		bool hit_left = LeftNode->Hit(ray, hitrecord);
-		hitrecord.ClosestHit = hit_left ? hitrecord.ClosestHit : originalClosestHit;
-		bool hit_right = RightNode->Hit(ray, hitrecord);
+		bool hit_left = LeftNode->Hit(ray, hitdist, hitrecord);
+		bool hit_right = RightNode->Hit(ray, Interval((double)hitdist.Min, hit_left? hitrecord.ClosestHit : (double)hitdist.Max), hitrecord);
 
 		return hit_left || hit_right;
 	}

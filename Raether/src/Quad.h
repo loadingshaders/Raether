@@ -12,7 +12,7 @@ class Quad : public Hittable {
 public:
 	Quad(const glm::vec3& q, const glm::vec3& u, const glm::vec3& v, std::shared_ptr<Material> matid);
 
-	bool Hit(const Ray& ray, Hitrec& hitrecord) const override;
+	bool Hit(const Ray& ray, Interval hitdist, Hitrec& hitrecord) const override;
 
 	Aabb BoundingBox() const override { return bbox; }
 

@@ -48,13 +48,9 @@ public:
 		RootNode = RootNode->SplitBvh(ObjectList, 0, ObjectList.size());
 	}
 
-	bool Hit(const Ray& ray, Hitrec& hitrecord) const override {
+	bool Hit(const Ray& ray, Interval hitdist, Hitrec& hitrecord) const override {
 		/// Check if the ray hits anything in the scene
-
-		/// Initialize hitrcord
-		hitrecord.ClosestHit = Infinity;
-
-		return RootNode->Hit(ray, hitrecord);
+		return RootNode->Hit(ray, hitdist, hitrecord);
 	}
 
 	Aabb BoundingBox() const override { return bbox; }

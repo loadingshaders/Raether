@@ -36,7 +36,7 @@ const glm::vec3 Sphere::GetSphereOrigin(float time) const {
 	return SphereOrigin + time * SphereMotion;
 }
 
-bool Sphere::Hit(const Ray& ray, Hitrec& hitrecord) const {
+bool Sphere::Hit(const Ray& ray, Interval hitdist, Hitrec& hitrecord) const {
 	/// Check for sphere hit and update hitrecord
 
 	/// Sphere Equation
@@ -60,11 +60,11 @@ bool Sphere::Hit(const Ray& ray, Hitrec& hitrecord) const {
 
 	double sqrtd = std::sqrt(discriminant);
 
-	/// Case-2: Check if this is the closest hit
+	/// Case-2: Check if the hit distance is in the valid range
 	double nearHit = (b - sqrtd) / a;
-	if (!Utils::Inrange(nearHit, rayNearDist, hitrecord.ClosestHit)) {
+	if (!hitdist.Surrounds(nearHit)) {
 		nearHit = (b + sqrtd) / a;
-		if (!Utils::Inrange(nearHit, rayNearDist, hitrecord.ClosestHit)) {
+		if (!hitdist.Surrounds(nearHit)) {
 			return false;
 		}
 	}

@@ -30,6 +30,7 @@ Box::Box(const glm::vec3& a, const glm::vec3& b, std::shared_ptr<Material> matid
 	RootNode = RootNode->SplitBvh(Quads, 0, Quads.size());
 }
 
-bool Box::Hit(const Ray& ray, Hitrec& hitrecord) const {
-	return RootNode->Hit(ray, hitrecord);
+bool Box::Hit(const Ray& ray, Interval hitdist, Hitrec& hitrecord) const {
+	/// Check if the ray hits any quad within the sides
+	return RootNode->Hit(ray, hitdist, hitrecord);
 }

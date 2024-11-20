@@ -27,7 +27,7 @@ public:
 class Hittable {
 public:
 	virtual ~Hittable() = default;
-	virtual bool Hit(const Ray& ray, Hitrec& hitrecord) const = 0;
+	virtual bool Hit(const Ray& ray, Interval hitdist, Hitrec& hitrecord) const = 0;
 	virtual Aabb BoundingBox() const = 0;
 
 public:
@@ -44,12 +44,12 @@ public:
 		bbox = Object->BoundingBox() + Offset;
 	}
 
-	bool Hit(const Ray& ray, Hitrec& hitrecord) const override {
+	bool Hit(const Ray& ray, Interval hitdist, Hitrec& hitrecord) const override {
 		/// Move the Ray Backwards by the Offset
 		Ray offsetRay(ray.Origin - Offset, ray.Direction, ray.Time);
 
 		/// Determine whether an intersection exists along the offset ray (and if so, where)
-		if (!Object->Hit(offsetRay, hitrecord)) return false;
+		if (!Object->Hit(offsetRay, hitdist, hitrecord)) return false;
 		hitrecord.HitPoint += Offset;
 
 		return true;
@@ -100,7 +100,7 @@ public:
 		bbox = Aabb(Min, Max);
 	}
 
-	bool Hit(const Ray& ray, Hitrec& hitrecord) const override {
+	bool Hit(const Ray& ray, Interval hitdist, Hitrec& hitrecord) const override {
 		/// Transform the ray from world space to object space
 		glm::vec3 Origin = glm::vec3(
 			(ray.Origin.x),
@@ -117,7 +117,7 @@ public:
 		Ray rotatedRay(Origin, Direction, ray.Time);
 
 		/// Determine whether an intersection exists in object space (and if so, where)
-		if (!Object->Hit(rotatedRay, hitrecord)) return false;
+		if (!Object->Hit(rotatedRay, hitdist, hitrecord)) return false;
 
 		/// Transform the intersection from object space back to world space
 		hitrecord.HitPoint = glm::vec3(
@@ -181,7 +181,7 @@ public:
 		bbox = Aabb(Min, Max);
 	}
 
-	bool Hit(const Ray& ray, Hitrec& hitrecord) const override {
+	bool Hit(const Ray& ray, Interval hitdist, Hitrec& hitrecord) const override {
 		/// Transform the ray from world space to object space
 		glm::vec3 Origin = glm::vec3(
 			(CosTheta * ray.Origin.x) - (SinTheta * ray.Origin.z),
@@ -198,7 +198,7 @@ public:
 		Ray rotatedRay(Origin, Direction, ray.Time);
 
 		/// Determine whether an intersection exists in object space (and if so, where)
-		if (!Object->Hit(rotatedRay, hitrecord)) return false;
+		if (!Object->Hit(rotatedRay, hitdist, hitrecord)) return false;
 
 		/// Transform the intersection from object space back to world space
 		hitrecord.HitPoint = glm::vec3(
@@ -262,7 +262,7 @@ public:
 		bbox = Aabb(Min, Max);
 	}
 
-	bool Hit(const Ray& ray, Hitrec& hitrecord) const override {
+	bool Hit(const Ray& ray, Interval hitdist, Hitrec& hitrecord) const override {
 
 		/// Transform the ray from world space to object space
 		glm::vec3 Origin = glm::vec3(
@@ -280,7 +280,7 @@ public:
 		Ray rotatedRay(Origin, Direction, ray.Time);
 
 		/// Determine whether an intersection exists in object space (and if so, where)
-		if (!Object->Hit(rotatedRay, hitrecord)) return false;
+		if (!Object->Hit(rotatedRay, hitdist, hitrecord)) return false;
 
 		/// Transform the intersection from object space back to world space
 		hitrecord.HitPoint = glm::vec3(

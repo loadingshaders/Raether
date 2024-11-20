@@ -21,7 +21,7 @@ Quad::Quad(const glm::vec3& q, const glm::vec3& u, const glm::vec3& v, std::shar
 	bbox = Aabb(bboxDiagonal1, bboxDiagonal2);
 }
 
-bool Quad::Hit(const Ray& ray, Hitrec& hitrecord) const {
+bool Quad::Hit(const Ray& ray, Interval hitdist, Hitrec& hitrecord) const {
 	/// Check for plane hit and update hitrecord
 
 	/// Planar Equation
@@ -47,7 +47,7 @@ bool Quad::Hit(const Ray& ray, Hitrec& hitrecord) const {
 	/// Case-2: If the Ray Hit Distance is outside the Ray Interval
 	double t = (D - glm::dot(Normal, glm::dvec3(ray.Origin))) / Denom;
 	
-	if (!Interval(rayNearDist, hitrecord.ClosestHit).Contains(t)) return false;
+	if (!hitdist.Contains(t)) return false;
 
 	/// Case-3: Check If the Ray Lies within the Planar Shape using it's Planar Co-ordinates
 	glm::dvec3 hitPoint = glm::dvec3(ray.Origin) + t * glm::dvec3(ray.Direction);

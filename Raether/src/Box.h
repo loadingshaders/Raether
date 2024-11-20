@@ -7,7 +7,7 @@ class Box : public Hittable {
 public:
 	Box(const glm::vec3& a, const glm::vec3& b, std::shared_ptr<Material> matid);
 
-	bool Hit(const Ray& ray, Hitrec& hitrecord) const override;
+	bool Hit(const Ray& ray, Interval hitdist, Hitrec& hitrecord) const override;
 
 	Aabb BoundingBox() const override { return bbox; }
 

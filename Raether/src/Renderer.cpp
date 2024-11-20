@@ -117,9 +117,11 @@ glm::vec3 Renderer::PerPixel(glm::vec2 uv) {
 	glm::vec3 accumColor(0.0f);        // Accumulated color
 	glm::vec3 attenuation(1.0f);       // Current attenuation
 
+	Interval rayhitdist = Interval(0.0001, Infinity);
+
 	for (uint32_t bounces = 0; bounces < renderScene->GetSampleBounces(); bounces++) {
 
-		if (renderScene->Hit(ray, hitrecord)) {
+		if (renderScene->Hit(ray, rayhitdist, hitrecord)) {
 
 			const std::shared_ptr<Material>& mat = hitrecord.MatId;
 			glm::vec3 scatterAttenuation;

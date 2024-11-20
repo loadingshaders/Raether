@@ -14,7 +14,7 @@ public:
 	Sphere(glm::vec3 origin1, glm::vec3 origin2, float radius, std::shared_ptr<Material> matid);
 
 	const glm::vec3 GetSphereOrigin(float time) const;
-	bool Hit(const Ray& ray, Hitrec& hitrecord) const override;
+	bool Hit(const Ray& ray, Interval hitdist, Hitrec& hitrecord) const override;
 
 	Aabb BoundingBox() const override { return bbox; }
 

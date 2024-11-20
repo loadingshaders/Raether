@@ -10,7 +10,7 @@ public:
 	Volume(std::shared_ptr<Hittable> boundary, float density, glm::vec3& albedo);
 	Volume(std::shared_ptr<Hittable> boundary, float density, std::shared_ptr<Texture> texture);
 
-	bool Hit(const Ray& ray, Hitrec& hitrecord) const override;
+	bool Hit(const Ray& ray, Interval hitdist, Hitrec& hitrecord) const override;
 
 	Aabb BoundingBox() const override { return Boundary->BoundingBox(); }
 
