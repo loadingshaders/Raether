@@ -22,6 +22,7 @@ public:
 	void SetFocus(float strength, float distance);
 	void SetFovRange(float minfov, float maxfov);
 	void SetCamMovement(float motionsensitivity, float movementspeed);
+	void SetJitterStrength(float jitterstrength);
 	void SetPosition(glm::vec3 position);
 	void SetForwardDirection(glm::vec3 forward);
 	void SetViewPortWidth(int vp_Width);
@@ -56,6 +57,8 @@ private:
 
 	float motionSensitivity;
 	float movementSpeed;
+
+	float jitterStrength;
 
 	glm::vec3 cameraOrigin;
 	glm::vec3 cameraOrientation;

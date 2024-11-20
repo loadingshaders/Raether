@@ -9,6 +9,7 @@ Camera::Camera() : viewportWidth(700),
 				   maxFOV(maxFov),
 				   motionSensitivity(camMotionSensitivity),
 				   movementSpeed(camMovementSpeed),
+				   jitterStrength(JitterStrength),
 				   cameraOrigin(glm::vec3(0.f, 0.f, -2.f)),
 				   forwardDirection(glm::vec3(0.f, 0.f, -1.f)),
 				   cameraOrientation(cameraOrigin + forwardDirection),
@@ -35,6 +36,10 @@ void Camera::SetFovRange(float minfov, float maxfov) {
 void Camera::SetCamMovement(float motionsensitivity, float movementspeed) {
 	motionSensitivity = motionsensitivity;
 	movementSpeed = movementspeed;
+}
+
+void Camera::SetJitterStrength(float jitterstrength) {
+	jitterStrength = jitterstrength;
 }
 
 void Camera::SetPosition(glm::vec3 position) { cameraOrigin = position; }
