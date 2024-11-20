@@ -16,6 +16,7 @@
 #include "Quad.h"
 #include "Box.h"
 #include "Volume.h"
+#include "HittableList.h"
 
 class App {
 public:
