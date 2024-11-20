@@ -48,20 +48,22 @@ bool Sphere::Hit(const Ray& ray, Hitrec& hitrecord) const {
 	// r = sphere radius
 
 	glm::dvec3 sphereOrigin = (IsMoving) ? glm::dvec3(GetSphereOrigin(ray.GetTime())) : glm::dvec3(SphereOrigin);
-	glm::dvec3 newrayOrigin = glm::dvec3(ray.Origin) - sphereOrigin;
+	glm::dvec3 newrayOrigin = sphereOrigin - glm::dvec3(ray.Origin);
 
-	double a = glm::dot(glm::dvec3(ray.Direction), glm::dvec3(ray.Direction)); // (bx^2 + by^2 + bz^2)
-	double b = 2.0 * (glm::dot(newrayOrigin, glm::dvec3(ray.Direction))); // 2 ((ax * bx + ay * by + az * bz)
-	double c = glm::dot(newrayOrigin, newrayOrigin) - Radius * Radius; // (ax^2 + ay^2 + az^2) - r^2
+	double a = Utils::LengthSquared(glm::dvec3(ray.Direction)); // (bx^2 + by^2 + bz^2)
+	double b = glm::dot(glm::dvec3(ray.Direction), newrayOrigin); // 2 ((ax * bx + ay * by + az * bz)
+	double c = Utils::LengthSquared(newrayOrigin) - (double)(Radius * Radius); // (ax^2 + ay^2 + az^2) - r^2
 
 	/// Case-1: Calculate if the ray hits the sphere or not
-	double discriminant = (b * b) - (4.0 * a * c);
+	double discriminant = (b * b) - (a * c);
 	if (discriminant < 0.0) return false;
 
+	double sqrtd = std::sqrt(discriminant);
+
 	/// Case-2: Check if this is the closest hit
-	double nearHit = (-b - std::sqrt(discriminant)) / (2.0 * a);
+	double nearHit = (b - sqrtd) / a;
 	if (!Utils::Inrange(nearHit, rayNearDist, hitrecord.ClosestHit)) {
-		nearHit = (-b + std::sqrt(discriminant)) / (2.0 * a);
+		nearHit = (b + sqrtd) / a;
 		if (!Utils::Inrange(nearHit, rayNearDist, hitrecord.ClosestHit)) {
 			return false;
 		}
@@ -69,9 +71,8 @@ bool Sphere::Hit(const Ray& ray, Hitrec& hitrecord) const {
 
 	/// Case-3: Ray hits the Sphere; set the rest of the hit record and return true
 	hitrecord.ClosestHit = nearHit;
-	glm::vec3 hitPoint = ray.Origin + (float)hitrecord.ClosestHit * ray.Direction;
-	hitrecord.HitPoint = hitPoint;
-	hitrecord.SurfaceNormal = glm::normalize(hitrecord.HitPoint - glm::vec3(sphereOrigin));
+	hitrecord.HitPoint = ray.Origin + (float)hitrecord.ClosestHit * ray.Direction;
+	hitrecord.SurfaceNormal = (hitrecord.HitPoint - glm::vec3(sphereOrigin)) / Radius;
 	hitrecord.SetFrontFace(ray.Direction, hitrecord.SurfaceNormal);
 	GetSphereUV(hitrecord.SurfaceNormal, hitrecord.U, hitrecord.V);
 	hitrecord.MatId = MaterialId;
