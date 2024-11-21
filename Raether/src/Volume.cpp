@@ -40,7 +40,7 @@ bool Volume::Hit(const Ray& ray, Interval hitdist, Hitrec& hitrecord) const {
 	/// Case-5: Perfrom subsurface scatter and update hit record
 	hitrecord.ClosestHit = rec1.ClosestHit + hitDistance / rayLength;
 	hitrecord.HitPoint = ray.Origin + (float)hitrecord.ClosestHit * ray.Direction;
-	hitrecord.SurfaceNormal = glm::vec3(1.0f, 0.0f, 0.0f);
+	hitrecord.SurfaceNormal = Utils::RandomUnitVector();
 	hitrecord.FrontFace = true;
 	hitrecord.MatId = PhaseFunction;
 
