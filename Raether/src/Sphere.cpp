@@ -72,9 +72,9 @@ bool Sphere::Hit(const Ray& ray, Interval hitdist, Hitrec& hitrecord) const {
 	/// Case-3: Ray hits the Sphere; set the rest of the hit record and return true
 	hitrecord.ClosestHit = nearHit;
 	hitrecord.HitPoint = ray.Origin + (float)hitrecord.ClosestHit * ray.Direction;
-	hitrecord.HitPoint += hitrecord.SurfaceNormal * 0.00001f;
 	hitrecord.SurfaceNormal = (hitrecord.HitPoint - glm::vec3(sphereOrigin)) / Radius;
 	hitrecord.SetFrontFace(ray.Direction, hitrecord.SurfaceNormal);
+	hitrecord.HitPoint += hitrecord.SurfaceNormal * 0.000001f;
 	GetSphereUV(hitrecord.SurfaceNormal, hitrecord.U, hitrecord.V);
 	hitrecord.MatId = MaterialId;
 
