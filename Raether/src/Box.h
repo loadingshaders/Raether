@@ -6,6 +6,7 @@
 class Box : public Hittable {
 public:
 	Box(const glm::vec3& a, const glm::vec3& b, std::shared_ptr<Material> matid);
+	Box(const glm::vec3& origin, std::shared_ptr<Material> matid, const glm::vec3& boxwidth);
 
 	bool Hit(const Ray& ray, Interval hitdist, Hitrec& hitrecord) const override;
 
