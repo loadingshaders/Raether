@@ -31,9 +31,9 @@ public:
 			int randomAxis = Utils::RandomIntInRange(0, 2);
 			auto comparator = (randomAxis == 0) ? BoxXCompare :
 				(randomAxis == 1) ? BoxYCompare : BoxZCompare;
-			
+
 			#else
-			
+
 			Aabb box = objects[start]->BoundingBox();
 
 			// Build the BVH
@@ -45,7 +45,7 @@ public:
 			int longestAxis = box.LongestAxis();
 			auto comparator = (longestAxis == 0) ? BoxXCompare :
 				(longestAxis == 1) ? BoxYCompare : BoxZCompare;
-			
+
 			#endif
 
 			std::sort(objects.begin() + start, objects.begin() + end, comparator);
@@ -60,12 +60,12 @@ public:
 
 	bool Hit(const Ray& ray, Interval hitdist, Hitrec& hitrecord) const override {
 		// Create an Interval for the AABB hit check
-		if (!bbox.Hit(ray, Interval(rayNearDist, (double)hitdist.Max))) {
+		if (!bbox.Hit(ray, hitdist)) {
 			return false;
 		}
 
 		bool hit_left = LeftNode->Hit(ray, hitdist, hitrecord);
-		bool hit_right = RightNode->Hit(ray, Interval((double)hitdist.Min, hit_left? hitrecord.ClosestHit : (double)hitdist.Max), hitrecord);
+		bool hit_right = RightNode->Hit(ray, Interval(hitdist.Min, hit_left ? hitrecord.ClosestHit : hitdist.Max), hitrecord);
 
 		return hit_left || hit_right;
 	}

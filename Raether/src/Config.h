@@ -4,25 +4,27 @@
 #define camDetails 0
 
 // Utility Macros
-#define black glm::vec3(0.0f, 0.0f, 0.0f)
-#define white glm::vec3(1.0f)
-#define blue glm::vec3(0.5294f, 0.8078f, 0.9215f) // glm::vec3(0.5f, 0.7f, 1.0f)
+#define PI 3.14159265358979323
 
-#define JitterStrength 0.0035f
+#define black glm::dvec3(0.0, 0.0, 0.0)
+#define white glm::dvec3(1.0)
+#define blue glm::dvec3(0.5294, 0.8078, 0.9215) // glm::vec3(0.5f, 0.7f, 1.0f)
+
+#define JitterStrength 0.0035
 
 #define camNearDist 0.001
 #define camFarDist 1000.0
 
 #define rayNearDist 0.00001
-#define rayFarDist 10000.0
+#define rayFarDist Infinity
 
 #define Infinity std::numeric_limits<double>::infinity()
 
 // Camera Related Macros
-#define minFov 5.f
-#define maxFov 180.f
-#define camMotionSensitivity 0.01f
-#define camMovementSpeed 0.3f
+#define minFov 5.0
+#define maxFov 180.0
+#define camMotionSensitivity 0.01
+#define camMovementSpeed 0.3
 
 // Multithreading Related Macros
 #define MT 1 // Enables Multithreading
@@ -31,7 +33,7 @@
 #define RBVH 0 // Enable Random Axis BVH Split (The Default is Longest Axis Split)
 
 // Scene Related Macros
-#define SCENE17 // Enable a Particular Scene
+#define SCENE16 // Enable a Particular Scene
 #define NumofProcSpheres 40 // Represents Total Number of Procedural Spheres
 
 // Logging Related Macros

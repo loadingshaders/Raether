@@ -1,54 +1,54 @@
 #include "Camera.h"
 
-Camera::Camera() : viewportWidth(700),
-				   viewportHeight(620),
-				   V_FOV(45.f),
-				   defocusStrength(0.f),
-				   focusDistance(0.f),
-				   minFOV(minFov),
-				   maxFOV(maxFov),
-				   motionSensitivity(camMotionSensitivity),
-				   movementSpeed(camMovementSpeed),
-				   jitterStrength(JitterStrength),
-				   cameraOrigin(glm::vec3(0.f, 0.f, -2.f)),
-				   forwardDirection(glm::vec3(0.f, 0.f, -1.f)),
-				   cameraOrientation(cameraOrigin + forwardDirection),
-				   upDirection(glm::vec3(0.f, 1.f, 0.f)),
-				   rightDirection(glm::vec3(1.f, 0.f, 0.f)),
-				   projection(glm::mat4(0.0f)),
-				   view(glm::mat4(0.0f)),
-				   inverseProjection(glm::mat4(0.0f)),
-				   inverseView(glm::mat4(0.0f))
-{
-}
-Camera::~Camera() { }
+Camera::Camera() :
+	viewportWidth(800),
+	viewportHeight(800),
+	V_FOV(45.0),
+	defocusStrength(0.0),
+	focusDistance(0.0),
+	minFOV(minFov),
+	maxFOV(maxFov),
+	motionSensitivity(camMotionSensitivity),
+	movementSpeed(camMovementSpeed),
+	jitterStrength(JitterStrength),
+	cameraOrigin(glm::dvec3(0.0, 0.0, -2.0)),
+	forwardDirection(glm::dvec3(0.0, 0.0, -1.0)),
+	cameraOrientation(cameraOrigin + forwardDirection),
+	upDirection(glm::dvec3(0.0, 1.0, 0.0)),
+	rightDirection(glm::dvec3(1.0, 0.0, 0.0)),
+	projection(glm::dmat4(0.0)),
+	view(glm::dmat4(0.0)),
+	inverseProjection(glm::dmat4(0.0)),
+	inverseView(glm::dmat4(0.0))
+{}
+Camera::~Camera() {}
 
-void Camera::SetFocus(float strength, float distance) {
+void Camera::SetFocus(double strength, double distance) {
 	defocusStrength = strength;
 	focusDistance = distance;
 }
 
-void Camera::SetFovRange(float minfov, float maxfov) {
+void Camera::SetFovRange(double minfov, double maxfov) {
 	minFOV = minfov;
 	maxFOV = maxfov;
 }
 
-void Camera::SetCamMovement(float motionsensitivity, float movementspeed) {
+void Camera::SetCamMovement(double motionsensitivity, double movementspeed) {
 	motionSensitivity = motionsensitivity;
 	movementSpeed = movementspeed;
 }
 
-void Camera::SetJitterStrength(float jitterstrength) {
+void Camera::SetJitterStrength(double jitterstrength) {
 	jitterStrength = jitterstrength;
 }
 
-void Camera::SetPosition(glm::vec3 position) { cameraOrigin = position; }
-void Camera::SetForwardDirection(glm::vec3 forward) { forwardDirection = forward; }
-void Camera::SetViewPortWidth(int vp_Width) { viewportWidth = vp_Width; }
-void Camera::SetViewPortHeight(int vp_Height) { viewportHeight = vp_Height; }
-void Camera::SetProjection(float v_fov) {
+void Camera::SetPosition(glm::dvec3 position) { cameraOrigin = position; }
+void Camera::SetForwardDirection(glm::dvec3 forward) { forwardDirection = forward; }
+void Camera::SetViewPortWidth(uint32_t vp_Width) { viewportWidth = vp_Width; }
+void Camera::SetViewPortHeight(uint32_t vp_Height) { viewportHeight = vp_Height; }
+void Camera::SetProjection(double v_fov) {
 	V_FOV = v_fov;
-	projection = glm::perspectiveFov(glm::radians(V_FOV), (float)viewportWidth, (float)viewportHeight, (float)camNearDist, (float)camFarDist);
+	projection = glm::perspectiveFov(glm::radians(V_FOV), (double)viewportWidth, (double)viewportHeight, camNearDist, camFarDist);
 	inverseProjection = glm::inverse(projection);
 }
 
@@ -58,8 +58,8 @@ void Camera::SetView() {
 	inverseView = glm::inverse(view);
 }
 
-glm::vec3 Camera::GetDefocusDiskSample() const {
-	glm::vec2 defocusJitter = Utils::RandomPointOnCircle() * (defocusStrength / viewportWidth);
+glm::dvec3 Camera::GetDefocusDiskSample() const {
+	glm::dvec2 defocusJitter = Utils::RandomPointOnCircle() * (defocusStrength / viewportWidth);
 	return cameraOrigin + rightDirection * defocusJitter.r + upDirection * defocusJitter.g;
 }
 
@@ -68,11 +68,11 @@ void Camera::CalculateRayDirections() {
 
 	for (uint32_t y = 0; y < viewportHeight; y++) {
 		for (uint32_t x = 0; x < viewportWidth; x++) {
-			glm::vec2 coord = { (float)x / (float)viewportWidth, (float)y / (float)viewportHeight };
-			coord = coord * 2.0f - 1.0f; // -1 to 1
+			glm::dvec2 coord = { x / (double)viewportWidth, y / (double)viewportHeight };
+			coord = coord * 2.0 - 1.0; // -1 to 1
 
-			glm::vec4 target = inverseProjection * glm::vec4(coord.x, coord.y, 1.0f, 1.0f);
-			glm::vec3 rayDirection = glm::vec3 ( inverseView * glm::vec4(glm::normalize(glm::vec3(target) / target.w), 0));//world space
+			glm::dvec4 target = inverseProjection * glm::dvec4(coord.x, coord.y, 1.0, 1.0);
+			glm::dvec3 rayDirection = glm::dvec3(inverseView * glm::dvec4(glm::normalize(glm::dvec3(target) / target.w), 0.0));//world space
 			rayDirections[(uint64_t)(x + y * viewportWidth)] = rayDirection;
 		}
 	}
@@ -112,13 +112,13 @@ void Camera::HandleInput(class Raether& rae) {
 
 	/// For Camera Rotation
 	if (rae.mouseState == Mousestate::INMOTION) {
-		if (rae.mouseDelta.x != 0.0f || rae.mouseDelta.y != 0.0f) {
+		if (rae.mouseDelta.x != 0.0 || rae.mouseDelta.y != 0.0) {
 
-			float yawDelta = rae.mouseDelta.x * motionSensitivity;
-			float pitchDelta = rae.mouseDelta.y * motionSensitivity;
+			double yawDelta = rae.mouseDelta.x * motionSensitivity;
+			double pitchDelta = rae.mouseDelta.y * motionSensitivity;
 
 			/// Don't really know what's happening here :/
-			glm::quat q = glm::normalize(glm::cross(glm::angleAxis(-pitchDelta, rightDirection), glm::angleAxis(-yawDelta, upDirection)));
+			glm::dquat q = glm::normalize(glm::cross(glm::angleAxis(-pitchDelta, rightDirection), glm::angleAxis(-yawDelta, upDirection)));
 			forwardDirection = glm::rotate(q, forwardDirection);
 
 			cam = CamMotion::MOVED;
@@ -128,13 +128,15 @@ void Camera::HandleInput(class Raether& rae) {
 	/// For Camera FOV
 	if (rae.mouseState == Mousestate::SCROLLING) {
 
-		V_FOV -= rae.scrollAmount * 1.5f;
-		if(V_FOV <= minFOV) {
+		V_FOV -= rae.scrollAmount * 1.5;
+
+		if (V_FOV <= minFOV) {
 			V_FOV = minFOV;
 		}
 		else if (V_FOV >= maxFOV) {
 			V_FOV = maxFOV;
 		}
+		
 		SetProjection(V_FOV);
 
 		cam = CamMotion::MOVED;
@@ -142,6 +144,7 @@ void Camera::HandleInput(class Raether& rae) {
 
 
 	if (cam == CamMotion::MOVED) {
+
 		SetView();
 		CalculateRayDirections();
 

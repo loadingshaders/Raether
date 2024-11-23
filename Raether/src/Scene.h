@@ -17,13 +17,13 @@ public:
 
 	void SetSampleCount(uint32_t count) { SampleCount = count; }
 	void SetSampleBounces(uint32_t bounces) { Bounces = bounces; }
-	void SetBackgroundColor(const glm::vec3 topcolor, const glm::vec3 bottomcolor) {
+	void SetBackgroundColor(const glm::dvec3 topcolor, const glm::dvec3 bottomcolor) {
 		BackgroundColorNorth = topcolor;
 		BackgroundColorSouth = bottomcolor;
 	}
 
-	const glm::vec3 GetBackgroundColorNorth() const { return  BackgroundColorNorth; }
-	const glm::vec3 GetBackgroundColorSouth() const { return  BackgroundColorSouth; }
+	const glm::dvec3 GetBackgroundColorNorth() const { return  BackgroundColorNorth; }
+	const glm::dvec3 GetBackgroundColorSouth() const { return  BackgroundColorSouth; }
 	const uint32_t GetSampleCount() const { return SampleCount; }
 	const uint32_t GetSampleBounces() const { return Bounces; }
 	const std::vector<std::shared_ptr<Hittable>>& GetObjectList() const { return ObjectList; }
@@ -61,6 +61,6 @@ private:
 	std::vector<std::shared_ptr<Hittable>> ObjectList;
 	Aabb bbox;
 	std::shared_ptr<BvhNode> RootNode;
-	glm::vec3 BackgroundColorNorth;
-	glm::vec3 BackgroundColorSouth;
+	glm::dvec3 BackgroundColorNorth;
+	glm::dvec3 BackgroundColorSouth;
 };

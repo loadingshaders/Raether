@@ -5,26 +5,26 @@
 class Ray {
 public:
 	Ray() :
-		Origin(glm::vec3(0.f)),
-		Direction(glm::vec3(0.f, 0.f, -1.f)),
-		Time(0.f)
+		Origin(glm::dvec3(0.0)),
+		Direction(glm::dvec3(0.0, 0.0, -1.0)),
+		Time(0.0)
 	{}
-	Ray(const glm::vec3& origin, const glm::vec3& direction, const float& time) :
+	Ray(const glm::dvec3& origin, const glm::dvec3& direction, const double& time) :
 		Origin(origin),
 		Direction(direction),
 		Time(time)
 	{}
 
-	const float GetTime() const {
+	const double GetTime() const {
 		return Time;
 	}
 
-	glm::vec3 At(float distance) const {
+	glm::dvec3 At(double distance) const {
 		return Origin + distance * Direction;
 	}
 
 public:
-	glm::vec3 Origin;
-	glm::vec3 Direction;
-	float Time;
+	glm::dvec3 Origin;
+	glm::dvec3 Direction;
+	double Time;
 };

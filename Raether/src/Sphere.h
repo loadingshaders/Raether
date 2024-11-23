@@ -10,23 +10,22 @@
 
 class Sphere : public Hittable {
 public:
-	Sphere(glm::vec3 origin, float radius, std::shared_ptr<Material> matid);
-	Sphere(glm::vec3 origin1, glm::vec3 origin2, float radius, std::shared_ptr<Material> matid);
+	Sphere(glm::dvec3 origin, double radius, std::shared_ptr<Material> matid);
+	Sphere(glm::dvec3 origin1, glm::dvec3 origin2, double radius, std::shared_ptr<Material> matid);
 
-	const glm::vec3 GetSphereOrigin(float time) const;
+	const glm::dvec3 GetSphereOrigin(double time) const;
 	bool Hit(const Ray& ray, Interval hitdist, Hitrec& hitrecord) const override;
 
 	Aabb BoundingBox() const override { return bbox; }
 
 private:
-	static void GetSphereUV(const glm::vec3& point, double& u, double& v);
+	static void GetSphereUV(const glm::dvec3& point, double& u, double& v);
 
 private:
-	glm::vec3 SphereOrigin{ 0.f };
-	glm::vec3 SphereMotion{ 0.f };
-	float Radius = 0.5f;
+	glm::dvec3 SphereOrigin{ 0.0 };
+	glm::dvec3 SphereMotion{ 0.0 };
+	double Radius = 0.5;
 	std::shared_ptr<Material> MaterialId;
 	bool IsMoving;
 	Aabb bbox;
 };
-

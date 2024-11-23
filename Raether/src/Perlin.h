@@ -19,7 +19,7 @@ public:
 		PerlinGenPermute(PermuteZ);
 	}
 
-	double Noise(const glm::vec3& point) const {
+	double Noise(const glm::dvec3& point) const {
 
 		// Storing the Fractional Part
 		double u = point.x - glm::floor(point.x);
@@ -40,8 +40,8 @@ public:
 				for (int dk = 0; dk < 2; dk++) {
 					Lerp[di][dj][dk] = RandomDoubles[
 						PermuteX[(i + di) & (TileWidth - 1)] ^
-						PermuteY[(j + dj) & (TileWidth - 1)] ^
-						PermuteZ[(k + dk) & (TileWidth - 1)]
+							PermuteY[(j + dj) & (TileWidth - 1)] ^
+							PermuteZ[(k + dk) & (TileWidth - 1)]
 					];
 				}
 			}
@@ -50,12 +50,12 @@ public:
 		return PerlinInterp(&Lerp[0][0][0], 2, u, v, w);
 	}
 
-	double Turbulence(const glm::vec3& point, int depth) const {
-		
+	double Turbulence(const glm::dvec3& point, int depth) const {
+
 		double Accum = 0.0;
 		double Weight = 1.0;
 		glm::dvec3 TempPoint = point;
-		
+
 		for (int i = 0; i < depth; i++) {
 			Accum += Weight * Noise(TempPoint);
 			Weight *= 0.5;
@@ -111,7 +111,7 @@ private:
 			for (int j = 0; j < size; j++) {
 				for (int k = 0; k < size; k++) {
 					glm::dvec3 Weight = glm::dvec3(u - i, v - j, w - k); // Here, i, j, k represents the lattice points from (0,0,0) to (1, 1, 1)
-					                                                     // And (u, v, w) is the fractional part of a point
+					// And (u, v, w) is the fractional part of a point
 
 					Accum +=
 						((1 - uu) * (1 - i) + uu * i) * // Lero(uu, v0, v1) = (1-uu) * v0 + uu * v1 => Lerp(uu, 1-i, i) => (1-uu) * (1-i) + uu * i

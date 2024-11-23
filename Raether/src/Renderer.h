@@ -22,7 +22,7 @@ public:
 	void ResetFrameIdx() { FrameCount = 0; }
 
 private:
-	glm::vec3 PerPixel(glm::vec2 uv);
+	glm::dvec3 PerPixel(glm::dvec2 uv);
 	void SetBuffers();
 
 public:
@@ -36,7 +36,7 @@ private:
 	uint32_t FrameCount;
 
 	std::vector<GLM::ui8_tvec4> ImageData;
-	std::vector<glm::vec3> AccumImageData;
+	std::vector<glm::dvec3> AccumImageData;
 
 	std::vector<uint32_t> ImageHorizontalIter, ImageVerticalIter;
 };

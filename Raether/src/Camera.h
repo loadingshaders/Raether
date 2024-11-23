@@ -11,7 +11,7 @@
 #include "Raether.h"
 #include "Scene.h"
 
-enum struct CamMotion { STATIC, MOVED , FOV};
+enum struct CamMotion { STATIC, MOVED, FOV };
 
 class Camera
 {
@@ -19,26 +19,26 @@ public:
 	Camera();
 	~Camera();
 
-	void SetFocus(float strength, float distance);
-	void SetFovRange(float minfov, float maxfov);
-	void SetCamMovement(float motionsensitivity, float movementspeed);
-	void SetJitterStrength(float jitterstrength);
-	void SetPosition(glm::vec3 position);
-	void SetForwardDirection(glm::vec3 forward);
-	void SetViewPortWidth(int vp_Width);
-	void SetViewPortHeight(int vp_Height);
-	void SetProjection(float v_fov);
+	void SetFocus(double strength, double distance);
+	void SetFovRange(double minfov, double maxfov);
+	void SetCamMovement(double motionsensitivity, double movementspeed);
+	void SetJitterStrength(double jitterstrength);
+	void SetPosition(glm::dvec3 position);
+	void SetForwardDirection(glm::dvec3 forward);
+	void SetViewPortWidth(uint32_t vp_Width);
+	void SetViewPortHeight(uint32_t vp_Height);
+	void SetProjection(double v_fov);
 	void SetView();
 
 	const uint32_t GetViewPortWidth() const { return viewportWidth; }
 	const uint32_t GetViewPortHeight() const { return viewportHeight; }
-	const glm::vec3& GetPosition() const { return cameraOrigin; }
-	const std::vector<glm::vec3>& GetRayDirection() const { return rayDirections; }
-	const float GetRayTime() const { return Utils::RandomFloat(); /* Ranges from 0.0f - 0.99f */ }
-	const float GetCamFovFraction() const { return (V_FOV / maxFov); /* Ranges From 0 - 1 */ }
-	const float GetDefocusStrength() const { return defocusStrength; }
-	const float GetFocusDistance() const { return focusDistance; };
-	glm::vec3 GetDefocusDiskSample() const;
+	const glm::dvec3& GetPosition() const { return cameraOrigin; }
+	const std::vector<glm::dvec3>& GetRayDirection() const { return rayDirections; }
+	const double GetRayTime() const { return Utils::RandomDouble(); /* Ranges from 0.0 - 0.9999 */ }
+	const double GetCamFovFraction() const { return (V_FOV / maxFov); /* Ranges From 0 - 1 */ }
+	const double GetDefocusStrength() const { return defocusStrength; }
+	const double GetFocusDistance() const { return focusDistance; };
+	glm::dvec3 GetDefocusDiskSample() const;
 
 	void CalculateRayDirections();
 	void HandleInput(class Raether& rae);
@@ -48,29 +48,29 @@ private:
 	uint32_t viewportWidth;
 	uint32_t viewportHeight;
 
-	float V_FOV;
-	float defocusStrength;
-	float focusDistance;
+	double V_FOV;
+	double defocusStrength;
+	double focusDistance;
 
-	float minFOV;
-	float maxFOV;
+	double minFOV;
+	double maxFOV;
 
-	float motionSensitivity;
-	float movementSpeed;
+	double motionSensitivity;
+	double movementSpeed;
 
-	float jitterStrength;
+	double jitterStrength;
 
-	glm::vec3 cameraOrigin;
-	glm::vec3 cameraOrientation;
-	glm::vec3 forwardDirection;
-	glm::vec3 upDirection;
-	glm::vec3 rightDirection;
+	glm::dvec3 cameraOrigin;
+	glm::dvec3 cameraOrientation;
+	glm::dvec3 forwardDirection;
+	glm::dvec3 upDirection;
+	glm::dvec3 rightDirection;
 
-	glm::mat4 projection;
-	glm::mat4 view;
-	glm::mat4 inverseProjection;
-	glm::mat4 inverseView;
+	glm::dmat4 projection;
+	glm::dmat4 view;
+	glm::dmat4 inverseProjection;
+	glm::dmat4 inverseView;
 
 	//Cached Ray Directions
-	std::vector<glm::vec3> rayDirections;
+	std::vector<glm::dvec3> rayDirections;
 };

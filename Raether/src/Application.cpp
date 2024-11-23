@@ -1,13 +1,14 @@
 #include "Application.h"
 
 App::App() : title("Raether"),
-			 width(800), // 800
-			 height(800), // 800
-			 rae(),
-			 scene(),
-			 camera(),
-			 renderer()
-{} // 900,500
+width(800), // 800
+height(800), // 800
+rae(),
+scene(),
+camera(),
+renderer()
+{
+} // 900,500
 
 App::~App() {}
 
@@ -24,19 +25,19 @@ void App::setUpScene() {
 		///Scene-1
 
 		// Configure Materials
-		std::shared_ptr<Material> diffuseYeollow = std::make_shared<Lambertian>(glm::vec3(0.8f, 0.8f, 0.0f));
-		std::shared_ptr<Material> diffuseBlue = std::make_shared<Lambertian>(glm::vec3(0.1f, 0.2f, 0.5f));
-		std::shared_ptr<Material> metalGold = std::make_shared<Metal>(glm::vec3(1.f, 0.782f, 0.344f), 0.f);
-		std::shared_ptr<Material> metalSilver = std::make_shared<Metal>(glm::vec3(0.972f, 0.960f, 0.915f), 0.3f);
-		std::shared_ptr<Material> dielectricGlass = std::make_shared<Dielectric>(1.52f);
-		std::shared_ptr<Material> dielectricBubble = std::make_shared<Dielectric>(1.003f / 1.52f);
+		std::shared_ptr<Material> diffuseYeollow = std::make_shared<Lambertian>(glm::dvec3(0.8, 0.8, 0.0));
+		std::shared_ptr<Material> diffuseBlue = std::make_shared<Lambertian>(glm::dvec3(0.1, 0.2, 0.5));
+		std::shared_ptr<Material> metalGold = std::make_shared<Metal>(glm::dvec3(1.0, 0.782, 0.344), 0.0);
+		std::shared_ptr<Material> metalSilver = std::make_shared<Metal>(glm::dvec3(0.972, 0.960, 0.915), 0.3);
+		std::shared_ptr<Material> dielectricGlass = std::make_shared<Dielectric>(1.52);
+		std::shared_ptr<Material> dielectricBubble = std::make_shared<Dielectric>(1.0003 / 1.52);
 
 		// Configure Spheres
-		scene.Add(std::make_shared<Sphere>(glm::vec3(0.f, -101.f, 0.f), 100.f, diffuseYeollow));
-		scene.Add(std::make_shared<Sphere>(glm::vec3(0.f, 0.f, 0.f), 1.f, diffuseBlue));
-		scene.Add(std::make_shared<Sphere>(glm::vec3(2.01f, 0.0f, 0.0f), 1.f, metalGold));
-		scene.Add(std::make_shared<Sphere>(glm::vec3(-2.01f, 0.0f, 0.0f), 1.f, dielectricGlass));
-		scene.Add(std::make_shared<Sphere>(glm::vec3(-2.01f, 0.0f, 0.0f), 0.65f, dielectricBubble));
+		scene.Add(std::make_shared<Sphere>(glm::dvec3(0.0, -101.0, 0.0), 100.0, diffuseYeollow));
+		scene.Add(std::make_shared<Sphere>(glm::dvec3(0.0, 0.0, 0.0), 1.0, diffuseBlue));
+		scene.Add(std::make_shared<Sphere>(glm::dvec3(2.01, 0.0, 0.0), 1.0, metalGold));
+		scene.Add(std::make_shared<Sphere>(glm::dvec3(-2.01, 0.0, 0.0), 1.0, dielectricGlass));
+		scene.Add(std::make_shared<Sphere>(glm::dvec3(-2.01, 0.0, 0.00), 0.65, dielectricBubble));
 
 		// Set Background Color
 		scene.SetBackgroundColor(blue, white);
@@ -45,32 +46,33 @@ void App::setUpScene() {
 		scene.BuildBVH();
 
 		// Camera setup
-		camera.SetFocus(100.f, 8.f);
+		camera.SetFocus(100.0, 8.0);
 		camera.SetViewPortWidth(width);
 		camera.SetViewPortHeight(height);
-		camera.SetPosition(glm::vec3(0.f, 0.f, 8.f));
-		camera.SetForwardDirection(glm::vec3(0.0f, 0.0f, -1.0f));
-		camera.SetProjection(45.0f);
+		camera.SetPosition(glm::dvec3(0.0, 0.0, 8.0));
+		camera.SetForwardDirection(glm::dvec3(0.0, 0.0, -1.0));
+		camera.SetProjection(45.0);
 		camera.SetView();
 		camera.CalculateRayDirections();
 	}
 	#elif defined(SCENE2)
 	{
 		///Scene-2
+
 		// Configure Materials
-		std::shared_ptr<Material> diffuseYeollow = std::make_shared<Lambertian>(glm::vec3(0.8f, 0.8f, 0.0f));
-		std::shared_ptr<Material> diffuseBlue = std::make_shared<Lambertian>(glm::vec3(0.1f, 0.2f, 0.5f));
-		std::shared_ptr<Material> metalGold = std::make_shared<Metal>(glm::vec3(1.f, 0.782f, 0.344f), 0.f);
-		std::shared_ptr<Material> metalSilver = std::make_shared<Metal>(glm::vec3(0.972f, 0.960f, 0.915f), 0.3f);
-		std::shared_ptr<Material> dielectricGlass = std::make_shared<Dielectric>(1.52f);
-		std::shared_ptr<Material> dielectricBubble = std::make_shared<Dielectric>(1.003f / 1.52f);
+		std::shared_ptr<Material> diffuseYeollow = std::make_shared<Lambertian>(glm::dvec3(0.8, 0.8, 0.0));
+		std::shared_ptr<Material> diffuseBlue = std::make_shared<Lambertian>(glm::dvec3(0.1, 0.2, 0.5));
+		std::shared_ptr<Material> metalGold = std::make_shared<Metal>(glm::dvec3(1.0, 0.782, 0.344), 0.0);
+		std::shared_ptr<Material> metalSilver = std::make_shared<Metal>(glm::dvec3(0.972, 0.960, 0.915), 0.3);
+		std::shared_ptr<Material> dielectricGlass = std::make_shared<Dielectric>(1.52);
+		std::shared_ptr<Material> dielectricBubble = std::make_shared<Dielectric>(1.0003 / 1.52);
 
 		// Configure Spheres
-		scene.Add(std::make_shared<Sphere>(glm::vec3(0.f, -101.f, 0.f), 100.f, diffuseYeollow));
-		scene.Add(std::make_shared<Sphere>(glm::vec3(0.f, 0.f, 0.f), 1.f, diffuseBlue));
-		scene.Add(std::make_shared<Sphere>(glm::vec3(2.01f, 0.0f, 0.0f), 1.f, metalGold));
-		scene.Add(std::make_shared<Sphere>(glm::vec3(-2.01f, 0.0f, 0.0f), 1.f, dielectricGlass));
-		scene.Add(std::make_shared<Sphere>(glm::vec3(-2.01f, 0.0f, 0.0f), 0.65f, dielectricBubble));
+		scene.Add(std::make_shared<Sphere>(glm::dvec3(0.0, -101.0, 0.0), 100.0, diffuseYeollow));
+		scene.Add(std::make_shared<Sphere>(glm::dvec3(0.0, 0.0, 0.0), 1.0, diffuseBlue));
+		scene.Add(std::make_shared<Sphere>(glm::dvec3(2.01, 0.0, 0.0), 1.0, metalGold));
+		scene.Add(std::make_shared<Sphere>(glm::dvec3(-2.01, 0.0, 0.0), 1.0, dielectricGlass));
+		scene.Add(std::make_shared<Sphere>(glm::dvec3(-2.01, 0.0, 0.0), 0.65, dielectricBubble));
 
 		// Set Background Color
 		scene.SetBackgroundColor(blue, white);
@@ -79,61 +81,62 @@ void App::setUpScene() {
 		scene.BuildBVH();
 
 		// Camera setup
-		camera.SetFocus(0.f, 62.f);
+		camera.SetFocus(0.0, 62.0);
 		camera.SetViewPortWidth(width);
 		camera.SetViewPortHeight(height);
-		camera.SetPosition(glm::vec3(-34.93f, 35.6765, 36.7877)); //glm::vec3(0.f, 0.f, 8.f)
-		camera.SetForwardDirection(glm::vec3(0.562163f, -0.577032f, -0.592458f)); // glm::vec3(0.0f, 0.0f, -1.0f)
-		camera.SetProjection(4.5f); // 45.f
+		camera.SetPosition(glm::dvec3(-34.93, 35.6765, 36.7877)); //glm::dvec3(0.0, 0.0, 8.0)
+		camera.SetForwardDirection(glm::dvec3(0.562163, -0.577032, -0.592458)); // glm::dvec3(0.0, 0.0, -1.0)
+		camera.SetProjection(4.5); // 45.0
 		camera.SetView();
 		camera.CalculateRayDirections();
 	}
 	#elif defined(SCENE3)
 	{
 		///Scene-3
+
 		// Configure Materials
-		std::shared_ptr<Material> diffuseWhite = std::make_shared<Lambertian>(glm::vec3(0.5f, 0.5f, 0.5f));
-		std::shared_ptr<Material> diffuseRed = std::make_shared<Lambertian>(glm::vec3(0.4f, 0.2f, 0.1f));
-		std::shared_ptr<Material> dielectricGlass = std::make_shared<Dielectric>(1.5f);
-		std::shared_ptr<Material> dielectricBubble = std::make_shared<Dielectric>(1.0003f / 1.5f);
-		std::shared_ptr<Material> metalSteel = std::make_shared<Metal>(glm::vec3(0.7f, 0.6f, 0.5f), 0.0f);
+		std::shared_ptr<Material> diffuseWhite = std::make_shared<Lambertian>(glm::dvec3(0.5, 0.5, 0.5));
+		std::shared_ptr<Material> diffuseRed = std::make_shared<Lambertian>(glm::dvec3(0.4, 0.2, 0.1));
+		std::shared_ptr<Material> dielectricGlass = std::make_shared<Dielectric>(1.5);
+		std::shared_ptr<Material> dielectricBubble = std::make_shared<Dielectric>(1.00003 / 1.5);
+		std::shared_ptr<Material> metalSteel = std::make_shared<Metal>(glm::dvec3(0.7, 0.6, 0.5), 0.0);
 
 		// Configure Spheres
-		scene.Add(std::make_shared<Sphere>(glm::vec3(0.f, -10000.f, 0.f), 10000.f, diffuseWhite));
-		scene.Add(std::make_shared<Sphere>(glm::vec3(-4.f, 1.f, 0.f), 1.f, diffuseRed));
-		scene.Add(std::make_shared<Sphere>(glm::vec3(0.f, 1.f, 0.f), 1.f, dielectricGlass));
-		scene.Add(std::make_shared<Sphere>(glm::vec3(4.f, 1.f, 0.f), 1.f, metalSteel));
-		scene.Add(std::make_shared<Sphere>(glm::vec3(0.f, 1.f, 0.f), 0.6f, dielectricBubble));
+		scene.Add(std::make_shared<Sphere>(glm::dvec3(0.0, -10000.0, 0.0), 10000.0, diffuseWhite));
+		scene.Add(std::make_shared<Sphere>(glm::dvec3(-4.0, 1.0, 0.0), 1.0, diffuseRed));
+		scene.Add(std::make_shared<Sphere>(glm::dvec3(0.0, 1.0, 0.0), 1.0, dielectricGlass));
+		scene.Add(std::make_shared<Sphere>(glm::dvec3(4.0, 1.0, 0.0), 1.0, metalSteel));
+		scene.Add(std::make_shared<Sphere>(glm::dvec3(0.0, 1.0, 0.0), 0.6, dielectricBubble));
 
-		static glm::vec3 lastOrigin;
+		static glm::dvec3 lastOrigin;
 
 		for (int a = -NumofProcSpheres; a < NumofProcSpheres; a++) {
 			for (int b = -NumofProcSpheres; b < NumofProcSpheres; b++) {
-				
-				float chooseMat = Utils::RandomFloat();
-				glm::vec3 center = glm::vec3(a + Utils::RandomFloat(), 0.2f, b + Utils::RandomFloat());
 
-				if (glm::distance(scene.GetObjectList()[1]->ObjectOrigin, center) > 1.23f &&
-					glm::distance(scene.GetObjectList()[2]->ObjectOrigin, center) > 1.23f &&
-					glm::distance(scene.GetObjectList()[3]->ObjectOrigin, center) > 1.23f &&
-					glm::distance(              lastOrigin              , center) > 0.45f) {
+				double chooseMat = Utils::RandomDouble();
+				glm::dvec3 center = glm::dvec3(a + Utils::RandomDouble(), 0.2, b + Utils::RandomDouble());
+
+				if (glm::distance(scene.GetObjectList()[1]->ObjectOrigin, center) > 1.23 &&
+					glm::distance(scene.GetObjectList()[2]->ObjectOrigin, center) > 1.23 &&
+					glm::distance(scene.GetObjectList()[3]->ObjectOrigin, center) > 1.23 &&
+					glm::distance(lastOrigin, center) > 0.45) {
 
 					std::shared_ptr<Material> sphereMat;
 
-					if (chooseMat < 0.6f) {
+					if (chooseMat < 0.6) {
 						// Diffuse Spheres
-						sphereMat = std::make_shared<Lambertian>(glm::vec3((float)Utils::RandomFloatInRange(0.0f, 0.99f), (float)Utils::RandomFloatInRange(0.0f, 0.99f), (float)Utils::RandomFloatInRange(0.0f, 0.99f)));
-						scene.Add(std::make_shared<Sphere>(center, 0.2f, sphereMat));
+						sphereMat = std::make_shared<Lambertian>(glm::dvec3(Utils::RandomDoubleInRange(0.0, 0.99), Utils::RandomDoubleInRange(0.0, 0.99), Utils::RandomDoubleInRange(0.0, 0.99)));
+						scene.Add(std::make_shared<Sphere>(center, 0.2, sphereMat));
 					}
-					else if (chooseMat < 0.85f) {
+					else if (chooseMat < 0.85) {
 						// Metal Spheres
-						sphereMat = std::make_shared<Metal>(glm::vec3((float)Utils::RandomFloatInRange(0.0f, 0.99f), (float)Utils::RandomFloatInRange(0.0f, 0.99f), (float)Utils::RandomFloatInRange(0.0f, 0.99f)), (float)Utils::RandomFloatInRange(0.f, 0.5f));
-						scene.Add(std::make_shared<Sphere>(center, 0.2f, sphereMat));
+						sphereMat = std::make_shared<Metal>(glm::dvec3(Utils::RandomDoubleInRange(0.0, 0.99), Utils::RandomDoubleInRange(0.0, 0.99), Utils::RandomDoubleInRange(0.0, 0.99)), Utils::RandomDoubleInRange(0.0, 0.5));
+						scene.Add(std::make_shared<Sphere>(center, 0.2, sphereMat));
 					}
 					else {
 						// Glass Spheres
-						sphereMat = std::make_shared<Dielectric>(1.52f);
-						scene.Add(std::make_shared<Sphere>(center, 0.2f, sphereMat));
+						sphereMat = std::make_shared<Dielectric>(1.52);
+						scene.Add(std::make_shared<Sphere>(center, 0.2, sphereMat));
 					}
 				}
 
@@ -148,62 +151,63 @@ void App::setUpScene() {
 		scene.BuildBVH();
 
 		// Camera setup
-		camera.SetFocus(10.f, 12.f);
+		camera.SetFocus(10.0, 12.0);
 		camera.SetViewPortWidth(width);
 		camera.SetViewPortHeight(height);
-		camera.SetPosition(glm::vec3(14.0218f, 2.0866f, 3.9276f)); //glm::vec3(0.f, 0.f, 8.f)
-		camera.SetForwardDirection(glm::vec3(-0.869436f, -0.0900598f, -0.228215f)); // glm::vec3(0.0f, 0.0f, -1.0f)
-		camera.SetProjection(30.f); // 45.f
+		camera.SetPosition(glm::dvec3(14.0218, 2.0866, 3.9276)); //glm::dvec3(0.0, 0.0, 8.0)
+		camera.SetForwardDirection(glm::dvec3(-0.869436, -0.0900598, -0.228215)); // glm::dvec3(0.0, 0.0, -1.0)
+		camera.SetProjection(30.0); // 45.0
 		camera.SetView();
 		camera.CalculateRayDirections();
 	}
 	#elif defined(SCENE4)
 	{
 		///Scene-4
+
 		// Configure Materials
-		std::shared_ptr<Material> diffuseWhite = std::make_shared<Lambertian>(glm::vec3(0.5f, 0.5f, 0.5f));
-		std::shared_ptr<Material> diffuseRed = std::make_shared<Lambertian>(glm::vec3(0.4f, 0.2f, 0.1f));
-		std::shared_ptr<Material> dielectricGlass = std::make_shared<Dielectric>(1.5f);
-		std::shared_ptr<Material> dielectricBubble = std::make_shared<Dielectric>(1.0003f / 1.5f);
-		std::shared_ptr<Material> metalSteel = std::make_shared<Metal>(glm::vec3(0.7f, 0.6f, 0.5f), 0.0f);
+		std::shared_ptr<Material> diffuseWhite = std::make_shared<Lambertian>(glm::dvec3(0.5, 0.5, 0.5));
+		std::shared_ptr<Material> diffuseRed = std::make_shared<Lambertian>(glm::dvec3(0.4, 0.2, 0.1));
+		std::shared_ptr<Material> dielectricGlass = std::make_shared<Dielectric>(1.5);
+		std::shared_ptr<Material> dielectricBubble = std::make_shared<Dielectric>(1.00003 / 1.5);
+		std::shared_ptr<Material> metalSteel = std::make_shared<Metal>(glm::dvec3(0.7, 0.6, 0.5), 0.0);
 
 		// Configure Spheres
-		scene.Add(std::make_shared<Sphere>(glm::vec3(0.f, -10000.f, 0.f), 10000.f, diffuseWhite));
-		scene.Add(std::make_shared<Sphere>(glm::vec3(-4.f, 1.f, 0.f), 1.f, diffuseRed));
-		scene.Add(std::make_shared<Sphere>(glm::vec3(0.f, 1.f, 0.f), 1.f, dielectricGlass));
-		scene.Add(std::make_shared<Sphere>(glm::vec3(4.f, 1.f, 0.f), 1.f, metalSteel));
-		scene.Add(std::make_shared<Sphere>(glm::vec3(0.f, 1.f, 0.f), 0.6f, dielectricBubble));
+		scene.Add(std::make_shared<Sphere>(glm::dvec3(0.0, -10000.0, 0.0), 10000.0, diffuseWhite));
+		scene.Add(std::make_shared<Sphere>(glm::dvec3(-4.0, 1.0, 0.0), 1.0, diffuseRed));
+		scene.Add(std::make_shared<Sphere>(glm::dvec3(0.0, 1.0, 0.0), 1.0, dielectricGlass));
+		scene.Add(std::make_shared<Sphere>(glm::dvec3(4.0, 1.0, 0.0), 1.0, metalSteel));
+		scene.Add(std::make_shared<Sphere>(glm::dvec3(0.0, 1.0, 0.0), 0.6, dielectricBubble));
 
-		static glm::vec3 lastOrigin;
+		static glm::dvec3 lastOrigin;
 
 		for (int a = -NumofProcSpheres; a < NumofProcSpheres; a++) {
 			for (int b = -NumofProcSpheres; b < NumofProcSpheres; b++) {
 
-				float chooseMat = Utils::RandomFloat();
-				glm::vec3 center1 = glm::vec3(a + Utils::RandomFloat(), 0.2f, b + Utils::RandomFloat());
-				glm::vec3 center2 = center1 + glm::vec3(0.f, Utils::RandomFloatInRange(0.f, 0.5f), 0.f);
+				double chooseMat = Utils::RandomDouble();
+				glm::dvec3 center1 = glm::dvec3(a + Utils::RandomDouble(), 0.2, b + Utils::RandomDouble());
+				glm::dvec3 center2 = center1 + glm::dvec3(0.0, Utils::RandomDoubleInRange(0.0, 0.5), 0.0);
 
-				if (glm::distance(scene.GetObjectList()[1]->ObjectOrigin, center1) > 1.23f &&
-					glm::distance(scene.GetObjectList()[2]->ObjectOrigin, center1) > 1.23f &&
-					glm::distance(scene.GetObjectList()[3]->ObjectOrigin, center1) > 1.23f &&
-					glm::distance(              lastOrigin              , center1) > 0.45f) {
+				if (glm::distance(scene.GetObjectList()[1]->ObjectOrigin, center1) > 1.23 &&
+					glm::distance(scene.GetObjectList()[2]->ObjectOrigin, center1) > 1.23 &&
+					glm::distance(scene.GetObjectList()[3]->ObjectOrigin, center1) > 1.23 &&
+					glm::distance(lastOrigin, center1) > 0.45) {
 
 					std::shared_ptr<Material> sphereMat;
 
-					if (chooseMat < 0.6f) {
+					if (chooseMat < 0.6) {
 						// Diffuse Spheres
-						sphereMat = std::make_shared<Lambertian>(glm::vec3((float)Utils::RandomFloatInRange(0.0f, 0.99f), (float)Utils::RandomFloatInRange(0.0f, 0.99f), (float)Utils::RandomFloatInRange(0.0f, 0.99f)));
-						scene.Add(std::make_shared<Sphere>(center1, center2, 0.2f, sphereMat));
+						sphereMat = std::make_shared<Lambertian>(glm::dvec3(Utils::RandomDoubleInRange(0.0, 0.99), Utils::RandomDoubleInRange(0.0, 0.99), Utils::RandomDoubleInRange(0.0, 0.99)));
+						scene.Add(std::make_shared<Sphere>(center1, center2, 0.2, sphereMat));
 					}
-					else if (chooseMat < 0.85f) {
+					else if (chooseMat < 0.85) {
 						// Metal Spheres
-						sphereMat = std::make_shared<Metal>(glm::vec3((float)Utils::RandomFloatInRange(0.0f, 0.99f), (float)Utils::RandomFloatInRange(0.0f, 0.99f), (float)Utils::RandomFloatInRange(0.0f, 0.99f)), (float)Utils::RandomFloatInRange(0.f, 0.5f));
-						scene.Add(std::make_shared<Sphere>(center1, center2, 0.2f, sphereMat));
+						sphereMat = std::make_shared<Metal>(glm::dvec3(Utils::RandomDoubleInRange(0.0, 0.99), Utils::RandomDoubleInRange(0.0, 0.99), Utils::RandomDoubleInRange(0.0, 0.99)), Utils::RandomDoubleInRange(0.0, 0.5));
+						scene.Add(std::make_shared<Sphere>(center1, center2, 0.2, sphereMat));
 					}
 					else {
 						// Glass Spheres
-						sphereMat = std::make_shared<Dielectric>(1.52f);
-						scene.Add(std::make_shared<Sphere>(center1, center2, 0.2f, sphereMat));
+						sphereMat = std::make_shared<Dielectric>(1.52);
+						scene.Add(std::make_shared<Sphere>(center1, center2, 0.2, sphereMat));
 					}
 				}
 
@@ -218,62 +222,63 @@ void App::setUpScene() {
 		scene.BuildBVH();
 
 		// Camera setup
-		camera.SetFocus(50.f, 12.f);
+		camera.SetFocus(50.0, 12.0);
 		camera.SetViewPortWidth(width);
 		camera.SetViewPortHeight(height);
-		camera.SetPosition(glm::vec3(14.0218f, 2.0866f, 3.9276f)); //glm::vec3(0.f, 0.f, 8.f)
-		camera.SetForwardDirection(glm::vec3(-0.869436f, -0.0900598f, -0.228215f)); // glm::vec3(0.0f, 0.0f, -1.0f)
-		camera.SetProjection(30.f); // 45.f
+		camera.SetPosition(glm::dvec3(14.0218, 2.0866, 3.9276)); //glm::dvec3(0.0, 0.0, 8.0)
+		camera.SetForwardDirection(glm::dvec3(-0.869436, -0.0900598, -0.228215)); // glm::dvec3(0.0, 0.0, -1.0)
+		camera.SetProjection(30.0); // 45.0
 		camera.SetView();
 		camera.CalculateRayDirections();
 	}
 	#elif defined(SCENE5)
 	{
 		///Scene-5
+
 		// Configure Materials
-		std::shared_ptr<Material> diffuseWhite = std::make_shared<Lambertian>(glm::vec3(0.5f, 0.5f, 0.5f));
-		std::shared_ptr<Material> diffuseRed = std::make_shared<Lambertian>(glm::vec3(0.4f, 0.2f, 0.1f));
-		std::shared_ptr<Material> dielectricGlass = std::make_shared<Dielectric>(1.5f);
-		std::shared_ptr<Material> dielectricBubble = std::make_shared<Dielectric>(1.0003f / 1.5f);
-		std::shared_ptr<Material> metalSteel = std::make_shared<Metal>(glm::vec3(0.7f, 0.6f, 0.5f), 0.0f);
-		std::shared_ptr<CheckerTexture> checkerTexture = std::make_shared<CheckerTexture>(0.32f, glm::vec3(0.2f, 0.3f, 0.1f), glm::vec3(0.9f));
+		std::shared_ptr<Material> diffuseWhite = std::make_shared<Lambertian>(glm::dvec3(0.5, 0.5, 0.5));
+		std::shared_ptr<Material> diffuseRed = std::make_shared<Lambertian>(glm::dvec3(0.4, 0.2, 0.1));
+		std::shared_ptr<Material> dielectricGlass = std::make_shared<Dielectric>(1.5);
+		std::shared_ptr<Material> dielectricBubble = std::make_shared<Dielectric>(1.00003 / 1.5);
+		std::shared_ptr<Material> metalSteel = std::make_shared<Metal>(glm::dvec3(0.7, 0.6, 0.5), 0.0);
+		std::shared_ptr<CheckerTexture> checkerTexture = std::make_shared<CheckerTexture>(0.32, glm::dvec3(0.2, 0.3, 0.1), glm::dvec3(0.9));
 
 		// Configure Spheres
-		scene.Add(std::make_shared<Sphere>(glm::vec3(0.f, -10000.f, 0.f), 10000.f, std::make_shared<Lambertian>(checkerTexture)));
-		scene.Add(std::make_shared<Sphere>(glm::vec3(-4.f, 1.f, 0.f), 1.f, diffuseRed));
-		scene.Add(std::make_shared<Sphere>(glm::vec3(0.f, 1.f, 0.f), 1.f, dielectricGlass));
-		scene.Add(std::make_shared<Sphere>(glm::vec3(4.f, 1.f, 0.f), 1.f, metalSteel));
-		scene.Add(std::make_shared<Sphere>(glm::vec3(0.f, 1.f, 0.f), 0.6f, dielectricBubble));
+		scene.Add(std::make_shared<Sphere>(glm::dvec3(0.0, -10000.0, 0.0), 10000.0, std::make_shared<Lambertian>(checkerTexture)));
+		scene.Add(std::make_shared<Sphere>(glm::dvec3(-4.0, 1.0, 0.0), 1.0, diffuseRed));
+		scene.Add(std::make_shared<Sphere>(glm::dvec3(0.0, 1.0, 0.0), 1.0, dielectricGlass));
+		scene.Add(std::make_shared<Sphere>(glm::dvec3(4.0, 1.0, 0.0), 1.0, metalSteel));
+		scene.Add(std::make_shared<Sphere>(glm::dvec3(0.0, 1.0, 0.0), 0.6, dielectricBubble));
 
-		static glm::vec3 lastOrigin;
+		static glm::dvec3 lastOrigin;
 
 		for (int a = -NumofProcSpheres; a < NumofProcSpheres; a++) {
 			for (int b = -NumofProcSpheres; b < NumofProcSpheres; b++) {
 
-				float chooseMat = Utils::RandomFloat();
-				glm::vec3 center = glm::vec3(a + Utils::RandomFloat(), 0.2f, b + Utils::RandomFloat());
+				double chooseMat = Utils::RandomDouble();
+				glm::dvec3 center = glm::dvec3(a + Utils::RandomDouble(), 0.2, b + Utils::RandomDouble());
 
-				if (glm::distance(scene.GetObjectList()[1]->ObjectOrigin, center) > 1.23f &&
-					glm::distance(scene.GetObjectList()[2]->ObjectOrigin, center) > 1.23f &&
-					glm::distance(scene.GetObjectList()[3]->ObjectOrigin, center) > 1.23f &&
-					glm::distance(lastOrigin, center) > 0.45f) {
+				if (glm::distance(scene.GetObjectList()[1]->ObjectOrigin, center) > 1.23 &&
+					glm::distance(scene.GetObjectList()[2]->ObjectOrigin, center) > 1.23 &&
+					glm::distance(scene.GetObjectList()[3]->ObjectOrigin, center) > 1.23 &&
+					glm::distance(lastOrigin, center) > 0.45) {
 
 					std::shared_ptr<Material> sphereMat;
 
-					if (chooseMat < 0.6f) {
+					if (chooseMat < 0.6) {
 						// Diffuse Spheres
-						sphereMat = std::make_shared<Lambertian>(glm::vec3((float)Utils::RandomFloatInRange(0.0f, 0.99f), (float)Utils::RandomFloatInRange(0.0f, 0.99f), (float)Utils::RandomFloatInRange(0.0f, 0.99f)));
-						scene.Add(std::make_shared<Sphere>(center, 0.2f, sphereMat));
+						sphereMat = std::make_shared<Lambertian>(glm::dvec3(Utils::RandomDoubleInRange(0.0, 0.99), Utils::RandomDoubleInRange(0.0, 0.99), Utils::RandomDoubleInRange(0.0, 0.99)));
+						scene.Add(std::make_shared<Sphere>(center, 0.2, sphereMat));
 					}
 					else if (chooseMat < 0.85f) {
 						// Metal Spheres
-						sphereMat = std::make_shared<Metal>(glm::vec3((float)Utils::RandomFloatInRange(0.0f, 0.99f), (float)Utils::RandomFloatInRange(0.0f, 0.99f), (float)Utils::RandomFloatInRange(0.0f, 0.99f)), (float)Utils::RandomFloatInRange(0.f, 0.5f));
-						scene.Add(std::make_shared<Sphere>(center, 0.2f, sphereMat));
+						sphereMat = std::make_shared<Metal>(glm::dvec3(Utils::RandomDoubleInRange(0.0, 0.99), Utils::RandomDoubleInRange(0.0, 0.99), Utils::RandomDoubleInRange(0.0, 0.99)), Utils::RandomDoubleInRange(0.0, 0.5));
+						scene.Add(std::make_shared<Sphere>(center, 0.2, sphereMat));
 					}
 					else {
 						// Glass Spheres
-						sphereMat = std::make_shared<Dielectric>(1.52f);
-						scene.Add(std::make_shared<Sphere>(center, 0.2f, sphereMat));
+						sphereMat = std::make_shared<Dielectric>(1.52);
+						scene.Add(std::make_shared<Sphere>(center, 0.2, sphereMat));
 					}
 				}
 
@@ -288,63 +293,64 @@ void App::setUpScene() {
 		scene.BuildBVH();
 
 		// Camera setup
-		camera.SetFocus(10.f, 12.f);
+		camera.SetFocus(10.0, 12.0);
 		camera.SetViewPortWidth(width);
 		camera.SetViewPortHeight(height);
-		camera.SetPosition(glm::vec3(14.0218f, 2.0866f, 3.9276f)); //glm::vec3(0.f, 0.f, 8.f)
-		camera.SetForwardDirection(glm::vec3(-0.869436f, -0.0900598f, -0.228215f)); // glm::vec3(0.0f, 0.0f, -1.0f)
-		camera.SetProjection(30.f); // 45.f
+		camera.SetPosition(glm::dvec3(14.0218, 2.0866, 3.9276)); // glm::dvec3(0.0, 0.0, 8.0)
+		camera.SetForwardDirection(glm::dvec3(-0.869436, -0.0900598, -0.228215)); // glm::dvec3(0.0, 0.0, -1.0)
+		camera.SetProjection(30.0); // 45.0
 		camera.SetView();
 		camera.CalculateRayDirections();
 	}
 	#elif defined(SCENE6)
 	{
 		///Scene-6
+
 		// Configure Materials
-		std::shared_ptr<Material> diffuseWhite = std::make_shared<Lambertian>(glm::vec3(0.5f, 0.5f, 0.5f));
-		std::shared_ptr<Material> diffuseRed = std::make_shared<Lambertian>(glm::vec3(0.4f, 0.2f, 0.1f));
-		std::shared_ptr<Material> dielectricGlass = std::make_shared<Dielectric>(1.5f);
-		std::shared_ptr<Material> dielectricBubble = std::make_shared<Dielectric>(1.0003f / 1.5f);
-		std::shared_ptr<Material> metalSteel = std::make_shared<Metal>(glm::vec3(0.7f, 0.6f, 0.5f), 0.0f);
-		std::shared_ptr<CheckerTexture> checkerTexture = std::make_shared<CheckerTexture>(0.32f, glm::vec3(0.2f, 0.3f, 0.1f), glm::vec3(0.9f));
+		std::shared_ptr<Material> diffuseWhite = std::make_shared<Lambertian>(glm::dvec3(0.5, 0.5, 0.5));
+		std::shared_ptr<Material> diffuseRed = std::make_shared<Lambertian>(glm::dvec3(0.4, 0.2, 0.1));
+		std::shared_ptr<Material> dielectricGlass = std::make_shared<Dielectric>(1.5);
+		std::shared_ptr<Material> dielectricBubble = std::make_shared<Dielectric>(1.00003 / 1.5);
+		std::shared_ptr<Material> metalSteel = std::make_shared<Metal>(glm::dvec3(0.7, 0.6, 0.5), 0.0);
+		std::shared_ptr<CheckerTexture> checkerTexture = std::make_shared<CheckerTexture>(0.32, glm::dvec3(0.2, 0.3, 0.1), glm::dvec3(0.9));
 
 		// Configure Spheres
-		scene.Add(std::make_shared<Sphere>(glm::vec3(0.f, -10000.f, 0.f), 10000.f, std::make_shared<Lambertian>(checkerTexture)));
-		scene.Add(std::make_shared<Sphere>(glm::vec3(-4.f, 1.f, 0.f), 1.f, diffuseRed));
-		scene.Add(std::make_shared<Sphere>(glm::vec3(0.f, 1.f, 0.f), 1.f, dielectricGlass));
-		scene.Add(std::make_shared<Sphere>(glm::vec3(4.f, 1.f, 0.f), 1.f, metalSteel));
-		scene.Add(std::make_shared<Sphere>(glm::vec3(0.f, 1.f, 0.f), 0.6f, dielectricBubble));
+		scene.Add(std::make_shared<Sphere>(glm::dvec3(0.0, -10000.0, 0.0), 10000.0, std::make_shared<Lambertian>(checkerTexture)));
+		scene.Add(std::make_shared<Sphere>(glm::dvec3(-4.0, 1.0, 0.0), 1.0, diffuseRed));
+		scene.Add(std::make_shared<Sphere>(glm::dvec3(0.0, 1.0, 0.0), 1.0, dielectricGlass));
+		scene.Add(std::make_shared<Sphere>(glm::dvec3(4.0, 1.0, 0.0), 1.0, metalSteel));
+		scene.Add(std::make_shared<Sphere>(glm::dvec3(0.0, 1.0, 0.0), 0.6, dielectricBubble));
 
-		static glm::vec3 lastOrigin;
+		static glm::dvec3 lastOrigin;
 
 		for (int a = -NumofProcSpheres; a < NumofProcSpheres; a++) {
 			for (int b = -NumofProcSpheres; b < NumofProcSpheres; b++) {
 
-				float chooseMat = Utils::RandomFloat();
-				glm::vec3 center1 = glm::vec3(a + Utils::RandomFloat(), 0.2f, b + Utils::RandomFloat());
-				glm::vec3 center2 = center1 + glm::vec3(0.f, Utils::RandomFloatInRange(0.f, 0.5f), 0.f);
+				double chooseMat = Utils::RandomDouble();
+				glm::dvec3 center1 = glm::dvec3(a + Utils::RandomDouble(), 0.2, b + Utils::RandomDouble());
+				glm::dvec3 center2 = center1 + glm::dvec3(0.0, Utils::RandomDoubleInRange(0.0, 0.50), 0.0);
 
-				if (glm::distance(scene.GetObjectList()[1]->ObjectOrigin, center1) > 1.23f &&
-					glm::distance(scene.GetObjectList()[2]->ObjectOrigin, center1) > 1.23f &&
-					glm::distance(scene.GetObjectList()[3]->ObjectOrigin, center1) > 1.23f &&
-					glm::distance(lastOrigin, center1) > 0.45f) {
+				if (glm::distance(scene.GetObjectList()[1]->ObjectOrigin, center1) > 1.23 &&
+					glm::distance(scene.GetObjectList()[2]->ObjectOrigin, center1) > 1.23 &&
+					glm::distance(scene.GetObjectList()[3]->ObjectOrigin, center1) > 1.23 &&
+					glm::distance(lastOrigin, center1) > 0.45) {
 
 					std::shared_ptr<Material> sphereMat;
 
-					if (chooseMat < 0.6f) {
+					if (chooseMat < 0.6) {
 						// Diffuse Spheres
-						sphereMat = std::make_shared<Lambertian>(glm::vec3((float)Utils::RandomFloatInRange(0.0f, 0.99f), (float)Utils::RandomFloatInRange(0.0f, 0.99f), (float)Utils::RandomFloatInRange(0.0f, 0.99f)));
-						scene.Add(std::make_shared<Sphere>(center1, center2, 0.2f, sphereMat));
+						sphereMat = std::make_shared<Lambertian>(glm::dvec3(Utils::RandomDoubleInRange(0.0, 0.99), Utils::RandomDoubleInRange(0.0, 0.99), Utils::RandomDoubleInRange(0.0, 0.99)));
+						scene.Add(std::make_shared<Sphere>(center1, center2, 0.2, sphereMat));
 					}
-					else if (chooseMat < 0.85f) {
+					else if (chooseMat < 0.85) {
 						// Metal Spheres
-						sphereMat = std::make_shared<Metal>(glm::vec3((float)Utils::RandomFloatInRange(0.0f, 0.99f), (float)Utils::RandomFloatInRange(0.0f, 0.99f), (float)Utils::RandomFloatInRange(0.0f, 0.99f)), (float)Utils::RandomFloatInRange(0.f, 0.5f));
-						scene.Add(std::make_shared<Sphere>(center1, center2, 0.2f, sphereMat));
+						sphereMat = std::make_shared<Metal>(glm::dvec3(Utils::RandomDoubleInRange(0.0, 0.99), Utils::RandomDoubleInRange(0.0, 0.99), Utils::RandomDoubleInRange(0.0, 0.99)), Utils::RandomDoubleInRange(0.0, 0.5));
+						scene.Add(std::make_shared<Sphere>(center1, center2, 0.2, sphereMat));
 					}
 					else {
 						// Glass Spheres
-						sphereMat = std::make_shared<Dielectric>(1.52f);
-						scene.Add(std::make_shared<Sphere>(center1, center2, 0.2f, sphereMat));
+						sphereMat = std::make_shared<Dielectric>(1.52);
+						scene.Add(std::make_shared<Sphere>(center1, center2, 0.2, sphereMat));
 					}
 				}
 
@@ -359,29 +365,30 @@ void App::setUpScene() {
 		scene.BuildBVH();
 
 		// Camera setup
-		camera.SetFocus(10.f, 12.f);
+		camera.SetFocus(10.0, 12.0);
 		camera.SetViewPortWidth(width);
 		camera.SetViewPortHeight(height);
-		camera.SetPosition(glm::vec3(14.0218f, 2.0866f, 3.9276f)); //glm::vec3(0.f, 0.f, 8.f)
-		camera.SetForwardDirection(glm::vec3(-0.869436f, -0.0900598f, -0.228215f)); // glm::vec3(0.0f, 0.0f, -1.0f)
-		camera.SetProjection(30.f); // 45.f
+		camera.SetPosition(glm::dvec3(14.0218, 2.0866f, 3.9276)); //glm::dvec3(0.0, 0.0, 8.0)
+		camera.SetForwardDirection(glm::dvec3(-0.869436, -0.0900598, -0.228215)); // glm::dvec3(0.0, 0.0, -1.0)
+		camera.SetProjection(30.0); // 45.0
 		camera.SetView();
 		camera.CalculateRayDirections();
 	}
 	#elif defined(SCENE7)
 	{
 		///Scene-7
+
 		// Configure Materials
-		std::shared_ptr<Material> diffuseWhite = std::make_shared<Lambertian>(glm::vec3(0.5f, 0.5f, 0.5f));
-		std::shared_ptr<Material> diffuseRed = std::make_shared<Lambertian>(glm::vec3(0.4f, 0.2f, 0.1f));
-		std::shared_ptr<Material> dielectricGlass = std::make_shared<Dielectric>(1.5f);
-		std::shared_ptr<Material> dielectricBubble = std::make_shared<Dielectric>(1.0003f / 1.5f);
-		std::shared_ptr<Material> metalSteel = std::make_shared<Metal>(glm::vec3(0.7f, 0.6f, 0.5f), 0.0f);
-		std::shared_ptr<CheckerTexture> checkerTexture = std::make_shared<CheckerTexture>(0.32f, glm::vec3(0.2f, 0.3f, 0.1f), glm::vec3(0.9f));
+		std::shared_ptr<Material> diffuseWhite = std::make_shared<Lambertian>(glm::dvec3(0.5));
+		std::shared_ptr<Material> diffuseRed = std::make_shared<Lambertian>(glm::dvec3(0.4, 0.2, 0.1));
+		std::shared_ptr<Material> dielectricGlass = std::make_shared<Dielectric>(1.5);
+		std::shared_ptr<Material> dielectricBubble = std::make_shared<Dielectric>(1.00003 / 1.5);
+		std::shared_ptr<Material> metalSteel = std::make_shared<Metal>(glm::dvec3(0.7, 0.6, 0.5), 0.0);
+		std::shared_ptr<CheckerTexture> checkerTexture = std::make_shared<CheckerTexture>(0.32, glm::dvec3(0.2, 0.3, 0.1), glm::dvec3(0.9));
 
 		// Configure Spheres
-		scene.Add(std::make_shared<Sphere>(glm::vec3(4.f, 10.f, 0.f), 10.f, std::make_shared<Lambertian>(checkerTexture)));
-		scene.Add(std::make_shared<Sphere>(glm::vec3(4.f, -10.f, 0.f), 10.f, std::make_shared<Lambertian>(checkerTexture)));
+		scene.Add(std::make_shared<Sphere>(glm::dvec3(4.0, 10.0, 0.0), 10.0, std::make_shared<Lambertian>(checkerTexture)));
+		scene.Add(std::make_shared<Sphere>(glm::dvec3(4.0, -10.0, 0.0), 10.0, std::make_shared<Lambertian>(checkerTexture)));
 
 		// Set Background Color
 		scene.SetBackgroundColor(blue, white);
@@ -390,25 +397,26 @@ void App::setUpScene() {
 		scene.BuildBVH();
 
 		// Camera setup
-		camera.SetFocus(0.f, 12.f);
+		camera.SetFocus(0.0, 12.0);
 		camera.SetViewPortWidth(width);
 		camera.SetViewPortHeight(height);
-		camera.SetPosition(glm::vec3(18.8951f, 1.88632f, 3.44855f)); //glm::vec3(0.f, 0.f, 8.f)
-		camera.SetForwardDirection(glm::vec3(-0.873826f, -0.0900598f, -0.210782f)); // glm::vec3(0.0f, 0.0f, -1.0f)
-		camera.SetProjection(30.f);
+		camera.SetPosition(glm::dvec3(18.8951, 1.88632, 3.44855)); //glm::dvec3(0.0, 0.0, 8.0)
+		camera.SetForwardDirection(glm::dvec3(-0.873826, -0.0900598, -0.210782)); // glm::dvec3(0.0, 0.0, -1.0)
+		camera.SetProjection(30.0); // 45.0
 		camera.SetView();
 		camera.CalculateRayDirections();
 	}
 	#elif defined(SCENE8)
 	{
 		///Scene-8
+
 		// Configure Materials
-		std::shared_ptr<CheckerTexture> checkerTexture = std::make_shared<CheckerTexture>(0.32f, glm::vec3(0.3f), glm::vec3(0.9f));
+		std::shared_ptr<CheckerTexture> checkerTexture = std::make_shared<CheckerTexture>(0.32, glm::dvec3(0.3), glm::dvec3(0.9));
 		std::shared_ptr<ImageTexture> checkerImageTexture = std::make_shared<ImageTexture>("Checker/UVChecker_4K.png");
 
 		// Configure Spheres
-		scene.Add(std::make_shared<Sphere>(glm::vec3(0.f, -10000.f, 0.f), 10000.f, std::make_shared<Lambertian>(checkerTexture)));
-		scene.Add(std::make_shared<Sphere>(glm::vec3(4.f, 1.01f, 0.f), 1.f, std::make_shared<Lambertian>(checkerImageTexture)));
+		scene.Add(std::make_shared<Sphere>(glm::dvec3(0.0, -10000.0, 0.0), 10000.0, std::make_shared<Lambertian>(checkerTexture)));
+		scene.Add(std::make_shared<Sphere>(glm::dvec3(4.0, 1.01, 0.0), 1.0, std::make_shared<Lambertian>(checkerImageTexture)));
 
 		// Set Background Color
 		scene.SetBackgroundColor(blue, white);
@@ -417,24 +425,25 @@ void App::setUpScene() {
 		scene.BuildBVH();
 
 		// Camera setup
-		camera.SetFocus(10.f, 12.f);
+		camera.SetFocus(10.0, 12.0);
 		camera.SetViewPortWidth(width);
 		camera.SetViewPortHeight(height);
-		camera.SetPosition(glm::vec3(14.0218f, 2.0866f, 3.9276f)); //glm::vec3(0.f, 0.f, 8.f)
-		camera.SetForwardDirection(glm::vec3(-0.869436f, -0.0900598f, -0.228215f)); // glm::vec3(0.0f, 0.0f, -1.0f)
-		camera.SetProjection(30.f); // 45.f
+		camera.SetPosition(glm::dvec3(14.0218, 2.0866, 3.9276)); // glm::dvec3(0.0, 0.0, 8.0)
+		camera.SetForwardDirection(glm::dvec3(-0.869436, -0.0900598, -0.228215)); // glm::dvec3(0.0, 0.0, -1.0)
+		camera.SetProjection(30.0); // 45.0
 		camera.SetView();
 		camera.CalculateRayDirections();
 	}
 	#elif defined(SCENE9)
 	{
 		///Scene-9
+
 		// Configure Materials
 		std::shared_ptr<NoiseTexture> perlinNoise = std::make_shared<NoiseTexture>(0.2);
 
 		// Configure Spheres
-		scene.Add(std::make_shared<Sphere>(glm::vec3(0.f, -10000.f, 0.f), 10000.f, std::make_shared<Lambertian>(perlinNoise)));
-		scene.Add(std::make_shared<Sphere>(glm::vec3(4.f, 1.01f, 0.f), 1.f, std::make_shared<Lambertian>(perlinNoise)));
+		scene.Add(std::make_shared<Sphere>(glm::dvec3(0.0, -10000.0, 0.0), 10000.0, std::make_shared<Lambertian>(perlinNoise)));
+		scene.Add(std::make_shared<Sphere>(glm::dvec3(4.0, 1.01, 0.0), 1.0, std::make_shared<Lambertian>(perlinNoise)));
 
 		// Set Background Color
 		scene.SetBackgroundColor(blue, white);
@@ -443,31 +452,32 @@ void App::setUpScene() {
 		scene.BuildBVH();
 
 		// Camera setup
-		camera.SetFocus(10.f, 12.f);
+		camera.SetFocus(10.0, 12.0);
 		camera.SetViewPortWidth(width);
 		camera.SetViewPortHeight(height);
-		camera.SetPosition(glm::vec3(14.0218f, 2.0866f, 3.9276f)); //glm::vec3(0.f, 0.f, 8.f)
-		camera.SetForwardDirection(glm::vec3(-0.869436f, -0.0900598f, -0.228215f)); // glm::vec3(0.0f, 0.0f, -1.0f)
-		camera.SetProjection(30.f); // 45.f
+		camera.SetPosition(glm::dvec3(14.0218, 2.0866, 3.9276)); // glm::dvec3(0.0, 0.0, 8.0)
+		camera.SetForwardDirection(glm::dvec3(-0.869436, -0.0900598, -0.228215)); // glm::dvec3(0.0, 0.0, -1.0)
+		camera.SetProjection(30.0); // 45.0
 		camera.SetView();
 		camera.CalculateRayDirections();
 	}
 	#elif defined(SCENE10)
 	{
 		///Scene-10
+
 		// Configure Materials
-		auto leftRed = std::make_shared<Lambertian>(glm::vec3(1.0f, 0.2f, 0.2f));
-		auto backGreen = std::make_shared<Lambertian>(glm::vec3(0.2f, 1.0f, 0.2f));
-		auto rightBlue = std::make_shared<Lambertian>(glm::vec3(0.2f, 0.2f, 1.0f));
-		auto upperOrange = std::make_shared<Lambertian>(glm::vec3(1.0f, 0.5f, 0.0f));
-		auto lowerTeal = std::make_shared<Lambertian>(glm::vec3(0.2f, 0.8f, 0.8f));
+		auto leftRed = std::make_shared<Lambertian>(glm::dvec3(1.0, 0.2, 0.2));
+		auto backGreen = std::make_shared<Lambertian>(glm::dvec3(0.2, 1.0, 0.2));
+		auto rightBlue = std::make_shared<Lambertian>(glm::dvec3(0.2, 0.2, 1.0));
+		auto upperOrange = std::make_shared<Lambertian>(glm::dvec3(1.0, 0.5, 0.0));
+		auto lowerTeal = std::make_shared<Lambertian>(glm::dvec3(0.2, 0.8, 0.8));
 
 		// Configure Planes
-		scene.Add(std::make_shared<Quad>(glm::vec3(-2.0f, -1.5f, -5.0f), glm::vec3(0.0f, 0.0f, 3.0f), glm::vec3(0.0f, 3.0f, 0.0f), leftRed));
-		scene.Add(std::make_shared<Quad>(glm::vec3(-1.5f, -1.5f, -5.5f), glm::vec3(3.0f, 0.0f, 0.0f), glm::vec3(0.0f, 3.0f, 0.0f), backGreen));
-		scene.Add(std::make_shared<Quad>(glm::vec3(2.0f, -1.5f, -5.0f), glm::vec3(0.0f, 0.0f, 3.0f), glm::vec3(0.0f, 3.0f, 0.0f), rightBlue));
-		scene.Add(std::make_shared<Quad>(glm::vec3(-1.5f, 2.0f, -5.0f), glm::vec3(3.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 3.0f), upperOrange));
-		scene.Add(std::make_shared<Quad>(glm::vec3(-1.5f, -2.0f, -5.0f), glm::vec3(3.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 3.0f), lowerTeal));
+		scene.Add(std::make_shared<Quad>(glm::dvec3(-2.0, -1.5, -5.0), glm::dvec3(0.0, 0.0, 3.0), glm::dvec3(0.0, 3.0, 0.0), leftRed));
+		scene.Add(std::make_shared<Quad>(glm::dvec3(-1.5, -1.5, -5.5), glm::dvec3(3.0, 0.0, 0.0), glm::dvec3(0.0, 3.0, 0.0), backGreen));
+		scene.Add(std::make_shared<Quad>(glm::dvec3(2.0, -1.5, -5.0), glm::dvec3(0.0, 0.0, 3.0), glm::dvec3(0.0, 3.0, 0.0), rightBlue));
+		scene.Add(std::make_shared<Quad>(glm::dvec3(-1.5, 2.0, -5.0), glm::dvec3(3.0, 0.0, 0.0), glm::dvec3(0.0, 0.0, 3.0), upperOrange));
+		scene.Add(std::make_shared<Quad>(glm::dvec3(-1.5, -2.0, -5.0), glm::dvec3(3.0, 0.0, 0.0), glm::dvec3(0.0, 0.0, 3.0), lowerTeal));
 
 		// Set Background Color
 		scene.SetBackgroundColor(blue, white);
@@ -476,29 +486,30 @@ void App::setUpScene() {
 		scene.BuildBVH();
 
 		// Camera setup
-		camera.SetFocus(10.f, 12.f);
+		camera.SetFocus(10.0, 12.0);
 		camera.SetViewPortWidth(width);
 		camera.SetViewPortHeight(height);
-		camera.SetPosition(glm::vec3(0.0f, 0.0f, 8.0f)); //glm::vec3(0.f, 0.f, 8.f)
-		camera.SetForwardDirection(glm::vec3(0.0f, 0.0f, -1.0f)); // glm::vec3(0.0f, 0.0f, -1.0f)
-		camera.SetProjection(30.f); // 45.f
+		camera.SetPosition(glm::dvec3(0.0, 0.0, 8.0)); //glm::dvec3(0.0, 0.0, 8.0)
+		camera.SetForwardDirection(glm::dvec3(0.0, 0.0, -1.0)); // glm::dvec3(0.0, 0.0, -1.0)
+		camera.SetProjection(30.0); // 45.0
 		camera.SetView();
 		camera.CalculateRayDirections();
 	}
 	#elif defined(SCENE11)
 	{
 		///Scene-11
+
 		// Configure Materials
 		std::shared_ptr<NoiseTexture> tiledNoise = std::make_shared<NoiseTexture>(0.32);
-		std::shared_ptr<DiffuseLight> diffusedLight = std::make_shared<DiffuseLight>(glm::vec3(5.f));
+		std::shared_ptr<DiffuseLight> diffusedLight = std::make_shared<DiffuseLight>(glm::dvec3(5.0));
 
 		// Configure Planes
-		scene.Add(std::make_shared<Quad>(glm::vec3(3.28f, 0.2f, 2.3f), glm::vec3(1.5f, 0.0f, 0.0f), glm::vec3(0.0f, 1.5f, 0.0f), diffusedLight));
+		scene.Add(std::make_shared<Quad>(glm::dvec3(3.28, 0.2, 2.3), glm::dvec3(1.5, 0.0, 0.0), glm::dvec3(0.0, 1.5, 0.0), diffusedLight));
 
 		// Configure Spheres
-		scene.Add(std::make_shared<Sphere>(glm::vec3(0.f, -10000.f, 0.f), 10000.f, std::make_shared<Lambertian>(tiledNoise)));
-		scene.Add(std::make_shared<Sphere>(glm::vec3(4.f, 1.01f, 0.f), 1.f, std::make_shared<Lambertian>(tiledNoise)));
-		scene.Add(std::make_shared<Sphere>(glm::vec3(4.f, 3.2f, 0.f), 0.65f, diffusedLight));
+		scene.Add(std::make_shared<Sphere>(glm::dvec3(0.0, -10000.0, 0.0), 10000.0, std::make_shared<Lambertian>(tiledNoise)));
+		scene.Add(std::make_shared<Sphere>(glm::dvec3(4.0, 1.01, 0.0), 1.0, std::make_shared<Lambertian>(tiledNoise)));
+		scene.Add(std::make_shared<Sphere>(glm::dvec3(4.0, 3.2, 0.0), 0.65, diffusedLight));
 
 		// Set Background Color
 		scene.SetBackgroundColor(black, black);
@@ -507,32 +518,33 @@ void App::setUpScene() {
 		scene.BuildBVH();
 
 		// Camera setup
-		camera.SetFocus(0.f, 0.f);
+		camera.SetFocus(0.0, 0.0);
 		camera.SetViewPortWidth(width);
 		camera.SetViewPortHeight(height);
-		camera.SetPosition(glm::vec3(-6.89692, 1.89061, -1.04361)); //glm::vec3(0.f, 0.f, 8.f)
-		camera.SetForwardDirection(glm::vec3(0.895924f, -0.0334501f, 0.110963f)); // glm::vec3(0.0f, 0.0f, -1.0f)
-		camera.SetProjection(30.f); // 45.f
+		camera.SetPosition(glm::dvec3(-6.89692, 1.89061, -1.04361)); //glm::dvec3(0.0, 0.0, 8.0)
+		camera.SetForwardDirection(glm::dvec3(0.895924, -0.0334501, 0.110963)); // glm::dvec3(0.0, 0.0, -1.0)
+		camera.SetProjection(30.0); // 45.0
 		camera.SetView();
 		camera.CalculateRayDirections();
 	}
 	#elif defined(SCENE12)
 	{
 		///Scene-12
+
 		// Configure Materials
-		auto diffusedHighLight = std::make_shared<DiffuseLight>(glm::vec3(10.0f));
-		auto diffusedRed = std::make_shared<Lambertian>(glm::vec3(0.65f, 0.05f, 0.05f));
-		auto diffusedGreen = std::make_shared<Lambertian>(glm::vec3(0.12f, 0.45f, 0.15f));
-		auto diffusedWhite = std::make_shared<Lambertian>(glm::vec3(0.73f, 0.73f, 0.73f));
+		auto diffusedHighLight = std::make_shared<DiffuseLight>(glm::dvec3(10.0));
+		auto diffusedRed = std::make_shared<Lambertian>(glm::dvec3(0.65, 0.05, 0.05));
+		auto diffusedGreen = std::make_shared<Lambertian>(glm::dvec3(0.12, 0.45, 0.15));
+		auto diffusedWhite = std::make_shared<Lambertian>(glm::dvec3(0.73, 0.73, 0.73));
 
 		// Configure Planes
-		scene.Add(std::make_shared<Quad>(glm::vec3(-2.0f, -2.0f, -4.0f), glm::vec3(0.0f, 0.0f, 4.0f), glm::vec3(0.0f, 4.0f, 0.0f), diffusedRed)); // Left Quad
-		scene.Add(std::make_shared<Quad>(glm::vec3(2.0f, -2.0f, -4.0f), glm::vec3(0.0f, 0.0f, 4.0f), glm::vec3(0.0f, 4.0f, 0.0f), diffusedGreen)); // Right Quad
-		scene.Add(std::make_shared<Quad>(glm::vec3(-2.0f, -2.0f, -4.0f), glm::vec3(4.0f, 0.0f, 0.0f), glm::vec3(0.0f, 4.0f, 0.0f), diffusedWhite)); // Back Quad
-		scene.Add(std::make_shared<Quad>(glm::vec3(-2.0f, -2.0f, -4.0f), glm::vec3(4.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 4.0f), diffusedWhite)); // Bottom Quad
-		scene.Add(std::make_shared<Quad>(glm::vec3(-2.0f, 2.0f, -4.0f), glm::vec3(4.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 4.0f), diffusedWhite)); // Upper Quad
+		scene.Add(std::make_shared<Quad>(glm::dvec3(-2.0, -2.0, -4.0), glm::dvec3(0.0, 0.0, 4.0), glm::dvec3(0.0, 4.0, 0.0), diffusedRed)); // Left Quad
+		scene.Add(std::make_shared<Quad>(glm::dvec3(2.0f, -2.0f, -4.0f), glm::dvec3(0.0, 0.0, 4.0), glm::dvec3(0.0, 4.0, 0.0), diffusedGreen)); // Right Quad
+		scene.Add(std::make_shared<Quad>(glm::dvec3(-2.0, -2.0, -4.0), glm::dvec3(4.0, 0.0, 0.0), glm::dvec3(0.0, 4.0, 0.0), diffusedWhite)); // Back Quad
+		scene.Add(std::make_shared<Quad>(glm::dvec3(-2.0, -2.0, -4.0), glm::dvec3(4.0, 0.0, 0.0), glm::dvec3(0.0, 0.0, 4.0), diffusedWhite)); // Bottom Quad
+		scene.Add(std::make_shared<Quad>(glm::dvec3(-2.0, 2.0, -4.0), glm::dvec3(4.0, 0.0, 0.0), glm::dvec3(0.0, 0.0, 4.0), diffusedWhite)); // Upper Quad
 
-		scene.Add(std::make_shared<Quad>(glm::vec3(-1.0f, 1.99f, -3.0f), glm::vec3(2.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 2.0f), diffusedHighLight)); // Light Quad
+		scene.Add(std::make_shared<Quad>(glm::dvec3(-1.0, 1.99, -3.0), glm::dvec3(2.0, 0.0, 0.0), glm::dvec3(0.0, 0.0, 2.0), diffusedHighLight)); // Light Quad
 
 		// Set Background Color
 		scene.SetBackgroundColor(black, black);
@@ -541,39 +553,40 @@ void App::setUpScene() {
 		scene.BuildBVH();
 
 		// Camera setup
-		camera.SetFocus(10.f, 9.7f);
+		camera.SetFocus(10.0, 9.7);
 		camera.SetViewPortWidth(width);
 		camera.SetViewPortHeight(height);
-		camera.SetPosition(glm::vec3(0.0f, 0.0f, 7.7f)); //glm::vec3(0.f, 0.f, 8.f)
-		camera.SetForwardDirection(glm::vec3(0.0f, 0.0f, -1.0f)); // glm::vec3(0.0f, 0.0f, -1.0f)
-		camera.SetProjection(30.f); // 45.f
+		camera.SetPosition(glm::dvec3(0.0, 0.0, 7.7)); //glm::dvec3(0.0, 0.0, 8.0)
+		camera.SetForwardDirection(glm::dvec3(0.0, 0.0, -1.0)); // glm::dvec3(0.0, 0.0, -1.0)
+		camera.SetProjection(30.0); // 45.0
 		camera.SetView();
 		camera.CalculateRayDirections();
 	}
 	#elif defined(SCENE13)
 	{
 		///Scene-13
+
 		// Configure Materials
-		auto diffusedHighLight = std::make_shared<DiffuseLight>(glm::vec3(10.0f));
-		auto diffusedRed = std::make_shared<Lambertian>(glm::vec3(0.65f, 0.05f, 0.05f));
-		auto diffusedGreen = std::make_shared<Lambertian>(glm::vec3(0.12f, 0.45f, 0.15f));
-		auto diffusedWhite = std::make_shared<Lambertian>(glm::vec3(0.73f, 0.73f, 0.73f));
+		auto diffusedHighLight = std::make_shared<DiffuseLight>(glm::dvec3(10.0));
+		auto diffusedRed = std::make_shared<Lambertian>(glm::dvec3(0.65, 0.05, 0.05));
+		auto diffusedGreen = std::make_shared<Lambertian>(glm::dvec3(0.12, 0.45, 0.15));
+		auto diffusedWhite = std::make_shared<Lambertian>(glm::dvec3(0.73, 0.73, 0.73));
 
 		// Configure Planes
-		scene.Add(std::make_shared<Quad>(glm::vec3(-2.0f, -2.0f, -4.0f), glm::vec3(0.0f, 0.0f, 4.0f), glm::vec3(0.0f, 4.0f, 0.0f), diffusedRed)); // Left Quad
-		scene.Add(std::make_shared<Quad>(glm::vec3(2.0f, -2.0f, -4.0f), glm::vec3(0.0f, 0.0f, 4.0f), glm::vec3(0.0f, 4.0f, 0.0f), diffusedGreen)); // Right Quad
-		scene.Add(std::make_shared<Quad>(glm::vec3(-2.0f, -2.0f, -4.0f), glm::vec3(4.0f, 0.0f, 0.0f), glm::vec3(0.0f, 4.0f, 0.0f), diffusedWhite)); // Back Quad
-		scene.Add(std::make_shared<Quad>(glm::vec3(-2.0f, -2.0f, -4.0f), glm::vec3(4.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 4.0f), diffusedWhite)); // Bottom Quad
-		scene.Add(std::make_shared<Quad>(glm::vec3(-2.0f, 2.0f, -4.0f), glm::vec3(4.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 4.0f), diffusedWhite)); // Upper Quad
+		scene.Add(std::make_shared<Quad>(glm::dvec3(-2.0, -2.0, -4.0), glm::dvec3(0.0, 0.0, 4.0), glm::dvec3(0.0, 4.0, 0.0), diffusedRed)); // Left Quad
+		scene.Add(std::make_shared<Quad>(glm::dvec3(2.0, -2.0, -4.0), glm::dvec3(0.0, 0.0, 4.0), glm::dvec3(0.0, 4.0, 0.0), diffusedGreen)); // Right Quad
+		scene.Add(std::make_shared<Quad>(glm::dvec3(-2.0, -2.0, -4.0), glm::dvec3(4.0, 0.0, 0.0), glm::dvec3(0.0, 4.0, 0.0), diffusedWhite)); // Back Quad
+		scene.Add(std::make_shared<Quad>(glm::dvec3(-2.0, -2.0, -4.0), glm::dvec3(4.0, 0.0, 0.0), glm::dvec3(0.0, 0.0, 4.0), diffusedWhite)); // Bottom Quad
+		scene.Add(std::make_shared<Quad>(glm::dvec3(-2.0, 2.0, -4.0), glm::dvec3(4.0, 0.0, 0.0), glm::dvec3(0.0, 0.0, 4.0), diffusedWhite)); // Upper Quad
 
-		scene.Add(std::make_shared<Quad>(glm::vec3(-1.0f, 1.99f, -3.0f), glm::vec3(2.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 2.0f), diffusedHighLight)); // Light Quad
+		scene.Add(std::make_shared<Quad>(glm::dvec3(-1.0, 1.99, -3.0), glm::dvec3(2.0, 0.0, 0.0), glm::dvec3(0.0, 0.0, 2.0), diffusedHighLight)); // Light Quad
 
 		// Configure Instances
-		//scene.Add(Box3D(glm::vec3(-1.14f, -2.0f, -2.2f), glm::vec3(0.06f, 0.4f, -3.4f), diffusedWhite));
-		//scene.Add(Box3D(glm::vec3(-0.06f, -2.0f, -0.6f), glm::vec3(1.14f, -0.8f, -1.8f), diffusedWhite));
+		//scene.Add(Box3D(glm::dvec3(-1.14, -2.0, -2.2), glm::dvec3(0.06, 0.4, -3.4), diffusedWhite));
+		//scene.Add(Box3D(glm::dvec3(-0.06, -2.0, -0.6), glm::dvec3(1.14, -0.8, -1.8), diffusedWhite));
 
-		scene.Add(std::make_shared<Box>(glm::vec3(-1.14f, -2.0f, -2.2f), glm::vec3(0.06f, 0.4f, -3.4f), diffusedWhite));
-		scene.Add(std::make_shared<Box>(glm::vec3(-0.06f, -2.0f, -0.6f), glm::vec3(1.14f, -0.8f, -1.8f), diffusedWhite));
+		scene.Add(std::make_shared<Box>(glm::dvec3(-1.14, -2.0, -2.2), glm::dvec3(0.06, 0.4, -3.4), diffusedWhite));
+		scene.Add(std::make_shared<Box>(glm::dvec3(-0.06, -2.0, -0.6), glm::dvec3(1.14, -0.8, -1.8), diffusedWhite));
 
 		// Set Background Color
 		scene.SetBackgroundColor(black, black);
@@ -582,93 +595,95 @@ void App::setUpScene() {
 		scene.BuildBVH();
 
 		// Camera setup
-		camera.SetFocus(10.f, 9.7f);
+		camera.SetFocus(10.0, 9.7);
 		camera.SetViewPortWidth(width);
 		camera.SetViewPortHeight(height);
-		camera.SetPosition(glm::vec3(0.0f, 0.0f, 7.7f)); //glm::vec3(0.f, 0.f, 8.f)
-		camera.SetForwardDirection(glm::vec3(0.0f, 0.0f, -1.0f)); // glm::vec3(0.0f, 0.0f, -1.0f)
-		camera.SetProjection(30.f); // 45.f
+		camera.SetPosition(glm::dvec3(0.0, 0.0, 7.7)); //glm::dvec3(0.0, 0.0, 8.0)
+		camera.SetForwardDirection(glm::dvec3(0.0, 0.0, -1.0)); // glm::dvec3(0.0, 0.0, -1.0)
+		camera.SetProjection(30.0); // 45.0
 		camera.SetView();
 		camera.CalculateRayDirections();
 	}
 	#elif defined(SCENE14)
 	{
 		///Scene-14
+
 		// Configure Materials
-		auto diffusedHighLight = std::make_shared<DiffuseLight>(glm::vec3(9.0f));
-		auto diffusedRed = std::make_shared<Lambertian>(glm::vec3(0.65f, 0.05f, 0.05f));
-		auto diffusedGreen = std::make_shared<Lambertian>(glm::vec3(0.12f, 0.45f, 0.15f));
-		auto diffusedWhite = std::make_shared<Lambertian>(glm::vec3(0.73f, 0.73f, 0.73f));
+		auto diffusedHighLight = std::make_shared<DiffuseLight>(glm::dvec3(9.00));
+		auto diffusedRed = std::make_shared<Lambertian>(glm::dvec3(0.65, 0.05, 0.05));
+		auto diffusedGreen = std::make_shared<Lambertian>(glm::dvec3(0.12, 0.45, 0.15));
+		auto diffusedWhite = std::make_shared<Lambertian>(glm::dvec3(0.73, 0.73, 0.73));
 
 		// Configure Planes
-		scene.Add(std::make_shared<Quad>(glm::vec3(-2.0f, -2.0f, -4.0f), glm::vec3(0.0f, 0.0f, 4.0f), glm::vec3(0.0f, 4.0f, 0.0f), diffusedRed)); // Left Quad
-		scene.Add(std::make_shared<Quad>(glm::vec3(2.0f, -2.0f, -4.0f), glm::vec3(0.0f, 0.0f, 4.0f), glm::vec3(0.0f, 4.0f, 0.0f), diffusedGreen)); // Right Quad
-		scene.Add(std::make_shared<Quad>(glm::vec3(-2.0f, -2.0f, -4.0f), glm::vec3(4.0f, 0.0f, 0.0f), glm::vec3(0.0f, 4.0f, 0.0f), diffusedWhite)); // Back Quad
-		scene.Add(std::make_shared<Quad>(glm::vec3(-2.0f, -2.0f, -4.0f), glm::vec3(4.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 4.0f), diffusedWhite)); // Bottom Quad
-		scene.Add(std::make_shared<Quad>(glm::vec3(-2.0f, 2.0f, -4.0f), glm::vec3(4.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 4.0f), diffusedWhite)); // Upper Quad
+		scene.Add(std::make_shared<Quad>(glm::dvec3(-2.0, -2.0, -4.0), glm::dvec3(0.0, 0.0, 4.0), glm::dvec3(0.0, 4.0, 0.0), diffusedRed)); // Left Quad
+		scene.Add(std::make_shared<Quad>(glm::dvec3(2.0, -2.0, -4.0), glm::dvec3(0.0, 0.0, 4.0), glm::dvec3(0.0, 4.0, 0.0), diffusedGreen)); // Right Quad
+		scene.Add(std::make_shared<Quad>(glm::dvec3(-2.0, -2.0, -4.0), glm::dvec3(4.0, 0.0, 0.0), glm::dvec3(0.0, 4.0, 0.0), diffusedWhite)); // Back Quad
+		scene.Add(std::make_shared<Quad>(glm::dvec3(-2.0, -2.0, -4.0), glm::dvec3(4.0, 0.0, 0.0), glm::dvec3(0.0, 0.0, 4.0), diffusedWhite)); // Bottom Quad
+		scene.Add(std::make_shared<Quad>(glm::dvec3(-2.0, 2.0, -4.0), glm::dvec3(4.0, 0.0, 0.0), glm::dvec3(0.0, 0.0, 4.0), diffusedWhite)); // Upper Quad
 
-		scene.Add(std::make_shared<Quad>(glm::vec3(-1.0f, 1.99f, -3.0f), glm::vec3(2.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 2.0f), diffusedHighLight)); // Light Quad
+		scene.Add(std::make_shared<Quad>(glm::dvec3(-1.0, 1.99, -3.0), glm::dvec3(2.0, 0.0, 0.0), glm::dvec3(0.0, 0.0, 2.0), diffusedHighLight)); // Light Quad
 
 		// Configure Instances
-		std::shared_ptr<Hittable> box1 = std::make_shared<Box>(glm::vec3(-1.14f, -2.0f, -2.2f), glm::vec3(0.06f, 0.4f, -3.4f), diffusedWhite);
-		box1 = std::make_shared<Translate>(box1, glm::vec3(0.72f, -0.4f, 0.0f));
-		box1 = std::make_shared<RotateX>(box1, 15.0f);
-		box1 = std::make_shared<RotateY>(box1, 18.0f);
+		std::shared_ptr<Hittable> box1 = std::make_shared<Box>(glm::dvec3(-1.14, -2.0, -2.2), glm::dvec3(0.06, 0.4, -3.4), diffusedWhite);
+		box1 = std::make_shared<Translate>(box1, glm::dvec3(0.72, -0.4, 0.0));
+		box1 = std::make_shared<RotateX>(box1, 15.0);
+		box1 = std::make_shared<RotateY>(box1, 18.0);
 		scene.Add(box1);
 
-		std::shared_ptr<Hittable> box2 = std::make_shared<Box>(glm::vec3(-0.06f, -2.0f, -0.6f), glm::vec3(1.14f, -0.8f, -1.8f), diffusedWhite);
-		box2 = std::make_shared<Translate>(box2, glm::vec3(-0.22f, 0.0f, 0.0f));
-		box2 = std::make_shared<RotateY>(box2, -18.0f);
-		box2 = std::make_shared<RotateZ>(box2, 7.0f);
+		std::shared_ptr<Hittable> box2 = std::make_shared<Box>(glm::dvec3(-0.06, -2.0, -0.6), glm::dvec3(1.14, -0.8, -1.8), diffusedWhite);
+		box2 = std::make_shared<Translate>(box2, glm::dvec3(-0.22, 0.0, 0.0));
+		box2 = std::make_shared<RotateY>(box2, -18.0);
+		box2 = std::make_shared<RotateZ>(box2, 7.0);
 		scene.Add(box2);
 
 		// Set Background Color
 		scene.SetBackgroundColor(black, black);
-		
+
 		// Build the BVH
 		scene.BuildBVH();
 
 		// Camera setup
-		camera.SetFocus(10.f, 9.7f);
+		camera.SetFocus(10.0, 9.7);
 		camera.SetViewPortWidth(width);
 		camera.SetViewPortHeight(height);
-		camera.SetPosition(glm::vec3(0.0f, 0.0f, 7.7f)); //glm::vec3(0.f, 0.f, 8.f)
-		camera.SetForwardDirection(glm::vec3(0.0f, 0.0f, -1.0f)); // glm::vec3(0.0f, 0.0f, -1.0f)
-		camera.SetProjection(30.f); // 45.f
+		camera.SetPosition(glm::dvec3(0.0, 0.0, 7.7)); //glm::dvec3(0.0, 0.0, 8.0)
+		camera.SetForwardDirection(glm::dvec3(0.0, 0.0, -1.0)); // glm::dvec3(0.0, 0.0, -1.0)
+		camera.SetProjection(30.0); // 45.0
 		camera.SetView();
 		camera.CalculateRayDirections();
 	}
 	#elif defined(SCENE15)
 	{
 		///Scene-15
+
 		// Configure Materials
-		auto diffusedHighLight = std::make_shared<DiffuseLight>(glm::vec3(9.0f));
-		auto diffusedRed = std::make_shared<Lambertian>(glm::vec3(0.65f, 0.05f, 0.05f));
-		auto diffusedGreen = std::make_shared<Lambertian>(glm::vec3(0.12f, 0.45f, 0.15f));
-		auto diffusedWhite = std::make_shared<Lambertian>(glm::vec3(0.73f, 0.73f, 0.73f));
+		auto diffusedHighLight = std::make_shared<DiffuseLight>(glm::dvec3(9.0));
+		auto diffusedRed = std::make_shared<Lambertian>(glm::dvec3(0.65, 0.05, 0.05));
+		auto diffusedGreen = std::make_shared<Lambertian>(glm::dvec3(0.12, 0.45, 0.15));
+		auto diffusedWhite = std::make_shared<Lambertian>(glm::dvec3(0.73, 0.73, 0.73));
 
 		// Configure Planes
-		scene.Add(std::make_shared<Quad>(glm::vec3(-2.0f, -2.0f, -4.0f), glm::vec3(0.0f, 0.0f, 4.0f), glm::vec3(0.0f, 4.0f, 0.0f), diffusedRed)); // Left Quad
-		scene.Add(std::make_shared<Quad>(glm::vec3(2.0f, -2.0f, -4.0f), glm::vec3(0.0f, 0.0f, 4.0f), glm::vec3(0.0f, 4.0f, 0.0f), diffusedGreen)); // Right Quad
-		scene.Add(std::make_shared<Quad>(glm::vec3(-2.0f, -2.0f, -4.0f), glm::vec3(4.0f, 0.0f, 0.0f), glm::vec3(0.0f, 4.0f, 0.0f), diffusedWhite)); // Back Quad
-		scene.Add(std::make_shared<Quad>(glm::vec3(-2.0f, -2.0f, -4.0f), glm::vec3(4.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 4.0f), diffusedWhite)); // Bottom Quad
-		scene.Add(std::make_shared<Quad>(glm::vec3(-2.0f, 2.0f, -4.0f), glm::vec3(4.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 4.0f), diffusedWhite)); // Upper Quad
+		scene.Add(std::make_shared<Quad>(glm::dvec3(-2.0, -2.0, -4.0), glm::dvec3(0.0, 0.0, 4.0), glm::dvec3(0.0, 4.0, 0.0), diffusedRed)); // Left Quad
+		scene.Add(std::make_shared<Quad>(glm::dvec3(2.0, -2.0, -4.0), glm::dvec3(0.0, 0.0, 4.0), glm::dvec3(0.0, 4.0, 0.0), diffusedGreen)); // Right Quad
+		scene.Add(std::make_shared<Quad>(glm::dvec3(-2.0, -2.0, -4.0), glm::dvec3(4.0, 0.0, 0.0), glm::dvec3(0.0, 4.0, 0.0), diffusedWhite)); // Back Quad
+		scene.Add(std::make_shared<Quad>(glm::dvec3(-2.0, -2.0, -4.0), glm::dvec3(4.0, 0.0, 0.0), glm::dvec3(0.0, 0.0, 4.0), diffusedWhite)); // Bottom Quad
+		scene.Add(std::make_shared<Quad>(glm::dvec3(-2.0, 2.0, -4.0), glm::dvec3(4.0, 0.0, 0.0), glm::dvec3(0.0, 0.0, 4.0), diffusedWhite)); // Upper Quad
 
-		scene.Add(std::make_shared<Quad>(glm::vec3(-1.0f, 1.99f, -3.0f), glm::vec3(2.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 2.0f), diffusedHighLight)); // Light Quad
+		scene.Add(std::make_shared<Quad>(glm::dvec3(-1.0, 1.99, -3.0), glm::dvec3(2.0, 0.0, 0.0), glm::dvec3(0.0, 0.0, 2.0), diffusedHighLight)); // Light Quad
 
 		// Configure Instances
-		std::shared_ptr<Hittable> box1 = std::make_shared<Box>(glm::vec3(-1.14f, -2.0f, -2.2f), glm::vec3(0.06f, 0.4f, -3.4f), diffusedWhite);
-		box1 = std::make_shared<Translate>(box1, glm::vec3(0.72f, -0.4f, 0.0f));
-		box1 = std::make_shared<RotateX>(box1, 15.0f);
-		box1 = std::make_shared<RotateY>(box1, 18.0f);
+		std::shared_ptr<Hittable> box1 = std::make_shared<Box>(glm::dvec3(-1.14, -2.0, -2.2), glm::dvec3(0.06, 0.4, -3.4), diffusedWhite);
+		box1 = std::make_shared<Translate>(box1, glm::dvec3(0.72, -0.4, 0.0));
+		box1 = std::make_shared<RotateX>(box1, 15.0);
+		box1 = std::make_shared<RotateY>(box1, 18.0);
 
-		std::shared_ptr<Hittable> box2 = std::make_shared<Box>(glm::vec3(-0.06f, -2.0f, -0.6f), glm::vec3(1.14f, -0.8f, -1.8f), diffusedWhite);
-		box2 = std::make_shared<Translate>(box2, glm::vec3(-0.22f, 0.0f, 0.0f));
-		box2 = std::make_shared<RotateY>(box2, -18.0f);
-		box2 = std::make_shared<RotateZ>(box2, 7.0f);
+		std::shared_ptr<Hittable> box2 = std::make_shared<Box>(glm::dvec3(-0.06, -2.0, -0.6), glm::dvec3(1.14, -0.8, -1.8), diffusedWhite);
+		box2 = std::make_shared<Translate>(box2, glm::dvec3(-0.22, 0.0, 0.0));
+		box2 = std::make_shared<RotateY>(box2, -18.0);
+		box2 = std::make_shared<RotateZ>(box2, 7.0);
 
-		scene.Add(std::make_shared<Volume>(box1, 1.8f, glm::vec3(0.0f)));
-		scene.Add(std::make_shared<Volume>(box2, 1.8f, glm::vec3(1.0f)));
+		scene.Add(std::make_shared<Volume>(box1, 1.8, glm::dvec3(0.0)));
+		scene.Add(std::make_shared<Volume>(box2, 1.8, glm::dvec3(1.0)));
 
 		// Set Background Color
 		scene.SetBackgroundColor(black, black);
@@ -677,46 +692,47 @@ void App::setUpScene() {
 		scene.BuildBVH();
 
 		// Camera setup
-		camera.SetFocus(10.f, 9.7f);
+		camera.SetFocus(10.0, 9.7);
 		camera.SetViewPortWidth(width);
 		camera.SetViewPortHeight(height);
-		camera.SetPosition(glm::vec3(0.0f, 0.0f, 7.7f)); //glm::vec3(0.f, 0.f, 8.f)
-		camera.SetForwardDirection(glm::vec3(0.0f, 0.0f, -1.0f)); // glm::vec3(0.0f, 0.0f, -1.0f)
-		camera.SetProjection(30.f); // 45.f
+		camera.SetPosition(glm::dvec3(0.0, 0.0, 7.7)); // glm::dvec3(0.0, 0.0, 8.0)
+		camera.SetForwardDirection(glm::dvec3(0.0, 0.0, -1.0)); // glm::dvec3(0.0, 0.0, -1.0)
+		camera.SetProjection(30.0); // 45.0
 		camera.SetView();
 		camera.CalculateRayDirections();
 	}
 	#elif defined(SCENE16)
 	{
 		///Scene-16
+
 		// Configure Materials
-		auto diffusedLight = std::make_shared<DiffuseLight>(glm::vec3(10.0f));
-		auto diffusedBlack = std::make_shared<Lambertian>(glm::vec3(0.0f));
-		auto diffusedGreen = std::make_shared<Lambertian>(glm::vec3(0.48f, 0.83f, 0.53f));
-		auto diffusedBurntOrange = std::make_shared<Lambertian>(glm::vec3(0.7f, 0.3f, 0.1f));
-		auto diffusedWhite = std::make_shared<Lambertian>(glm::vec3(0.73f));
-		auto diffusedBlue = std::make_shared<Lambertian>(glm::vec3(0.2f, 0.4f, 0.9f));
-		auto dielectricGlass = std::make_shared<Dielectric>(1.5f, 0.0f);
-		auto brushedAluminum = std::make_shared<Metal>(glm::vec3(0.8f, 0.8f, 0.9f), 1.0f);
+		auto diffusedLight = std::make_shared<DiffuseLight>(glm::dvec3(10.0));
+		auto diffusedBlack = std::make_shared<Lambertian>(glm::dvec3(0.0));
+		auto diffusedGreen = std::make_shared<Lambertian>(glm::dvec3(0.48, 0.83, 0.53));
+		auto diffusedBurntOrange = std::make_shared<Lambertian>(glm::dvec3(0.7, 0.3, 0.1));
+		auto diffusedWhite = std::make_shared<Lambertian>(glm::dvec3(0.73));
+		auto diffusedBlue = std::make_shared<Lambertian>(glm::dvec3(0.2, 0.4, 0.9));
+		auto dielectricGlass = std::make_shared<Dielectric>(1.5, 0.0);
+		auto brushedAluminum = std::make_shared<Metal>(glm::dvec3(0.8, 0.8, 0.9), 1.0);
 		auto earthTopoMap = std::make_shared<Lambertian>(std::make_shared<ImageTexture>("Earthmap/EarthTopoMap.png"));
-		auto perlinNoise = std::make_shared<Lambertian>(std::make_shared<NoiseTexture>(5.0f));
+		auto perlinNoise = std::make_shared<Lambertian>(std::make_shared<NoiseTexture>(5.0));
 
 		// Configure Boxes
 		auto box1 = std::make_shared<HittableList>();
 
 		int boxesPerSide = 20;
-		float boxWidth = 100.0f;
-		float axisOffset = (boxesPerSide * boxWidth) / 2.0f;
+		double boxWidth = 100.0;
+		double axisOffset = (boxesPerSide * boxWidth) / 2.0;
 		for (int i = 0; i < boxesPerSide; i++) {
 			for (int j = 0; j < boxesPerSide; j++) {
-				float x0 = -axisOffset + i * boxWidth;
-				float y0 = 0.0f;
-				float z0 = -axisOffset + j * boxWidth;
-				float x1 = x0 + boxWidth - 0.1f;
-				float y1 = Utils::RandomFloatInRange(0.01f * boxWidth, boxWidth - (0.01f * boxWidth));
-				float z1 = z0 + boxWidth - 0.1f;
+				double x0 = -axisOffset + i * boxWidth;
+				double y0 = 0.0;
+				double z0 = -axisOffset + j * boxWidth;
+				double x1 = x0 + boxWidth - 0.1;
+				double y1 = Utils::RandomDoubleInRange(0.01 * boxWidth, boxWidth - (0.01 * boxWidth));
+				double z1 = z0 + boxWidth - 0.1;
 
-				box1->Add(std::make_shared<Box>(glm::vec3(x0, y0, z0), glm::vec3(x1, y1, z1), diffusedGreen));
+				box1->Add(std::make_shared<Box>(glm::dvec3(x0, y0, z0), glm::dvec3(x1, y1, z1), diffusedGreen));
 			}
 		}
 
@@ -725,36 +741,36 @@ void App::setUpScene() {
 		scene.Add(box1);
 
 		// Configure Quads
-		scene.Add(std::make_shared<Quad>(glm::vec3(123.0f, 554.01f, 147.0f), glm::vec3(300.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 265.0f), diffusedBlack));
-		scene.Add(std::make_shared<Quad>(glm::vec3(123.0f, 554.0f, 147.0f), glm::vec3(300.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 265.0f), diffusedLight)); // Light Quad
+		scene.Add(std::make_shared<Quad>(glm::dvec3(123.0, 554.01, 147.0), glm::dvec3(300.0, 0.0, 0.0), glm::dvec3(0.0, 0.0, 265.0), diffusedBlack));
+		scene.Add(std::make_shared<Quad>(glm::dvec3(123.0, 554.0, 147.0), glm::dvec3(300.0, 0.0, 0.0), glm::dvec3(0.0, 0.0, 265.0), diffusedLight)); // Light Quad
 
 		// Configure Spheres
-		scene.Add(std::make_shared<Sphere>(glm::vec3(400.0f, 400.0f, 200.0f), glm::vec3(430.0f, 400.0f, 200.0f), 50.0f, diffusedBurntOrange));
-		scene.Add(std::make_shared<Sphere>(glm::vec3(0.0f, 150.0f, 145.0f), 50.0f, brushedAluminum));
-		scene.Add(std::make_shared<Sphere>(glm::vec3(260.0f, 150.0f, 45.0f), 50.0f, dielectricGlass));
+		scene.Add(std::make_shared<Sphere>(glm::dvec3(400.0, 400.0, 200.0), glm::dvec3(430.0, 400.0, 200.0), 50.0, diffusedBurntOrange));
+		scene.Add(std::make_shared<Sphere>(glm::dvec3(0.0, 150.0, 145.0), 50.0, brushedAluminum));
+		scene.Add(std::make_shared<Sphere>(glm::dvec3(260.0, 150.0, 45.0), 50.0, dielectricGlass));
 
-		auto boundary = std::make_shared<Sphere>(glm::vec3(360.0f, 150.0f, 145.0f), 69.95f, dielectricGlass);
-		scene.Add(std::make_shared<Volume>(boundary, 0.2f, glm::vec3(0.2f, 0.4f, 0.9f)));
-		boundary = std::make_shared<Sphere>(glm::vec3(360.0f, 150.0f, 145.0f), 70.0f, dielectricGlass);
+		auto boundary = std::make_shared<Sphere>(glm::dvec3(360.0, 150.0, 145.0), 69.95, dielectricGlass);
+		scene.Add(std::make_shared<Volume>(boundary, 0.2, glm::dvec3(0.2, 0.4, 0.9)));
+		boundary = std::make_shared<Sphere>(glm::dvec3(360.0, 150.0, 145.0), 70.0, dielectricGlass);
 		scene.Add(boundary);
 
-		boundary = std::make_shared<Sphere>(glm::vec3(0.0f), 5000.0f, dielectricGlass);
-		scene.Add(std::make_shared<Volume>(boundary, 0.00008f, glm::vec3(1.0f)));
+		boundary = std::make_shared<Sphere>(glm::dvec3(0.0), 5000.0, dielectricGlass);
+		scene.Add(std::make_shared<Volume>(boundary, 0.00008, glm::dvec3(1.0)));
 
-		scene.Add(std::make_shared<Sphere>(glm::vec3(400.0f, 200.0f, 400.0f), 100.0f, earthTopoMap));
-		scene.Add(std::make_shared<Sphere>(glm::vec3(220.0f, 280.0f, 300.0f), 80.0f, perlinNoise));
+		scene.Add(std::make_shared<Sphere>(glm::dvec3(400.0, 200.0, 400.0), 100.0, earthTopoMap));
+		scene.Add(std::make_shared<Sphere>(glm::dvec3(220.0, 280.0, 300.0), 80.0, perlinNoise));
 
 		// Configure Boxes of Spheres
 		auto box2 = std::make_shared<HittableList>();
 
 		int sphereCount = 1000;
 		for (int i = 0; i < sphereCount; i++) {
-			box2->Add(std::make_shared<Sphere>(Utils::RandomOffset2(0.0f, 165.0f), 10.0f, diffusedWhite));
+			box2->Add(std::make_shared<Sphere>(Utils::RandomOffset2(0.0, 165.0), 10.0, diffusedWhite));
 		}
 
 		// Build box2 BVH
 		box2->BuildBVH();
-		scene.Add(std::make_shared<Translate>(std::make_shared<RotateY>(box2, 15.0f), glm::vec3(-100.0f, 270.0f, 395.0f)));
+		scene.Add(std::make_shared<Translate>(std::make_shared<RotateY>(box2, 15.0), glm::dvec3(-100.0, 270.0, 395.0)));
 
 		// Set Background Color
 		scene.SetBackgroundColor(black, black);
@@ -763,47 +779,48 @@ void App::setUpScene() {
 		scene.BuildBVH();
 
 		// Camera setup
-		camera.SetCamMovement(0.01f, 60.0f);
-		camera.SetFocus(10.f, 801.21f);
+		camera.SetCamMovement(0.01, 60.0);
+		camera.SetFocus(0.0, 0.0);
 		camera.SetViewPortWidth(width);
 		camera.SetViewPortHeight(height);
-		camera.SetPosition(glm::vec3(470.0f, 278.0f, -600.0f)); //glm::vec3(555.928, 257.911, -691.695)
-		camera.SetForwardDirection(glm::vec3(-0.29f, 0.01f, 0.95f)); // glm::vec3(-0.342436, 0.0428016, 0.938567)
-		camera.SetProjection(40.0f); // 45.f
+		camera.SetPosition(glm::dvec3(470.0, 278.0, -600.0)); //glm::dvec3(555.928, 257.911, -691.695)
+		camera.SetForwardDirection(glm::dvec3(-0.29, 0.01, 0.95)); // glm::dvec3(-0.342436, 0.0428016, 0.938567)
+		camera.SetProjection(40.0); // 45.0
 		camera.SetView();
 		camera.CalculateRayDirections();
 	}
 	#elif defined(SCENE17)
 	{
 		///Scene-17
+
 		// Configure Materials
-		auto diffusedLight = std::make_shared<DiffuseLight>(glm::vec3(10.0f, 9.8f, 9.85f));
-		auto diffusedBlack = std::make_shared<Lambertian>(glm::vec3(0.0f));
-		auto diffusedGreen = std::make_shared<Lambertian>(glm::vec3(0.48f, 0.83f, 0.53f));
-		auto diffusedBurntOrange = std::make_shared<Lambertian>(glm::vec3(0.7f, 0.3f, 0.1f));
-		auto diffusedWhite = std::make_shared<Lambertian>(glm::vec3(0.73f));
-		auto diffusedBlue = std::make_shared<Lambertian>(glm::vec3(0.2f, 0.4f, 0.9f));
-		auto dielectricGlass = std::make_shared<Dielectric>(1.5f, 0.0f);
-		auto brushedAluminum = std::make_shared<Metal>(glm::vec3(0.8f, 0.8f, 0.9f), 1.0f);
+		auto diffusedLight = std::make_shared<DiffuseLight>(glm::dvec3(11.0, 10.8, 10.85));
+		auto diffusedBlack = std::make_shared<Lambertian>(glm::dvec3(0.0));
+		auto diffusedGreen = std::make_shared<Lambertian>(glm::dvec3(0.48, 0.83, 0.53));
+		auto diffusedBurntOrange = std::make_shared<Lambertian>(glm::dvec3(0.7, 0.3, 0.1));
+		auto diffusedWhite = std::make_shared<Lambertian>(glm::dvec3(0.73));
+		auto diffusedBlue = std::make_shared<Lambertian>(glm::dvec3(0.2, 0.4, 0.9));
+		auto dielectricGlass = std::make_shared<Dielectric>(1.5, 0.0);
+		auto brushedAluminum = std::make_shared<Metal>(glm::dvec3(0.8, 0.8, 0.9), 1.0);
 		auto earthTopoMap = std::make_shared<Lambertian>(std::make_shared<ImageTexture>("Earthmap/EarthTopoMap.png"));
-		auto perlinNoise = std::make_shared<Lambertian>(std::make_shared<NoiseTexture>(5.0f));
+		auto perlinNoise = std::make_shared<Lambertian>(std::make_shared<NoiseTexture>(5.0));
 
 		// Configure Boxes
 		auto box1 = std::make_shared<HittableList>();
 
-		int boxesPerSide = 20;
-		float boxWidth = 100.0f;
-		float axisOffset = (boxesPerSide * boxWidth) / 2.0f;
+		int boxesPerSide = 100;
+		double boxWidth = 100.0;
+		double axisOffset = (boxesPerSide * boxWidth) / 2.0;
 		for (int i = 0; i < boxesPerSide; i++) {
 			for (int j = 0; j < boxesPerSide; j++) {
-				float x0 = -axisOffset + i * boxWidth;
-				float y0 = 0.0f;
-				float z0 = -axisOffset + j * boxWidth;
-				float x1 = x0 + boxWidth - 0.1f;
-				float y1 = Utils::RandomFloatInRange(0.01f * boxWidth, boxWidth - (0.01f * boxWidth));
-				float z1 = z0 + boxWidth - 0.1f;
+				double x0 = -axisOffset + i * boxWidth;
+				double y0 = 0.0;
+				double z0 = -axisOffset + j * boxWidth;
+				double x1 = x0 + boxWidth - 0.1;
+				double y1 = Utils::RandomDoubleInRange(0.01 * boxWidth, boxWidth - (0.01 * boxWidth));
+				double z1 = z0 + boxWidth - 0.1;
 
-				box1->Add(std::make_shared<Box>(glm::vec3(x0, y0, z0), glm::vec3(x1, y1, z1), diffusedGreen));
+				box1->Add(std::make_shared<Box>(glm::dvec3(x0, y0, z0), glm::dvec3(x1, y1, z1), diffusedGreen));
 			}
 		}
 
@@ -812,24 +829,24 @@ void App::setUpScene() {
 		scene.Add(box1);
 
 		// Configure Quads
-		scene.Add(std::make_shared<Quad>(glm::vec3(123.0f, 554.01f, 147.0f), glm::vec3(300.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 265.0f), diffusedBlack));
-		scene.Add(std::make_shared<Quad>(glm::vec3(123.0f, 554.0f, 147.0f), glm::vec3(300.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 265.0f), diffusedLight)); // Light Quad
+		scene.Add(std::make_shared<Quad>(glm::dvec3(123.0, 554.02, 147.0), glm::dvec3(300.0, 0.0, 0.0), glm::dvec3(0.0, 0.0, 265.0), diffusedBlack));
+		scene.Add(std::make_shared<Quad>(glm::dvec3(123.0, 554.0, 147.0), glm::dvec3(300.0, 0.0, 0.0), glm::dvec3(0.0, 0.0, 265.0), diffusedLight)); // Light Quad
 
 		// Configure Spheres
-		scene.Add(std::make_shared<Sphere>(glm::vec3(400.0f, 400.0f, 200.0f), glm::vec3(430.0f, 400.0f, 200.0f), 50.0f, diffusedBurntOrange));
-		scene.Add(std::make_shared<Sphere>(glm::vec3(0.0f, 150.0f, 145.0f), 50.0f, brushedAluminum));
-		scene.Add(std::make_shared<Sphere>(glm::vec3(260.0f, 150.0f, 45.0f), 50.0f, dielectricGlass));
+		scene.Add(std::make_shared<Sphere>(glm::dvec3(400.0, 400.0, 200.0), glm::dvec3(430.0, 400.0, 200.0), 50.0, diffusedBurntOrange));
+		scene.Add(std::make_shared<Sphere>(glm::dvec3(0.0, 150.0, 145.0), 50.0, brushedAluminum));
+		scene.Add(std::make_shared<Sphere>(glm::dvec3(260.0, 150.0, 45.0), 50.0, dielectricGlass));
 
-		auto boundary = std::make_shared<Sphere>(glm::vec3(360.0f, 150.0f, 145.0f), 69.95f, dielectricGlass);
-		scene.Add(std::make_shared<Volume>(boundary, 0.2f, glm::vec3(0.2f, 0.4f, 0.9f)));
-		boundary = std::make_shared<Sphere>(glm::vec3(360.0f, 150.0f, 145.0f), 70.0f, dielectricGlass);
+		auto boundary = std::make_shared<Sphere>(glm::dvec3(360.0, 150.0, 145.0), 69.95, dielectricGlass);
+		scene.Add(std::make_shared<Volume>(boundary, 0.2, glm::dvec3(0.2, 0.4, 0.9)));
+		boundary = std::make_shared<Sphere>(glm::dvec3(360.0, 150.0, 145.0), 70.0, dielectricGlass);
 		scene.Add(boundary);
 
-		boundary = std::make_shared<Sphere>(glm::vec3(0.0f), 5000.0f, dielectricGlass);
-		scene.Add(std::make_shared<Volume>(boundary, 0.00008f, glm::vec3(1.0f)));
+		boundary = std::make_shared<Sphere>(glm::dvec3(0.0), 5000.0, dielectricGlass);
+		scene.Add(std::make_shared<Volume>(boundary, 0.0001, glm::dvec3(1.0)));
 
-		scene.Add(std::make_shared<Sphere>(glm::vec3(400.0f, 200.0f, 400.0f), 100.0f, earthTopoMap));
-		scene.Add(std::make_shared<Sphere>(glm::vec3(220.0f, 280.0f, 300.0f), 80.0f, perlinNoise));
+		scene.Add(std::make_shared<Sphere>(glm::dvec3(400.0, 200.0, 400.0), 100.0, earthTopoMap));
+		scene.Add(std::make_shared<Sphere>(glm::dvec3(220.0, 280.0, 300.0), 80.0, perlinNoise));
 
 		// Configure Boxes of Spheres
 		auto box2 = std::make_shared<HittableList>();
@@ -837,23 +854,23 @@ void App::setUpScene() {
 		int sphereCount = 1000;
 		for (int i = 0; i < sphereCount; i++) {
 
-			float random = Utils::RandomFloat();
+			double random = Utils::RandomDouble();
 
-			if(random < 0.45f) box2->Add(std::make_shared<Sphere>(Utils::RandomOffset2(0.0f, 165.0f), 10.0f, diffusedWhite));
-			else if(random < 7.0f) box2->Add(
+			if (random < 0.45) box2->Add(std::make_shared<Sphere>(Utils::RandomOffset2(0.0, 165.0), 10.0, diffusedWhite));
+			else if (random < 7.0) box2->Add(
 				std::make_shared<RotateX>(
-				std::make_shared<RotateY>(
-				std::make_shared<RotateZ>(
-				std::make_shared<Box>(
-					Utils::RandomOffset2(0.0f, 165.0f), diffusedWhite, glm::vec3(20.0f)),
-					Utils::RandomFloatInRange(1.0f, 22.5f)),
-					Utils::RandomFloatInRange(1.0f, 22.5f)),
-					Utils::RandomFloatInRange(1.0f, 22.5f)));
+					std::make_shared<RotateY>(
+						std::make_shared<RotateZ>(
+							std::make_shared<Box>(
+								Utils::RandomOffset2(0.0, 165.0), diffusedWhite, glm::dvec3(20.0)),
+							Utils::RandomFloatInRange(1.0, 22.5)),
+						Utils::RandomFloatInRange(1.0, 22.5)),
+					Utils::RandomFloatInRange(1.0, 22.5)));
 		}
 
 		// Build box2 BVH
 		box2->BuildBVH();
-		scene.Add(std::make_shared<Translate>(std::make_shared<RotateY>(box2, 0.0f), glm::vec3(-100.0f, 270.0f, 395.0f)));
+		scene.Add(std::make_shared<Translate>(std::make_shared<RotateY>(box2, 0.0), glm::dvec3(-100.0, 270.0, 395.0)));
 
 		// Set Background Color
 		scene.SetBackgroundColor(black, black);
@@ -862,13 +879,13 @@ void App::setUpScene() {
 		scene.BuildBVH();
 
 		// Camera setup
-		camera.SetCamMovement(0.01f, 60.0f);
-		camera.SetFocus(10.f, 801.21f);
+		camera.SetCamMovement(0.01, 60.0);
+		camera.SetFocus(0.0, 0.0);
 		camera.SetViewPortWidth(width);
 		camera.SetViewPortHeight(height);
-		camera.SetPosition(glm::vec3(470.0f, 278.0f, -600.0f)); //glm::vec3(555.928, 257.911, -691.695)
-		camera.SetForwardDirection(glm::vec3(-0.29f, 0.01f, 0.95f)); // glm::vec3(-0.342436, 0.0428016, 0.938567)
-		camera.SetProjection(40.0f); // 45.f
+		camera.SetPosition(glm::dvec3(470.0, 278.0, -600.0)); // glm::dvec3(555.928, 257.911, -691.695)
+		camera.SetForwardDirection(glm::dvec3(-0.29, 0.01, 0.95)); // glm::dvec3(-0.342436, 0.0428016, 0.938567)
+		camera.SetProjection(40.0); // 45.0
 		camera.SetView();
 		camera.CalculateRayDirections();
 	}

@@ -7,8 +7,8 @@
 
 class Volume : public Hittable {
 public:
-	Volume(std::shared_ptr<Hittable> boundary, float density, glm::vec3& albedo);
-	Volume(std::shared_ptr<Hittable> boundary, float density, std::shared_ptr<Texture> texture);
+	Volume(std::shared_ptr<Hittable> boundary, double density, glm::dvec3& albedo);
+	Volume(std::shared_ptr<Hittable> boundary, double density, std::shared_ptr<Texture> texture);
 
 	bool Hit(const Ray& ray, Interval hitdist, Hitrec& hitrecord) const override;
 
@@ -16,7 +16,6 @@ public:
 
 private:
 	std::shared_ptr<Hittable> Boundary;
-	float NegInvDensity;
+	double NegInvDensity;
 	std::shared_ptr<Material> PhaseFunction;
 };
-

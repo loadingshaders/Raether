@@ -9,7 +9,7 @@ Raether::Raether() : windowTitle("Raether"),
 					 screensize(SDL_Rect{ 0, 0, windowWidth, windowHeight }),
 					 windowState(RaeState::ACTIVE),
 					 keyState(Keystate::STANDBY),
-					 mouseDelta(GLM::si32_tvec2(0.f, 0.f)),
+					 mouseDelta(GLM::si32_tvec2(0.0, 0.0)),
 					 scrollAmount(0)
 {
 }
