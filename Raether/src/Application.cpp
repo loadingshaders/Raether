@@ -712,7 +712,7 @@ void App::setUpScene() {
 		auto diffusedBurntOrange = std::make_shared<Lambertian>(glm::dvec3(0.7, 0.3, 0.1));
 		auto diffusedWhite = std::make_shared<Lambertian>(glm::dvec3(0.73));
 		auto diffusedBlue = std::make_shared<Lambertian>(glm::dvec3(0.2, 0.4, 0.9));
-		auto dielectricGlass = std::make_shared<Dielectric>(1.5, 0.0);
+		auto dielectricGlass = std::make_shared<Dielectric>(1.5);
 		auto brushedAluminum = std::make_shared<Metal>(glm::dvec3(0.8, 0.8, 0.9), 1.0);
 		auto earthTopoMap = std::make_shared<Lambertian>(std::make_shared<ImageTexture>("Earthmap/EarthTopoMap.png"));
 		auto perlinNoise = std::make_shared<Lambertian>(std::make_shared<NoiseTexture>(5.0));
@@ -800,7 +800,7 @@ void App::setUpScene() {
 		auto diffusedBurntOrange = std::make_shared<Lambertian>(glm::dvec3(0.7, 0.3, 0.1));
 		auto diffusedWhite = std::make_shared<Lambertian>(glm::dvec3(0.73));
 		auto diffusedBlue = std::make_shared<Lambertian>(glm::dvec3(0.2, 0.4, 0.9));
-		auto dielectricGlass = std::make_shared<Dielectric>(1.5, 0.0);
+		auto dielectricGlass = std::make_shared<Dielectric>(1.5);
 		auto brushedAluminum = std::make_shared<Metal>(glm::dvec3(0.8, 0.8, 0.9), 1.0);
 		auto earthTopoMap = std::make_shared<Lambertian>(std::make_shared<ImageTexture>("Earthmap/EarthTopoMap.png"));
 		auto perlinNoise = std::make_shared<Lambertian>(std::make_shared<NoiseTexture>(5.0));
