@@ -7,9 +7,9 @@ App::App() : title("Raether"),
 			 scene(),
 			 camera(),
 			 renderer()
-{
-}//900,500
-App::~App() { }
+{} // 900,500
+
+App::~App() {}
 
 void App::setWindow() {
 	rae.raeCreateWindow(title, width, height);
@@ -826,7 +826,7 @@ void App::setUpScene() {
 		scene.Add(boundary);
 
 		boundary = std::make_shared<Sphere>(glm::vec3(0.0f), 5000.0f, dielectricGlass);
-		scene.Add(std::make_shared<Volume>(boundary, 0.0001f, glm::vec3(1.0f)));
+		scene.Add(std::make_shared<Volume>(boundary, 0.00008f, glm::vec3(1.0f)));
 
 		scene.Add(std::make_shared<Sphere>(glm::vec3(400.0f, 200.0f, 400.0f), 100.0f, earthTopoMap));
 		scene.Add(std::make_shared<Sphere>(glm::vec3(220.0f, 280.0f, 300.0f), 80.0f, perlinNoise));
