@@ -150,10 +150,10 @@ void Camera::HandleInput(class Raether& rae) {
 
 		#if camDetails == 1
 
-		Utils::PrintVec3("\ncamOrigin     : ", cameraOrigin);
-		Utils::PrintVec3("\ncamOrientation: ", cameraOrientation);
-		Utils::PrintVec3("\nForward       : ", forwardDirection);
-		Utils::PrintVec2("\nV_FOV         : ", glm::vec2(V_FOV));
+		Utils::PrintDvec3("\ncamOrigin     : ", cameraOrigin);
+		Utils::PrintDvec3("\ncamOrientation: ", cameraOrientation);
+		Utils::PrintDvec3("\nForward       : ", forwardDirection);
+		Utils::PrintDvec2("\nV_FOV         : ", glm::dvec2(V_FOV));
 		Utils::PrintError("\n");
 
 		#endif
