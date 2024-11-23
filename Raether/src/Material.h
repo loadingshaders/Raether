@@ -48,6 +48,7 @@ private:
 
 class Metal : public Material {
 public:
+	Metal(glm::dvec3 albedo) : Albedo(albedo), Fuzzyness(0.0) {}
 	Metal(glm::dvec3 albedo, double fuzzyness) : Albedo(albedo), Fuzzyness((fuzzyness < 1.0) ? ((fuzzyness < 0.0) ? 0.0 : fuzzyness) : 1.0) {}
 
 	bool Scatter(Ray& ray, Hitrec& hitrecord, glm::dvec3& attenuation) const override {
