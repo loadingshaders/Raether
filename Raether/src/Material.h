@@ -72,8 +72,10 @@ private:
 
 class Dielectric : public Material {
 public:
-	Dielectric(double ri) : RefractionIndex(ri), Fuzzyness(0.0) {}
-	Dielectric(double ri, double fuzzyness) : RefractionIndex(ri), Fuzzyness((fuzzyness < 1.0) ? ((fuzzyness < 0.0) ? 0.0 : fuzzyness) : 1.0) {}
+	Dielectric(double ri) : Albedo(glm::dvec3(1.0)), RefractionIndex(ri), Fuzzyness(0.0) {}
+	Dielectric(double ri, double fuzzyness) : Albedo(glm::dvec3(1.0)), RefractionIndex(ri), Fuzzyness(fuzzyness) {}
+	Dielectric(glm::dvec3 albedo, double ri) : Albedo(albedo), RefractionIndex(ri), Fuzzyness(0.0) {}
+	Dielectric(glm::dvec3 albedo, double ri, double fuzzyness) : Albedo(albedo), RefractionIndex(ri), Fuzzyness((fuzzyness < 1.0) ? ((fuzzyness < 0.0) ? 0.0 : fuzzyness) : 1.0) {}
 
 	bool Scatter(Ray& ray, Hitrec& hitrecord, glm::dvec3& attenuation) const override {
 
@@ -104,6 +106,7 @@ public:
 	}
 
 private:
+	glm::dvec3 Albedo;
 	double RefractionIndex;
 	double Fuzzyness;
 
