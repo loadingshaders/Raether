@@ -52,13 +52,14 @@ public:
 	bool Scatter(Ray& ray, Hitrec& hitrecord, glm::vec3& attenuation) const override {
 
 		ray.Origin = hitrecord.HitPoint;
-		// Metal shiny and fuzzy reflection
+
+		/// Metal shiny and fuzzy reflection
 		ray.Direction = glm::reflect(ray.Direction, hitrecord.SurfaceNormal);
-		ray.Direction = glm::normalize(ray.Direction) + Fuzzyness * Utils::RandomUnitVector();
+		ray.Direction = glm::normalize(ray.Direction) + (Fuzzyness * Utils::RandomUnitVector());
 		ray.Time = ray.GetTime();
 
 		attenuation = Albedo;
-		return true;
+		return (glm::dot(ray.Direction, hitrecord.SurfaceNormal) > 0);
 	}
 
 private:
