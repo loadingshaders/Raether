@@ -14,6 +14,7 @@
 class Scene : public Hittable {
 public:
 	Scene() {}
+	Scene(std::shared_ptr<Hittable> object) { Add(object); }
 
 	void SetSampleCount(uint32_t count) { SampleCount = count; }
 	void SetSampleBounces(uint32_t bounces) { Bounces = bounces; }
