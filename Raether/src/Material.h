@@ -48,7 +48,7 @@ private:
 
 class Metal : public Material {
 public:
-	Metal(glm::dvec3 albedo, double fuzzyness) : Albedo(albedo), Fuzzyness((fuzzyness < 1.0f) ? ((fuzzyness < 0.0f) ? 0.0f : fuzzyness) : 1.0f) {}
+	Metal(glm::dvec3 albedo, double fuzzyness) : Albedo(albedo), Fuzzyness((fuzzyness < 1.0) ? ((fuzzyness < 0.0) ? 0.0 : fuzzyness) : 1.0) {}
 
 	bool Scatter(Ray& ray, Hitrec& hitrecord, glm::dvec3& attenuation) const override {
 
@@ -72,7 +72,7 @@ private:
 class Dielectric : public Material {
 public:
 	Dielectric(double ri) : RefractionIndex(ri), Fuzzyness(0.0) {}
-	Dielectric(double ri, double fuzzyness) : RefractionIndex(ri), Fuzzyness((fuzzyness < 1.0f) ? ((fuzzyness < 0.0f) ? 0.0f : fuzzyness) : 1.0f) {}
+	Dielectric(double ri, double fuzzyness) : RefractionIndex(ri), Fuzzyness((fuzzyness < 1.0) ? ((fuzzyness < 0.0) ? 0.0 : fuzzyness) : 1.0) {}
 
 	bool Scatter(Ray& ray, Hitrec& hitrecord, glm::dvec3& attenuation) const override {
 
