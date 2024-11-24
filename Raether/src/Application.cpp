@@ -39,7 +39,7 @@ void App::setUpScene() {
 		scene.Add(std::make_shared<Sphere>(glm::dvec3(-2.01, 0.0, 0.00), 0.65, dielectricBubble));
 
 		// Set Background Color
-		scene.SetBackgroundColor(blue, white);
+		scene.SetBackgroundColor(ColorBlue, ColorWhite);
 
 		// Build the BVH
 		scene.BuildBVH();
@@ -74,7 +74,7 @@ void App::setUpScene() {
 		scene.Add(std::make_shared<Sphere>(glm::dvec3(-2.01, 0.0, 0.0), 0.65, dielectricBubble));
 
 		// Set Background Color
-		scene.SetBackgroundColor(blue, white);
+		scene.SetBackgroundColor(ColorBlue, ColorWhite);
 
 		// Build the BVH
 		scene.BuildBVH();
@@ -144,7 +144,7 @@ void App::setUpScene() {
 		}
 
 		// Set Background Color
-		scene.SetBackgroundColor(blue, white);
+		scene.SetBackgroundColor(ColorBlue, ColorWhite);
 
 		// Build the BVH
 		scene.BuildBVH();
@@ -215,7 +215,7 @@ void App::setUpScene() {
 		}
 
 		// Set Background Color
-		scene.SetBackgroundColor(blue, white);
+		scene.SetBackgroundColor(ColorBlue, ColorWhite);
 
 		// Build the BVH
 		scene.BuildBVH();
@@ -286,7 +286,7 @@ void App::setUpScene() {
 		}
 
 		// Set Background Color
-		scene.SetBackgroundColor(blue, white);
+		scene.SetBackgroundColor(ColorBlue, ColorWhite);
 
 		// Build the BVH
 		scene.BuildBVH();
@@ -358,7 +358,7 @@ void App::setUpScene() {
 		}
 
 		// Set Background Color
-		scene.SetBackgroundColor(blue, white);
+		scene.SetBackgroundColor(ColorBlue, ColorWhite);
 
 		// Build the BVH
 		scene.BuildBVH();
@@ -390,7 +390,7 @@ void App::setUpScene() {
 		scene.Add(std::make_shared<Sphere>(glm::dvec3(4.0, -10.0, 0.0), 10.0, std::make_shared<Lambertian>(checkerTexture)));
 
 		// Set Background Color
-		scene.SetBackgroundColor(blue, white);
+		scene.SetBackgroundColor(ColorBlue, ColorWhite);
 
 		// Build the BVH
 		scene.BuildBVH();
@@ -418,7 +418,7 @@ void App::setUpScene() {
 		scene.Add(std::make_shared<Sphere>(glm::dvec3(4.0, 1.01, 0.0), 1.0, std::make_shared<Lambertian>(checkerImageTexture)));
 
 		// Set Background Color
-		scene.SetBackgroundColor(blue, white);
+		scene.SetBackgroundColor(ColorBlue, ColorWhite);
 
 		// Build the BVH
 		scene.BuildBVH();
@@ -445,7 +445,7 @@ void App::setUpScene() {
 		scene.Add(std::make_shared<Sphere>(glm::dvec3(4.0, 1.01, 0.0), 1.0, std::make_shared<Lambertian>(perlinNoise)));
 
 		// Set Background Color
-		scene.SetBackgroundColor(blue, white);
+		scene.SetBackgroundColor(ColorBlue, ColorWhite);
 
 		// Build the BVH
 		scene.BuildBVH();
@@ -479,7 +479,7 @@ void App::setUpScene() {
 		scene.Add(std::make_shared<Quad>(glm::dvec3(-1.5, -2.0, -5.0), glm::dvec3(3.0, 0.0, 0.0), glm::dvec3(0.0, 0.0, 3.0), lowerTeal));
 
 		// Set Background Color
-		scene.SetBackgroundColor(blue, white);
+		scene.SetBackgroundColor(ColorBlue, ColorWhite);
 
 		// Build the BVH
 		scene.BuildBVH();
@@ -511,7 +511,7 @@ void App::setUpScene() {
 		scene.Add(std::make_shared<Sphere>(glm::dvec3(4.0, 3.2, 0.0), 0.65, diffusedLight));
 
 		// Set Background Color
-		scene.SetBackgroundColor(black, black);
+		scene.SetBackgroundColor(ColorBlack, ColorBlack);
 
 		// Build the BVH
 		scene.BuildBVH();
@@ -546,7 +546,7 @@ void App::setUpScene() {
 		scene.Add(std::make_shared<Quad>(glm::dvec3(-1.0, 1.99, -3.0), glm::dvec3(2.0, 0.0, 0.0), glm::dvec3(0.0, 0.0, 2.0), diffusedHighLight)); // Light Quad
 
 		// Set Background Color
-		scene.SetBackgroundColor(black, black);
+		scene.SetBackgroundColor(ColorBlack, ColorBlack);
 
 		// Build the BVH
 		scene.BuildBVH();
@@ -588,7 +588,7 @@ void App::setUpScene() {
 		scene.Add(std::make_shared<Box>(glm::dvec3(-0.06, -2.0, -0.6), glm::dvec3(1.14, -0.8, -1.8), diffusedWhite));
 
 		// Set Background Color
-		scene.SetBackgroundColor(black, black);
+		scene.SetBackgroundColor(ColorBlack, ColorBlack);
 
 		// Build the BVH
 		scene.BuildBVH();
@@ -636,7 +636,7 @@ void App::setUpScene() {
 		scene.Add(box2);
 
 		// Set Background Color
-		scene.SetBackgroundColor(black, black);
+		scene.SetBackgroundColor(ColorBlack, ColorBlack);
 
 		// Build the BVH
 		scene.BuildBVH();
@@ -685,7 +685,7 @@ void App::setUpScene() {
 		scene.Add(std::make_shared<Volume>(box2, 1.8, glm::dvec3(1.0)));
 
 		// Set Background Color
-		scene.SetBackgroundColor(black, black);
+		scene.SetBackgroundColor(ColorBlack, ColorBlack);
 
 		// Build the BVH
 		scene.BuildBVH();
@@ -774,7 +774,7 @@ void App::setUpScene() {
 		scene.Add(std::make_shared<Translate>(std::make_shared<RotateY>(box2, 15.0), glm::dvec3(-100.0, 270.0, 395.0)));
 
 		// Set Background Color
-		scene.SetBackgroundColor(black, black);
+		scene.SetBackgroundColor(ColorBlack, ColorBlack);
 
 		// Build the Entire Scene BVH
 		scene.BuildBVH();
@@ -877,7 +877,7 @@ void App::setUpScene() {
 		scene.Add(std::make_shared<Translate>(std::make_shared<RotateY>(box2, 0.0), glm::dvec3(-100.0, 270.0, 395.0)));
 
 		// Set Background Color
-		scene.SetBackgroundColor(black, black);
+		scene.SetBackgroundColor(ColorBlack, ColorBlack);
 
 		// Build the Entire Scene BVH
 		scene.BuildBVH();
