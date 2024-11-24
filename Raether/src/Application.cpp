@@ -7,8 +7,7 @@ rae(),
 scene(),
 camera(),
 renderer()
-{
-} // 900,500
+{} // 900,500
 
 App::~App() {}
 
@@ -98,7 +97,7 @@ void App::setUpScene() {
 		std::shared_ptr<Material> diffuseWhite = std::make_shared<Lambertian>(glm::dvec3(0.5, 0.5, 0.5));
 		std::shared_ptr<Material> diffuseRed = std::make_shared<Lambertian>(glm::dvec3(0.4, 0.2, 0.1));
 		std::shared_ptr<Material> dielectricGlass = std::make_shared<Dielectric>(1.5);
-		std::shared_ptr<Material> dielectricBubble = std::make_shared<Dielectric>(1.00003 / 1.5);
+		std::shared_ptr<Material> dielectricBubble = std::make_shared<Dielectric>(1.0003 / 1.5);
 		std::shared_ptr<Material> metalSteel = std::make_shared<Metal>(glm::dvec3(0.7, 0.6, 0.5), 0.0);
 
 		// Configure Spheres
@@ -168,7 +167,7 @@ void App::setUpScene() {
 		std::shared_ptr<Material> diffuseWhite = std::make_shared<Lambertian>(glm::dvec3(0.5, 0.5, 0.5));
 		std::shared_ptr<Material> diffuseRed = std::make_shared<Lambertian>(glm::dvec3(0.4, 0.2, 0.1));
 		std::shared_ptr<Material> dielectricGlass = std::make_shared<Dielectric>(1.5);
-		std::shared_ptr<Material> dielectricBubble = std::make_shared<Dielectric>(1.00003 / 1.5);
+		std::shared_ptr<Material> dielectricBubble = std::make_shared<Dielectric>(1.0003 / 1.5);
 		std::shared_ptr<Material> metalSteel = std::make_shared<Metal>(glm::dvec3(0.7, 0.6, 0.5), 0.0);
 
 		// Configure Spheres
@@ -239,7 +238,7 @@ void App::setUpScene() {
 		std::shared_ptr<Material> diffuseWhite = std::make_shared<Lambertian>(glm::dvec3(0.5, 0.5, 0.5));
 		std::shared_ptr<Material> diffuseRed = std::make_shared<Lambertian>(glm::dvec3(0.4, 0.2, 0.1));
 		std::shared_ptr<Material> dielectricGlass = std::make_shared<Dielectric>(1.5);
-		std::shared_ptr<Material> dielectricBubble = std::make_shared<Dielectric>(1.00003 / 1.5);
+		std::shared_ptr<Material> dielectricBubble = std::make_shared<Dielectric>(1.0003 / 1.5);
 		std::shared_ptr<Material> metalSteel = std::make_shared<Metal>(glm::dvec3(0.7, 0.6, 0.5), 0.0);
 		std::shared_ptr<CheckerTexture> checkerTexture = std::make_shared<CheckerTexture>(0.32, glm::dvec3(0.2, 0.3, 0.1), glm::dvec3(0.9));
 
@@ -310,7 +309,7 @@ void App::setUpScene() {
 		std::shared_ptr<Material> diffuseWhite = std::make_shared<Lambertian>(glm::dvec3(0.5, 0.5, 0.5));
 		std::shared_ptr<Material> diffuseRed = std::make_shared<Lambertian>(glm::dvec3(0.4, 0.2, 0.1));
 		std::shared_ptr<Material> dielectricGlass = std::make_shared<Dielectric>(1.5);
-		std::shared_ptr<Material> dielectricBubble = std::make_shared<Dielectric>(1.00003 / 1.5);
+		std::shared_ptr<Material> dielectricBubble = std::make_shared<Dielectric>(1.0003 / 1.5);
 		std::shared_ptr<Material> metalSteel = std::make_shared<Metal>(glm::dvec3(0.7, 0.6, 0.5), 0.0);
 		std::shared_ptr<CheckerTexture> checkerTexture = std::make_shared<CheckerTexture>(0.32, glm::dvec3(0.2, 0.3, 0.1), glm::dvec3(0.9));
 
@@ -382,7 +381,7 @@ void App::setUpScene() {
 		std::shared_ptr<Material> diffuseWhite = std::make_shared<Lambertian>(glm::dvec3(0.5));
 		std::shared_ptr<Material> diffuseRed = std::make_shared<Lambertian>(glm::dvec3(0.4, 0.2, 0.1));
 		std::shared_ptr<Material> dielectricGlass = std::make_shared<Dielectric>(1.5);
-		std::shared_ptr<Material> dielectricBubble = std::make_shared<Dielectric>(1.00003 / 1.5);
+		std::shared_ptr<Material> dielectricBubble = std::make_shared<Dielectric>(1.0003 / 1.5);
 		std::shared_ptr<Material> metalSteel = std::make_shared<Metal>(glm::dvec3(0.7, 0.6, 0.5), 0.0);
 		std::shared_ptr<CheckerTexture> checkerTexture = std::make_shared<CheckerTexture>(0.32, glm::dvec3(0.2, 0.3, 0.1), glm::dvec3(0.9));
 
@@ -720,11 +719,13 @@ void App::setUpScene() {
 		// Configure Boxes
 		auto box1 = std::make_shared<HittableList>();
 
-		int boxesPerSide = 20;
+		int boxesPerSide = 50;
 		double boxWidth = 100.0;
 		double axisOffset = (boxesPerSide * boxWidth) / 2.0;
+
 		for (int i = 0; i < boxesPerSide; i++) {
 			for (int j = 0; j < boxesPerSide; j++) {
+
 				double x0 = -axisOffset + i * boxWidth;
 				double y0 = 0.0;
 				double z0 = -axisOffset + j * boxWidth;
@@ -779,8 +780,9 @@ void App::setUpScene() {
 		scene.BuildBVH();
 
 		// Camera setup
-		camera.SetCamMovement(0.01, 60.0);
 		camera.SetFocus(0.0, 0.0);
+		camera.SetCamMovement(0.01, 60.0);
+		camera.SetJitterStrength(0.002);
 		camera.SetViewPortWidth(width);
 		camera.SetViewPortHeight(height);
 		camera.SetPosition(glm::dvec3(470.0, 278.0, -600.0)); //glm::dvec3(555.928, 257.911, -691.695)
@@ -808,11 +810,13 @@ void App::setUpScene() {
 		// Configure Boxes
 		auto box1 = std::make_shared<HittableList>();
 
-		int boxesPerSide = 100;
+		int boxesPerSide = 50;
 		double boxWidth = 100.0;
 		double axisOffset = (boxesPerSide * boxWidth) / 2.0;
+
 		for (int i = 0; i < boxesPerSide; i++) {
 			for (int j = 0; j < boxesPerSide; j++) {
+
 				double x0 = -axisOffset + i * boxWidth;
 				double y0 = 0.0;
 				double z0 = -axisOffset + j * boxWidth;
@@ -879,8 +883,9 @@ void App::setUpScene() {
 		scene.BuildBVH();
 
 		// Camera setup
-		camera.SetCamMovement(0.01, 60.0);
 		camera.SetFocus(0.0, 0.0);
+		camera.SetCamMovement(0.01, 60.0);
+		camera.SetJitterStrength(0.002);
 		camera.SetViewPortWidth(width);
 		camera.SetViewPortHeight(height);
 		camera.SetPosition(glm::dvec3(470.0, 278.0, -600.0)); // glm::dvec3(555.928, 257.911, -691.695)
