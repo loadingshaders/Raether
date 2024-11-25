@@ -60,7 +60,7 @@ public:
 
 	bool Hit(const Ray& ray, Interval hitdist, Hitrec& hitrecord) const override {
 		// Create an Interval for the AABB hit check
-		if (!bbox.Hit(ray, hitdist)) {
+		if (!bbox.Hit(ray, Interval(0.00001, hitdist.Max))) {
 			return false;
 		}
 
