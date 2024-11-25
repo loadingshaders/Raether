@@ -705,7 +705,7 @@ void App::setUpScene() {
 		///Scene-16
 
 		// Configure Materials
-		auto diffusedLight = std::make_shared<DiffuseLight>(glm::dvec3(10.0));
+		auto diffusedLight = std::make_shared<DiffuseLight>(glm::dvec3(8.0));
 		auto diffusedBlack = std::make_shared<Lambertian>(glm::dvec3(0.0));
 		auto diffusedGreen = std::make_shared<Lambertian>(glm::dvec3(0.48, 0.83, 0.53));
 		auto diffusedBurntOrange = std::make_shared<Lambertian>(glm::dvec3(0.7, 0.3, 0.1));
@@ -796,7 +796,7 @@ void App::setUpScene() {
 		///Scene-17
 
 		// Configure Materials
-		auto diffusedLight = std::make_shared<DiffuseLight>(glm::dvec3(11.0, 10.8, 10.85));
+		auto diffusedLight = std::make_shared<DiffuseLight>(glm::dvec3(10.0, 9.8, 9.85));
 		auto diffusedBlack = std::make_shared<Lambertian>(glm::dvec3(0.0));
 		auto diffusedGreen = std::make_shared<Lambertian>(glm::dvec3(0.48, 0.83, 0.53));
 		auto diffusedBurntOrange = std::make_shared<Lambertian>(glm::dvec3(0.7, 0.3, 0.1));
@@ -847,7 +847,7 @@ void App::setUpScene() {
 		scene.Add(boundary);
 
 		boundary = std::make_shared<Sphere>(glm::dvec3(0.0), 5000.0, dielectricGlass);
-		scene.Add(std::make_shared<Volume>(boundary, 0.0001, glm::dvec3(1.0)));
+		scene.Add(std::make_shared<Volume>(boundary, 0.00008, glm::dvec3(1.0)));
 
 		scene.Add(std::make_shared<Sphere>(glm::dvec3(400.0, 200.0, 400.0), 100.0, earthTopoMap));
 		scene.Add(std::make_shared<Sphere>(glm::dvec3(220.0, 280.0, 300.0), 80.0, perlinNoise));
