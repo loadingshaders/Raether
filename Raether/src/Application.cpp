@@ -933,6 +933,53 @@ void App::setUpScene() {
 		camera.SetView();
 		camera.CalculateRayDirections();
 	}
+	#elif defined(SCENE19)
+	{
+		///Scene-19
+
+		// Configure Materials
+		auto diffusedLight = std::make_shared<DiffuseLight>(glm::dvec3(2.0));
+		auto diffusedLightBright = std::make_shared<DiffuseLight>(glm::dvec3(4.0));
+		auto diffusedWhite = std::make_shared<Lambertian>(glm::dvec3(1.0));
+		auto dielectricGlass = std::make_shared<Dielectric>(1.5);
+		auto dielectricGlassHazy = std::make_shared<Dielectric>(1.5, 0.7);
+		auto beigeWallTexture = std::make_shared<Lambertian>(std::make_shared<ImageTexture>("Material/BeigeWallDiffuseColor.png"));
+		auto checkerTexture = std::make_shared<Lambertian>(std::make_shared<CheckerTexture>(0.32, glm::dvec3(0.65, 0.78, 0.6), std::make_shared<ImageTexture>("Material/BeigeWallDiffuseColor.png")));
+
+		// Configure Quads
+		scene.Add(std::make_shared<Quad>(glm::dvec3(-15.0, 10.0, 25.0), glm::dvec3(30.0, 0.0, 0.0), glm::dvec3(0.0, 0.0, -30.0), diffusedLight));
+		scene.Add(std::make_shared<Quad>(glm::dvec3(-5.0, 9.0, 10.0), glm::dvec3(10.0, 0.0, 0.0), glm::dvec3(0.0, 0.0, -10.0), diffusedLightBright));
+		scene.Add(std::make_shared<Quad>(glm::dvec3(-30.0, 7.0, 30.0), glm::dvec3(60.0, 0.0, 0.0), glm::dvec3(0.0, 0.0, -40.0), dielectricGlassHazy));
+
+		// Configure Boxes
+		scene.Add(std::make_shared<Box>(glm::dvec3(-30.0, 15.0, 10.0), beigeWallTexture, glm::dvec3(0.08, 30.0, 40.0))); // Left Box
+		scene.Add(std::make_shared<Box>(glm::dvec3(30.0, 15.0, 10.0), beigeWallTexture, glm::dvec3(0.08, 30.0, 40.0)));  // Right Box
+		scene.Add(std::make_shared<Box>(glm::dvec3(0.0, 15.0, -10.0), diffusedWhite, glm::dvec3(60.0, 30.0, 0.08)));     // Back Box
+		scene.Add(std::make_shared<Box>(glm::dvec3(0.0, 30.0, 10.0), diffusedWhite, glm::dvec3(60.0, 0.08, 40.0)));      // Top Box
+		scene.Add(std::make_shared<Box>(glm::dvec3(0.0, 0.0, 0.0), checkerTexture, glm::dvec3(2000.0, 0.08, 2000.0)));   // Bottom Box
+
+		// Configure Mesh
+		auto modelmesh = std::make_shared<Mesh>("StanfordBunny/StanfordBunny.glb", 1.0, diffusedWhite);
+		scene.Add(std::make_shared<Translate>(std::make_shared<RotateZ>(std::make_shared<RotateX>(modelmesh, 90.0), 2.0), glm::dvec3(0.26, 0.025, 0.2)));
+
+		// Set Background Color
+		scene.SetBackgroundColor(ColorBlack, ColorBlack);
+
+		// Build the BVH
+		scene.BuildBVH();
+
+		// Camera setup
+		camera.SetFocus(30.0, 3.4);
+		camera.SetCamMovement(0.01, 0.5);
+		camera.SetJitterStrength(0.002);
+		camera.SetViewPortWidth(width);
+		camera.SetViewPortHeight(height);
+		camera.SetPosition(glm::dvec3(0, 1.9, 3.5)); // glm::dvec3(0.0, 0.1, 4.0)
+		camera.SetForwardDirection(glm::dvec3(0.0, -0.329962, -0.943802));
+		camera.SetProjection(45.0);
+		camera.SetView();
+		camera.CalculateRayDirections();
+	}
 	#endif
 
 	// Scene Render Specs
