@@ -83,7 +83,7 @@ void App::setUpScene() {
 		camera.SetFocus(0.0, 62.0);
 		camera.SetViewPortWidth(width);
 		camera.SetViewPortHeight(height);
-		camera.SetPosition(glm::dvec3(-34.93, 35.6765, 36.7877)); //glm::dvec3(0.0, 0.0, 8.0)
+		camera.SetPosition(glm::dvec3(-34.93, 35.6765, 36.7877)); // glm::dvec3(0.0, 0.0, 8.0)
 		camera.SetForwardDirection(glm::dvec3(0.562163, -0.577032, -0.592458)); // glm::dvec3(0.0, 0.0, -1.0)
 		camera.SetProjection(4.5); // 45.0
 		camera.SetView();
@@ -153,7 +153,7 @@ void App::setUpScene() {
 		camera.SetFocus(10.0, 12.0);
 		camera.SetViewPortWidth(width);
 		camera.SetViewPortHeight(height);
-		camera.SetPosition(glm::dvec3(14.0218, 2.0866, 3.9276)); //glm::dvec3(0.0, 0.0, 8.0)
+		camera.SetPosition(glm::dvec3(14.0218, 2.0866, 3.9276)); // glm::dvec3(0.0, 0.0, 8.0)
 		camera.SetForwardDirection(glm::dvec3(-0.869436, -0.0900598, -0.228215)); // glm::dvec3(0.0, 0.0, -1.0)
 		camera.SetProjection(30.0); // 45.0
 		camera.SetView();
@@ -224,7 +224,7 @@ void App::setUpScene() {
 		camera.SetFocus(50.0, 12.0);
 		camera.SetViewPortWidth(width);
 		camera.SetViewPortHeight(height);
-		camera.SetPosition(glm::dvec3(14.0218, 2.0866, 3.9276)); //glm::dvec3(0.0, 0.0, 8.0)
+		camera.SetPosition(glm::dvec3(14.0218, 2.0866, 3.9276)); // glm::dvec3(0.0, 0.0, 8.0)
 		camera.SetForwardDirection(glm::dvec3(-0.869436, -0.0900598, -0.228215)); // glm::dvec3(0.0, 0.0, -1.0)
 		camera.SetProjection(30.0); // 45.0
 		camera.SetView();
@@ -367,7 +367,7 @@ void App::setUpScene() {
 		camera.SetFocus(10.0, 12.0);
 		camera.SetViewPortWidth(width);
 		camera.SetViewPortHeight(height);
-		camera.SetPosition(glm::dvec3(14.0218, 2.0866f, 3.9276)); //glm::dvec3(0.0, 0.0, 8.0)
+		camera.SetPosition(glm::dvec3(14.0218, 2.0866f, 3.9276)); // glm::dvec3(0.0, 0.0, 8.0)
 		camera.SetForwardDirection(glm::dvec3(-0.869436, -0.0900598, -0.228215)); // glm::dvec3(0.0, 0.0, -1.0)
 		camera.SetProjection(30.0); // 45.0
 		camera.SetView();
@@ -399,7 +399,7 @@ void App::setUpScene() {
 		camera.SetFocus(0.0, 12.0);
 		camera.SetViewPortWidth(width);
 		camera.SetViewPortHeight(height);
-		camera.SetPosition(glm::dvec3(18.8951, 1.88632, 3.44855)); //glm::dvec3(0.0, 0.0, 8.0)
+		camera.SetPosition(glm::dvec3(18.8951, 1.88632, 3.44855)); // glm::dvec3(0.0, 0.0, 8.0)
 		camera.SetForwardDirection(glm::dvec3(-0.873826, -0.0900598, -0.210782)); // glm::dvec3(0.0, 0.0, -1.0)
 		camera.SetProjection(30.0); // 45.0
 		camera.SetView();
@@ -488,7 +488,7 @@ void App::setUpScene() {
 		camera.SetFocus(10.0, 12.0);
 		camera.SetViewPortWidth(width);
 		camera.SetViewPortHeight(height);
-		camera.SetPosition(glm::dvec3(0.0, 0.0, 8.0)); //glm::dvec3(0.0, 0.0, 8.0)
+		camera.SetPosition(glm::dvec3(0.0, 0.0, 8.0)); // glm::dvec3(0.0, 0.0, 8.0)
 		camera.SetForwardDirection(glm::dvec3(0.0, 0.0, -1.0)); // glm::dvec3(0.0, 0.0, -1.0)
 		camera.SetProjection(30.0); // 45.0
 		camera.SetView();
@@ -520,7 +520,7 @@ void App::setUpScene() {
 		camera.SetFocus(0.0, 0.0);
 		camera.SetViewPortWidth(width);
 		camera.SetViewPortHeight(height);
-		camera.SetPosition(glm::dvec3(-6.89692, 1.89061, -1.04361)); //glm::dvec3(0.0, 0.0, 8.0)
+		camera.SetPosition(glm::dvec3(-6.89692, 1.89061, -1.04361)); // glm::dvec3(0.0, 0.0, 8.0)
 		camera.SetForwardDirection(glm::dvec3(0.895924, -0.0334501, 0.110963)); // glm::dvec3(0.0, 0.0, -1.0)
 		camera.SetProjection(30.0); // 45.0
 		camera.SetView();
@@ -555,7 +555,7 @@ void App::setUpScene() {
 		camera.SetFocus(10.0, 9.7);
 		camera.SetViewPortWidth(width);
 		camera.SetViewPortHeight(height);
-		camera.SetPosition(glm::dvec3(0.0, 0.0, 7.7)); //glm::dvec3(0.0, 0.0, 8.0)
+		camera.SetPosition(glm::dvec3(0.0, 0.0, 7.7)); // glm::dvec3(0.0, 0.0, 8.0)
 		camera.SetForwardDirection(glm::dvec3(0.0, 0.0, -1.0)); // glm::dvec3(0.0, 0.0, -1.0)
 		camera.SetProjection(30.0); // 45.0
 		camera.SetView();
@@ -597,7 +597,7 @@ void App::setUpScene() {
 		camera.SetFocus(10.0, 9.7);
 		camera.SetViewPortWidth(width);
 		camera.SetViewPortHeight(height);
-		camera.SetPosition(glm::dvec3(0.0, 0.0, 7.7)); //glm::dvec3(0.0, 0.0, 8.0)
+		camera.SetPosition(glm::dvec3(0.0, 0.0, 7.7)); // glm::dvec3(0.0, 0.0, 8.0)
 		camera.SetForwardDirection(glm::dvec3(0.0, 0.0, -1.0)); // glm::dvec3(0.0, 0.0, -1.0)
 		camera.SetProjection(30.0); // 45.0
 		camera.SetView();
@@ -645,7 +645,7 @@ void App::setUpScene() {
 		camera.SetFocus(10.0, 9.7);
 		camera.SetViewPortWidth(width);
 		camera.SetViewPortHeight(height);
-		camera.SetPosition(glm::dvec3(0.0, 0.0, 7.7)); //glm::dvec3(0.0, 0.0, 8.0)
+		camera.SetPosition(glm::dvec3(0.0, 0.0, 7.7)); // glm::dvec3(0.0, 0.0, 8.0)
 		camera.SetForwardDirection(glm::dvec3(0.0, 0.0, -1.0)); // glm::dvec3(0.0, 0.0, -1.0)
 		camera.SetProjection(30.0); // 45.0
 		camera.SetView();
@@ -785,7 +785,7 @@ void App::setUpScene() {
 		camera.SetJitterStrength(0.002);
 		camera.SetViewPortWidth(width);
 		camera.SetViewPortHeight(height);
-		camera.SetPosition(glm::dvec3(470.0, 278.0, -600.0)); //glm::dvec3(555.928, 257.911, -691.695)
+		camera.SetPosition(glm::dvec3(470.0, 278.0, -600.0)); // glm::dvec3(555.928, 257.911, -691.695)
 		camera.SetForwardDirection(glm::dvec3(-0.29, 0.01, 0.95)); // glm::dvec3(-0.342436, 0.0428016, 0.938567)
 		camera.SetProjection(40.0); // 45.0
 		camera.SetView();
@@ -894,11 +894,50 @@ void App::setUpScene() {
 		camera.SetView();
 		camera.CalculateRayDirections();
 	}
+	#elif defined(SCENE18)
+	{
+		///Scene-18
+
+		// Configure Materials
+		auto leftRed = std::make_shared<Lambertian>(glm::dvec3(1.0, 0.2, 0.2));
+		auto backGreen = std::make_shared<Lambertian>(glm::dvec3(0.2, 1.0, 0.2));
+		auto rightBlue = std::make_shared<Lambertian>(glm::dvec3(0.2, 0.2, 1.0));
+		auto upperOrange = std::make_shared<Lambertian>(glm::dvec3(1.0, 0.5, 0.0));
+		auto lowerTeal = std::make_shared<Lambertian>(glm::dvec3(0.2, 0.8, 0.8));
+
+		// Configure Planes
+		scene.Add(std::make_shared<Triangle>(glm::dvec3(-2.0, 1.6, -1.7), glm::dvec3(-2.0, 1.6, -4.7), glm::dvec3(-2.0, -1.4, -1.7), leftRed));
+		scene.Add(std::make_shared<Triangle>(glm::dvec3(-2.0, -1.6, -5.3), glm::dvec3(-2.0, -1.6, -2.3), glm::dvec3(-2.0, 1.4, -5.3), leftRed));
+		scene.Add(std::make_shared<Triangle>(glm::dvec3(2.0, 1.6, -1.7), glm::dvec3(2.0, 1.6, -4.7), glm::dvec3(2.0, -1.4, -1.7), rightBlue));
+		scene.Add(std::make_shared<Triangle>(glm::dvec3(2.0, -1.6, -5.3), glm::dvec3(2.0, -1.6, -2.3), glm::dvec3(2.0, 1.4, -5.3), rightBlue));
+		scene.Add(std::make_shared<Triangle>(glm::dvec3(-1.6, 2.0, -5.3), glm::dvec3(1.4, 2.0, -5.3), glm::dvec3(-1.6, 2.0, -2.3), upperOrange));
+		scene.Add(std::make_shared<Triangle>(glm::dvec3(1.6, 2.0, -1.7), glm::dvec3(1.6, 2.0, -4.7), glm::dvec3(-1.4, 2.0, -1.7), upperOrange));
+		scene.Add(std::make_shared<Triangle>(glm::dvec3(-1.6, -2.0, -5.3), glm::dvec3(1.4, -2.0, -5.3), glm::dvec3(-1.6, -2.0, -2.3), lowerTeal));
+		scene.Add(std::make_shared<Triangle>(glm::dvec3(1.6, -2.0, -1.7), glm::dvec3(1.6, -2.0, -4.7), glm::dvec3(-1.4, -2.0, -1.7), lowerTeal));
+		scene.Add(std::make_shared<Triangle>(glm::dvec3(-1.65, -1.65, -5.5), glm::dvec3(1.35, -1.65, -5.5), glm::dvec3(-1.65, 1.35, -5.5), backGreen));
+		scene.Add(std::make_shared<Triangle>(glm::dvec3(1.65, 1.65, -5.5), glm::dvec3(1.65, -1.35, -5.5), glm::dvec3(-1.35, 1.65, -5.5), backGreen));
+
+		// Set Background Color
+		scene.SetBackgroundColor(ColorBlue, ColorWhite);
+
+		// Build the BVH
+		scene.BuildBVH();
+
+		// Camera setup
+		camera.SetFocus(10.0, 12.0);
+		camera.SetViewPortWidth(width);
+		camera.SetViewPortHeight(height);
+		camera.SetPosition(glm::dvec3(0.0, 0.0, 8.0)); // glm::dvec3(0.0, 0.0, 8.0)
+		camera.SetForwardDirection(glm::dvec3(0.0, 0.0, -1.0)); // glm::dvec3(0.0, 0.0, -1.0)
+		camera.SetProjection(30.0); // 45.0
+		camera.SetView();
+		camera.CalculateRayDirections();
+	}
 	#endif
 
 	// Scene Render Specs
 	scene.SetSampleCount(100000);
-	scene.SetSampleBounces(500);
+	scene.SetSampleBounces(1000);
 }
 
 void App::updateScene() {

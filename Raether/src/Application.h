@@ -14,6 +14,7 @@
 #include "Config.h"
 #include "Sphere.h"
 #include "Quad.h"
+#include "Triangle.h"
 #include "Box.h"
 #include "Volume.h"
 #include "HittableList.h"
