@@ -1,0 +1,33 @@
+knobLogoSurface.glb
+
+Triangles: 1,954
+Vertices: 5,860
+Updated: 2024-11-29
+License: MIT License
+
+-----------------------------------------
+
+knobBall.glb
+
+Triangles: 18,046
+Vertices: 54,126
+Updated: 2024-11-29
+License: MIT License
+
+-----------------------------------------
+
+knobBase.glb
+
+Triangles: 23,442
+Vertices: 66,894
+Updated: 2024-11-29
+License: MIT License
+
+-----------------------------------------
+
+KnobHolder.glb
+
+Triangles: 20,612
+Vertices: 57,360
+Updated: 2024-11-29
+License: MIT License
