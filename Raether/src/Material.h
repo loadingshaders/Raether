@@ -48,8 +48,14 @@ private:
 
 class Metal : public Material {
 public:
-	Metal(glm::dvec3 albedo) : Albedo(albedo), Fuzzyness(0.0) {}
-	Metal(glm::dvec3 albedo, double fuzzyness) : Albedo(albedo), Fuzzyness((fuzzyness < 1.0) ? ((fuzzyness < 0.0) ? 0.0 : fuzzyness) : 1.0) {}
+	Metal(glm::dvec3 albedo) :
+		Albedo(albedo),
+		Fuzzyness(0.0)
+	{}
+	Metal(glm::dvec3 albedo, double fuzzyness) :
+		Albedo(albedo),
+		Fuzzyness((fuzzyness < 1.0) ? ((fuzzyness < 0.0) ? 0.0 : fuzzyness) : 1.0)
+	{}
 
 	bool Scatter(Ray& ray, Hitrec& hitrecord, glm::dvec3& attenuation) const override {
 
@@ -72,10 +78,35 @@ private:
 
 class Dielectric : public Material {
 public:
-	Dielectric(double ri) : Albedo(glm::dvec3(1.0)), RefractionIndex(ri), Fuzzyness(0.0) {}
-	Dielectric(double ri, double fuzzyness) : Albedo(glm::dvec3(1.0)), RefractionIndex(ri), Fuzzyness(fuzzyness) {}
-	Dielectric(glm::dvec3 albedo, double ri) : Albedo(albedo), RefractionIndex(ri), Fuzzyness(0.0) {}
-	Dielectric(glm::dvec3 albedo, double ri, double fuzzyness) : Albedo(albedo), RefractionIndex(ri), Fuzzyness((fuzzyness < 1.0) ? ((fuzzyness < 0.0) ? 0.0 : fuzzyness) : 1.0) {}
+	Dielectric(double ri) :
+		Tex(nullptr),
+		Albedo(glm::dvec3(1.0)),
+		RefractionIndex(ri),
+		Fuzzyness(0.0)
+	{}
+	Dielectric(double ri, double fuzzyness) :
+		Tex(nullptr),
+		Albedo(glm::dvec3(1.0)),
+		RefractionIndex(ri),
+		Fuzzyness(fuzzyness)
+	{}
+	Dielectric(glm::dvec3 albedo, double ri) :
+		Tex(nullptr),
+		Albedo(albedo),
+		RefractionIndex(ri),
+		Fuzzyness(0.0)
+	{}
+	Dielectric(glm::dvec3 albedo, double ri, double fuzzyness) :
+		Tex(nullptr),
+		Albedo(albedo),
+		RefractionIndex(ri),
+		Fuzzyness((fuzzyness < 1.0) ? ((fuzzyness < 0.0) ? 0.0 : fuzzyness) : 1.0)
+	{}
+	Dielectric(std::shared_ptr<Texture> texture, double ri, double fuzzyness) : 
+		Tex(texture),
+		RefractionIndex(ri),
+		Fuzzyness((fuzzyness < 1.0) ? ((fuzzyness < 0.0) ? 0.0 : fuzzyness) : 1.0)
+	{}
 
 	bool Scatter(Ray& ray, Hitrec& hitrecord, glm::dvec3& attenuation) const override {
 
@@ -101,11 +132,14 @@ public:
 		ray.Direction = glm::normalize(ray.Direction) + Fuzzyness * Utils::RandomUnitVector();
 		ray.Time = ray.GetTime();
 
-		attenuation = glm::dvec3(1.0);
+		if (Tex == nullptr) attenuation = Albedo;
+		else attenuation = Tex->value(hitrecord.U, hitrecord.V, hitrecord.HitPoint);
+		
 		return true;
 	}
 
 private:
+	std::shared_ptr<Texture> Tex;
 	glm::dvec3 Albedo;
 	double RefractionIndex;
 	double Fuzzyness;
