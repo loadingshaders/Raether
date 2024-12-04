@@ -35,6 +35,16 @@ public:
 	CheckerTexture(double scale, glm::dvec3& color1, glm::dvec3& color2) :
 		CheckerTexture(scale, std::make_shared<SolidColor>(color1), std::make_shared<SolidColor>(color2))
 	{}
+	CheckerTexture(double scale, std::shared_ptr<Texture> even, glm::dvec3& odd) :
+		InvScale(1.0 / scale),
+		Even(even),
+		Odd(std::make_shared<SolidColor>(odd))
+	{}
+	CheckerTexture(double scale, glm::dvec3& even, std::shared_ptr<Texture> odd) :
+		InvScale(1.0 / scale),
+		Even(std::make_shared<SolidColor>(even)),
+		Odd(odd)
+	{}
 
 	glm::dvec3 value(double u, double v, glm::dvec3& point) const override {
 		int xInteger = int(glm::floor(InvScale * point.x));
