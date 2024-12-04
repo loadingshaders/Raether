@@ -16,6 +16,7 @@
 #include "Quad.h"
 #include "Triangle.h"
 #include "Box.h"
+#include "Mesh.h"
 #include "Volume.h"
 #include "HittableList.h"
 
