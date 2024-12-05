@@ -1003,16 +1003,68 @@ void App::setUpScene() {
 		scene.Add(std::make_shared<Translate>(backdropBackground, glm::dvec3(0.0, 2.2, 0.0)));
 
 		auto knobLogo = std::make_shared<Mesh>("RaetherKnob/knobLogoSurface.glb", 0.8, polishedAluminum);
-		scene.Add(std::make_shared<Translate>(knobLogo, glm::dvec3(0.0, 1.065, 0.0)));
+		scene.Add(std::make_shared<Translate>(knobLogo, glm::dvec3(0.0, 1.055, 0.0)));
 
 		auto knobBall = std::make_shared<Mesh>("RaetherKnob/KnobBall.glb", 0.8, matteMetal);
-		scene.Add(std::make_shared<Translate>(knobBall, glm::dvec3(0.0, 1.065, 0.0)));
+		scene.Add(std::make_shared<Translate>(knobBall, glm::dvec3(0.0, 1.055, 0.0)));
 
 		auto knobHolder = std::make_shared<Mesh>("RaetherKnob/KnobHolder.glb", 0.8, dielectricGlassFuzzy02);
-		scene.Add(std::make_shared<Translate>(knobHolder, glm::dvec3(0.0, 1.065, 0.0)));
+		scene.Add(std::make_shared<Translate>(knobHolder, glm::dvec3(0.0, 1.055, 0.0)));
 
 		auto knobBase = std::make_shared<Mesh>("RaetherKnob/KnobBase.glb", 0.8, dielectricGlassFuzzy02);
-		scene.Add(std::make_shared<Translate>(knobBase, glm::dvec3(0.0, 1.065, 0.0)));
+		scene.Add(std::make_shared<Translate>(knobBase, glm::dvec3(0.0, 1.055, 0.0)));
+
+		// Set Background Color
+		scene.SetBackgroundColor(ColorBlack, ColorBlack);
+
+		// Build the BVH
+		scene.BuildBVH();
+
+		// Camera setup
+		camera.SetFocus(30.0, 3.135);
+		camera.SetCamMovement(0.01, 0.5);
+		camera.SetJitterStrength(0.002);
+		camera.SetViewPortWidth(width);
+		camera.SetViewPortHeight(height);
+		camera.SetPosition(glm::dvec3(0.0, 1.9, 3.5)); // glm::dvec3(0.0, 0.1, 4.0)
+		camera.SetForwardDirection(glm::dvec3(0.0, -0.329962, -0.943802));
+		camera.SetProjection(45.0);
+		camera.SetView();
+		camera.CalculateRayDirections();
+	}
+	#elif defined(SCENE21)
+	{
+		///Scene-21
+
+		// Configure Materials
+		auto diffusedLight = std::make_shared<DiffuseLight>(glm::dvec3(3.0));
+		auto diffusedLightHigh = std::make_shared<DiffuseLight>(glm::dvec3(4.5));
+		auto diffusedWhite = std::make_shared<Lambertian>(glm::dvec3(1.0));
+		auto dielectricGlassHazy01 = std::make_shared<Dielectric>(1.5, 0.8);
+		auto polishedAluminum = std::make_shared<Metal>(glm::dvec3(0.80392, 0.83529, 0.87058), 0.1);
+		auto matteMetal = std::make_shared<Metal>(glm::dvec3(0.10392, 0.13529, 0.17058), 0.45);
+		auto stuccoWallTexture = std::make_shared<Lambertian>(std::make_shared<ImageTexture>("Material/StuccoRoughnessWallDiffuseColor.png"));
+
+		// Configure Quads
+		scene.Add(std::make_shared<Quad>(glm::dvec3(-60.0, 23.0, 60.0), glm::dvec3(120.0, 0.0, 0.0), glm::dvec3(0.0, 0.0, -120.0), diffusedLight));
+		scene.Add(std::make_shared<Quad>(glm::dvec3(-15.0, 21.0, 15.0), glm::dvec3(30.0, 0.0, 0.0), glm::dvec3(0.0, 0.0, -30.0), diffusedLightHigh));
+		scene.Add(std::make_shared<Quad>(glm::dvec3(-120.0, 16.0, 120.0), glm::dvec3(240.0, 0.0, 0.0), glm::dvec3(0.0, 0.0, -240.0), dielectricGlassHazy01));
+
+		// Configure Mesh
+		auto backdropBackground = std::make_shared<Mesh>("Backdrop/Background.glb", 1.8, stuccoWallTexture);
+		scene.Add(std::make_shared<Translate>(backdropBackground, glm::dvec3(0.0, 2.2, 0.0)));
+
+		auto knobLogo = std::make_shared<Mesh>("RaetherKnob/knobLogoSurface.glb", 0.8, polishedAluminum);
+		scene.Add(std::make_shared<Translate>(knobLogo, glm::dvec3(0.0, 1.055, 0.0)));
+
+		auto knobBall = std::make_shared<Mesh>("RaetherKnob/KnobBall.glb", 0.8, matteMetal);
+		scene.Add(std::make_shared<Translate>(knobBall, glm::dvec3(0.0, 1.055, 0.0)));
+
+		auto knobHolder = std::make_shared<Mesh>("RaetherKnob/KnobHolder.glb", 0.8, diffusedWhite);
+		scene.Add(std::make_shared<Translate>(knobHolder, glm::dvec3(0.0, 1.055, 0.0)));
+
+		auto knobBase = std::make_shared<Mesh>("RaetherKnob/KnobBase.glb", 0.8, diffusedWhite);
+		scene.Add(std::make_shared<Translate>(knobBase, glm::dvec3(0.0, 1.055, 0.0)));
 
 		// Set Background Color
 		scene.SetBackgroundColor(ColorBlack, ColorBlack);
