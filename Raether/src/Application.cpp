@@ -988,7 +988,6 @@ void App::setUpScene() {
 		auto diffusedLight = std::make_shared<DiffuseLight>(glm::dvec3(3.0));
 		auto diffusedLightHigh = std::make_shared<DiffuseLight>(glm::dvec3(4.5));
 		auto diffusedLightLow = std::make_shared<DiffuseLight>(glm::dvec3(4.0));
-		auto diffusedWhite = std::make_shared<Lambertian>(glm::dvec3(1.0));
 		auto dielectricGlassFuzzy01 = std::make_shared<Dielectric>(1.5, 0.8);
 		auto dielectricGlassFuzzy02 = std::make_shared<Dielectric>(1.5, 0.3);
 		auto polishedAluminum = std::make_shared<Metal>(glm::dvec3(0.80392, 0.83529, 0.87058), 0.1);
