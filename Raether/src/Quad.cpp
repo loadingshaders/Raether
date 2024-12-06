@@ -69,16 +69,16 @@ bool Quad::Hit(const Ray& ray, Interval hitdist, Hitrec& hitrecord) const {
 	return true;
 }
 
-bool Quad::isInterior(double a, double b, Hitrec& hitrecord) const {
+bool Quad::isInterior(double u, double v, Hitrec& hitrecord) const {
 	Interval unitInterval = Interval(0.0, 1.0);
 
 	// Given the hit point in plane coordinates, return false if it is outside the
 	// primitive, otherwise set the hit record UV coordinates and return true.
 
-	if (!unitInterval.Contains(a) || !unitInterval.Contains(b)) return false;
+	if (!unitInterval.Contains(u) || !unitInterval.Contains(v)) return false;
 
-	hitrecord.U = glm::clamp(a, 0.0, 1.0);
-	hitrecord.V = glm::clamp(b, 0.0, 1.0);
+	hitrecord.U = glm::clamp(u, 0.0, 1.0);
+	hitrecord.V = glm::clamp(v, 0.0, 1.0);
 
 	return true;
 }

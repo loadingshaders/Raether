@@ -92,13 +92,13 @@ bool Triangle::Hit(const Ray& ray, Interval hitdist, Hitrec& hitrecord) const {
 	return true;
 }
 
-bool Triangle::isInterior(double a, double b, Hitrec& hitrecord) const {
+bool Triangle::isInterior(double u, double v, Hitrec& hitrecord) const {
 
 	/// Check Barycentric Coordinates
-	if (a < 0.0 || b < 0.0 || (a + b) > 1.0) return false;
+	if (u < 0.0 || v < 0.0 || (u + v) > 1.0) return false;
 
-	hitrecord.U = a;
-	hitrecord.V = b;
+	hitrecord.U = u;
+	hitrecord.V = v;
 
 	return true;
 }

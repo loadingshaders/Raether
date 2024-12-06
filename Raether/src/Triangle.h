@@ -17,7 +17,7 @@ public:
 	Aabb BoundingBox() const override { return bbox; }
 
 private:
-	bool isInterior(double a, double b, Hitrec& hitrecord) const;
+	bool isInterior(double u, double v, Hitrec& hitrecord) const;
 
 private:
 	glm::dvec3 V0{ 0.0 };
