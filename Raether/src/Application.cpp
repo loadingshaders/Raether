@@ -985,13 +985,13 @@ void App::setUpScene() {
 		///Scene-20
 
 		// Configure Materials
-		auto diffusedLight = std::make_shared<DiffuseLight>(glm::dvec3(3.0));
-		auto diffusedLightHigh = std::make_shared<DiffuseLight>(glm::dvec3(4.5));
+		auto diffusedLight = std::make_shared<DiffuseLight>(glm::dvec3(2.0));
+		auto diffusedLightHigh = std::make_shared<DiffuseLight>(glm::dvec3(4.0));
 		auto dielectricGlassFuzzy01 = std::make_shared<Dielectric>(1.5, 0.8);
 		auto dielectricGlassFuzzy02 = std::make_shared<Dielectric>(1.5, 0.3);
 		auto polishedAluminum = std::make_shared<Metal>(glm::dvec3(0.80392, 0.83529, 0.87058), 0.1);
 		auto matteMetal = std::make_shared<Metal>(glm::dvec3(0.10392, 0.13529, 0.17058), 0.45);
-		auto stuccoWallTexture = std::make_shared<Lambertian>(std::make_shared<ImageTexture>("Material/StuccoRoughnessWallDiffuseColor.png"));
+		auto checkerTexture = std::make_shared<Lambertian>(std::make_shared<CheckerTexture>(0.32, glm::dvec3(0.32), glm::dvec3(0.72)));
 
 		// Configure Quads
 		scene.Add(std::make_shared<Quad>(glm::dvec3(-60.0, 23.0, 60.0), glm::dvec3(120.0, 0.0, 0.0), glm::dvec3(0.0, 0.0, -120.0), diffusedLight));
@@ -999,7 +999,7 @@ void App::setUpScene() {
 		scene.Add(std::make_shared<Quad>(glm::dvec3(-120.0, 16.0, 120.0), glm::dvec3(240.0, 0.0, 0.0), glm::dvec3(0.0, 0.0, -240.0), dielectricGlassFuzzy01));
 
 		// Configure Mesh
-		auto backdropBackground = std::make_shared<Mesh>("Backdrop/Background.glb", 1.8, stuccoWallTexture);
+		auto backdropBackground = std::make_shared<Mesh>("Backdrop/Background.glb", 1.8, checkerTexture);
 		scene.Add(std::make_shared<Translate>(backdropBackground, glm::dvec3(0.0, 2.2, 0.0)));
 
 		auto knobLogo = std::make_shared<Mesh>("RaetherKnob/knobLogoSurface.glb", 0.8, polishedAluminum);
@@ -1037,21 +1037,21 @@ void App::setUpScene() {
 		///Scene-21
 
 		// Configure Materials
-		auto diffusedLight = std::make_shared<DiffuseLight>(glm::dvec3(3.0));
-		auto diffusedLightHigh = std::make_shared<DiffuseLight>(glm::dvec3(4.5));
+		auto diffusedLight = std::make_shared<DiffuseLight>(glm::dvec3(2.0));
+		auto diffusedLightHigh = std::make_shared<DiffuseLight>(glm::dvec3(4.0));
 		auto diffusedWhite = std::make_shared<Lambertian>(glm::dvec3(1.0));
-		auto dielectricGlassHazy01 = std::make_shared<Dielectric>(1.5, 0.8);
+		auto dielectricGlassFuzzy = std::make_shared<Dielectric>(1.5, 0.8);
 		auto polishedAluminum = std::make_shared<Metal>(glm::dvec3(0.80392, 0.83529, 0.87058), 0.1);
 		auto matteMetal = std::make_shared<Metal>(glm::dvec3(0.10392, 0.13529, 0.17058), 0.45);
-		auto stuccoWallTexture = std::make_shared<Lambertian>(std::make_shared<ImageTexture>("Material/StuccoRoughnessWallDiffuseColor.png"));
+		auto checkerTexture = std::make_shared<Lambertian>(std::make_shared<CheckerTexture>(0.32, glm::dvec3(0.32), glm::dvec3(0.72)));
 
 		// Configure Quads
 		scene.Add(std::make_shared<Quad>(glm::dvec3(-60.0, 23.0, 60.0), glm::dvec3(120.0, 0.0, 0.0), glm::dvec3(0.0, 0.0, -120.0), diffusedLight));
 		scene.Add(std::make_shared<Quad>(glm::dvec3(-15.0, 21.0, 15.0), glm::dvec3(30.0, 0.0, 0.0), glm::dvec3(0.0, 0.0, -30.0), diffusedLightHigh));
-		scene.Add(std::make_shared<Quad>(glm::dvec3(-120.0, 16.0, 120.0), glm::dvec3(240.0, 0.0, 0.0), glm::dvec3(0.0, 0.0, -240.0), dielectricGlassHazy01));
+		scene.Add(std::make_shared<Quad>(glm::dvec3(-120.0, 16.0, 120.0), glm::dvec3(240.0, 0.0, 0.0), glm::dvec3(0.0, 0.0, -240.0), dielectricGlassFuzzy));
 
 		// Configure Mesh
-		auto backdropBackground = std::make_shared<Mesh>("Backdrop/Background.glb", 1.8, stuccoWallTexture);
+		auto backdropBackground = std::make_shared<Mesh>("Backdrop/Background.glb", 1.8, checkerTexture);
 		scene.Add(std::make_shared<Translate>(backdropBackground, glm::dvec3(0.0, 2.2, 0.0)));
 
 		auto knobLogo = std::make_shared<Mesh>("RaetherKnob/knobLogoSurface.glb", 0.8, polishedAluminum);
