@@ -23,6 +23,8 @@ private:
 	glm::dvec3 V0{ 0.0 };
 	glm::dvec3 V1{ 0.0 };
 	glm::dvec3 V2{ 0.0 };
+	glm::dvec3 E1{ 0.0 };
+	glm::dvec3 E2{ 0.0 };
 	glm::dvec3 W{ 0.0 };
 	glm::dvec3 Normal;
 	std::shared_ptr<Material> MaterialId;

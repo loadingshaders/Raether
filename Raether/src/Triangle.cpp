@@ -10,20 +10,17 @@ Triangle::Triangle(const glm::dvec3& v0, const glm::dvec3& v1, const glm::dvec3&
 	this->ObjectMatId = MaterialId;
 
 	/// Calculate edge vectors
-	glm::dvec3 e1 = V1 - V0;
-	glm::dvec3 e2 = V2 - V0;
+	E1 = V1 - V0;
+	E2 = V2 - V0;
 
-	glm::dvec3 N = glm::cross(e1, e2);
+	glm::dvec3 N = glm::cross(E1, E2);
 
 	/// Calculate normal
 	Normal = glm::normalize(N);
 
-	/// Calculate plane equation constant D
+	/// Calculate plane equation constant D and W
 	D = glm::dot(Normal, V0);
-
-	/// Precompute inverse area for barycentric coordinate calculation
-	double area = glm::length(N) * 0.5;
-	W = N / (area * area * 2.0);
+	W = N / glm::dot(N, N);
 
 	/// Compute bounding box
 	bbox = Aabb(
@@ -64,19 +61,9 @@ bool Triangle::Hit(const Ray& ray, Interval hitdist, Hitrec& hitrecord) const {
 	glm::dvec3 hitPoint = ray.Origin + t * ray.Direction;
 
 	// Compute Barycentric Coordinates
-	glm::dvec3 v0 = V1 - V0;
-	glm::dvec3 v1 = V2 - V0;
-	glm::dvec3 v2 = hitPoint - V0;
-
-	double dot00 = glm::dot(v0, v0);
-	double dot01 = glm::dot(v0, v1);
-	double dot02 = glm::dot(v0, v2);
-	double dot11 = glm::dot(v1, v1);
-	double dot12 = glm::dot(v1, v2);
-
-	double InvDenom = 1.0 / (dot00 * dot11 - dot01 * dot01);
-	double Alpha = (dot11 * dot02 - dot01 * dot12) * InvDenom;
-	double Beta = (dot00 * dot12 - dot01 * dot02) * InvDenom;
+	glm::dvec3 planerHitPoint = hitPoint - V0;
+	double Alpha = glm::dot(W, glm::cross(planerHitPoint, E2));
+	double Beta = glm::dot(W, glm::cross(E1, planerHitPoint));
 
 	/// Case-4 Check if point is inside triangle
 	if (!isInterior(Alpha, Beta, hitrecord)) return false;
