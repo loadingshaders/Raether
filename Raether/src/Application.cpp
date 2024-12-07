@@ -941,15 +941,14 @@ void App::setUpScene() {
 		auto diffusedLight = std::make_shared<DiffuseLight>(glm::dvec3(2.0));
 		auto diffusedLightBright = std::make_shared<DiffuseLight>(glm::dvec3(4.0));
 		auto diffusedWhite = std::make_shared<Lambertian>(glm::dvec3(1.0));
-		auto dielectricGlass = std::make_shared<Dielectric>(1.5);
-		auto dielectricGlassHazy = std::make_shared<Dielectric>(1.5, 0.7);
+		auto dielectricGlassFuzzy = std::make_shared<Dielectric>(1.5, 0.7);
 		auto beigeWallTexture = std::make_shared<Lambertian>(std::make_shared<ImageTexture>("Material/BeigeWallDiffuseColor.png"));
 		auto checkerTexture = std::make_shared<Lambertian>(std::make_shared<CheckerTexture>(0.32, glm::dvec3(0.65, 0.78, 0.6), std::make_shared<ImageTexture>("Material/BeigeWallDiffuseColor.png")));
 
 		// Configure Quads
 		scene.Add(std::make_shared<Quad>(glm::dvec3(-15.0, 10.0, 25.0), glm::dvec3(30.0, 0.0, 0.0), glm::dvec3(0.0, 0.0, -30.0), diffusedLight));
 		scene.Add(std::make_shared<Quad>(glm::dvec3(-5.0, 9.0, 10.0), glm::dvec3(10.0, 0.0, 0.0), glm::dvec3(0.0, 0.0, -10.0), diffusedLightBright));
-		scene.Add(std::make_shared<Quad>(glm::dvec3(-30.0, 7.0, 30.0), glm::dvec3(60.0, 0.0, 0.0), glm::dvec3(0.0, 0.0, -40.0), dielectricGlassHazy));
+		scene.Add(std::make_shared<Quad>(glm::dvec3(-30.0, 7.0, 30.0), glm::dvec3(60.0, 0.0, 0.0), glm::dvec3(0.0, 0.0, -40.0), dielectricGlassFuzzy));
 
 		// Configure Boxes
 		scene.Add(std::make_shared<Box>(glm::dvec3(-30.0, 15.0, 10.0), beigeWallTexture, glm::dvec3(0.08, 30.0, 40.0))); // Left Box
