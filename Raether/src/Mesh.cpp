@@ -56,6 +56,7 @@ void Mesh::BuildBVH() {
 bool Mesh::LoadModel(std::string& modelFilename, std::string& err, std::string& warn) {
 	tinygltf::Model model;
 	tinygltf::TinyGLTF loader;
+
 	bool loadFile = loader.LoadBinaryFromFile(&model, &err, &warn, modelFilename);
 	if (!loadFile) {
 		return false;
@@ -75,6 +76,7 @@ bool Mesh::LoadModel(std::string& modelFilename, std::string& err, std::string& 
 
 			/// Get accessor for indices if present
 			std::vector<uint32_t> indices;
+
 			if (primitive.indices >= 0) {
 				
 				const tinygltf::Accessor& indexAccessor = model.accessors[primitive.indices];
