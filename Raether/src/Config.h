@@ -32,7 +32,7 @@
 #define RBVH 0 // Enable Random Axis BVH Split (The Default is Longest Axis Split)
 
 // Scene Related Macros
-#define SCENE21 // Enable a Particular Scene
+#define SCENE22 // Enable a Particular Scene
 #define NumofProcSpheres 40 // Represents Total Number of Procedural Spheres
 
 // Logging Related Macros
