@@ -3,15 +3,14 @@
 #include <iostream>
 #include <random>
 #include <chrono>
+#include <execution>
 
 #include "Raether.h"
 #include "Camera.h"
 #include "Ray.h"
 #include "Scene.h"
-
-#define black glm::vec3(0.0f, 0.0f, 0.0f)
-#define white glm::vec3(1.0f)
-#define blue glm::vec3(0.5f, 0.7f, 1.0f)
+#include "Utils.h"
+#include "Config.h"
 
 class Renderer {
 public:
@@ -20,19 +19,24 @@ public:
 
 	void Init(Raether& rae, const Scene& scene, Camera& camera);
 	void Render(const Scene& scene, Camera& camera);
-	void ResetFrameIdx() { FrameCount = 1; }
+	void ResetFrameIdx() { FrameCount = 0; }
 
-	const Camera* renderCam = nullptr;
-	const Scene* renderScene = nullptr;
-	Raether* raeObj = nullptr;
 private:
-	int FrameCount;
+	glm::dvec3 PerPixel(glm::dvec2 uv);
+	void SetBuffers();
 
-	std::vector<glm::ui8_tvec4> PixelData;
-	std::vector<glm::vec4> AccumPixelData;
+public:
+	Raether* raeObj;
+	const Scene* renderScene;
+	const Camera* renderCam;
+
 private:
-	glm::vec4 PerPixel(int x, int y);
-	bool Hittable(const Ray& ray, const std::vector<Sphere>& SphereList, Hitrec& hitrecord);
-private:
-	glm::ui8_tvec4 GammaCorrection(glm::vec4 color);
+	uint32_t width;
+	uint32_t height;
+	uint32_t FrameCount;
+
+	std::vector<GLM::ui8_tvec4> ImageData;
+	std::vector<glm::dvec3> AccumImageData;
+
+	std::vector<uint32_t> ImageHorizontalIter, ImageVerticalIter;
 };

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <inttypes.h>
 
 #include <glm\glm.hpp>
 
@@ -9,14 +10,28 @@
 #include "Camera.h"
 #include "Scene.h"
 #include "Ray.h"
+#include "Timer.h"
+#include "Config.h"
+#include "Sphere.h"
+#include "Quad.h"
+#include "Triangle.h"
+#include "Box.h"
+#include "Mesh.h"
+#include "Volume.h"
+#include "HittableList.h"
 
-class App
-{
+class App {
 public:
 	App();
 	~App();
 
 	void run();
+
+private:
+	void setWindow();
+	void setUpScene();
+	void updateScene();
+
 private:
 	const char* title;
 	const int width;
@@ -24,11 +39,6 @@ private:
 
 	Raether rae;
 	Scene scene;
-	Sphere sphere;
 	Camera camera;
 	Renderer renderer;
-
-	void setWindow();
-	void setUpScene();
-	void updateScene();
 };

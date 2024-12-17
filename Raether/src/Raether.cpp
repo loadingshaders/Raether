@@ -1,176 +1,161 @@
 #include "Raether.h"
 
-Raether::Raether() {
-	windowState = RaeState::ACTIVE;
-	keyState = Keystate::STANDBY;
-	window = nullptr;
-	title = "Raether";
-	windowwidth = 900;
-	windowheight = 500;
-	renderer = nullptr;
-	texture = nullptr;
-	screensize = SDL_Rect{ 0, 0, windowwidth, windowheight };
+Raether::Raether() : windowTitle("Raether"),
+					 windowWidth(1000),
+					 windowHeight(500),
+					 window(nullptr),
+					 renderer(nullptr),
+					 texture(nullptr),
+					 screensize(SDL_Rect{ 0, 0, windowWidth, windowHeight }),
+					 windowState(RaeState::ACTIVE),
+					 keyState(Keystate::STANDBY),
+					 mouseDelta(GLM::si32_tvec2(0.0, 0.0)),
+					 scrollAmount(0)
+{
 }
-Raether::~Raether() {
-	std::cout << "\nAbout to call raeQuit" << std::endl;
-	raeQuit();
-	std::cout << "raeQuit call done!" << std::endl;
-}
-
-void Raether::raeErrorList(std::string errorlist) {
-	std::cout << errorlist << std::endl;
-	std::cin.get();
-	SDL_Quit();
-}
+Raether::~Raether() { }
 
 void Raether::raeInit() {
-	SDL_bool hintError = SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, 0);
-
-	int sdlError = SDL_Init(SDL_INIT_VIDEO);
-	if (sdlError != 0) {
-		raeErrorList("SDL subsystems could not be initialized: " + std::string(SDL_GetError()));
+	// Setting the render scale quality as nearest pixel sampling
+	if (SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, 0) != SDL_TRUE) {
+		Utils::PrintError("SDL Hint could not be set: " + std::string(SDL_GetError()));
 	}
-
-	window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, windowwidth, windowheight, SDL_WINDOW_SHOWN);
+	// Initialize the required subsystems
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS)) {
+		Utils::PrintError("SDL subsystems could not be initialized: " + std::string(SDL_GetError()));
+	}
+	// Create window pointer
+	window = SDL_CreateWindow(windowTitle, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, windowWidth, windowHeight, SDL_WINDOW_SHOWN);
 	if (window == nullptr) {
-		raeErrorList("SDL window could not be created: " + std::string(SDL_GetError()));
+		Utils::PrintError("SDL window could not be created: " + std::string(SDL_GetError()));
 	}
-
+	// Create renderer pointer
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	if (renderer == nullptr) {
-		raeErrorList("SDL renderer could not be created: " + std::string(SDL_GetError()));
+		Utils::PrintError("SDL renderer could not be created: " + std::string(SDL_GetError()));
 	}
-
-	int sdlblendmode = SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-	if (sdlblendmode != 0) {
-		raeErrorList("SDL blendmode could not be created: " + std::string(SDL_GetError()));
+	// Set render blendmode as alpha blending
+	// dstRGB = (srcRGB * srcA) + (dstRGB * (1 - srcA))
+	// dstA = srcA + (dstA * (1 - srcA))
+	if (SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND)) {
+		Utils::PrintError("SDL blendmode could not be set: " + std::string(SDL_GetError()));
 	}
-
-	texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ABGR8888, SDL_TEXTUREACCESS_STREAMING, windowwidth, windowheight);
+	// Create the texture with texture acess streaming
+	texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ABGR8888, SDL_TEXTUREACCESS_STREAMING, windowWidth, windowHeight);
 	if (texture == nullptr) {
-		raeErrorList("SDL texture could not be created: " + std::string(SDL_GetError()));
+		Utils::PrintError("SDL texture could not be created: " + std::string(SDL_GetError()));
 	}
 
-	// destination rect
+	// Setting up the destination rect
 	screensize.x = 0;
 	screensize.y = 0;
-	screensize.w = windowwidth;
-	screensize.h = windowheight;
+	screensize.w = windowWidth;
+	screensize.h = windowHeight;
 }
 
 void Raether::raeCreateWindow(const char* w_t, int w_width, int w_height) {
-	title = w_t;
-	windowwidth = w_width;
-	windowheight = w_height;
+	windowTitle = w_t;
+	windowWidth = w_width;
+	windowHeight = w_height;
 
 	raeInit();
 }
 
-void Raether::raeDrawPix(int u, int v, std::vector<glm::ui8_tvec4>& PixData) {
+void Raether::raeDrawImage(std::vector<GLM::ui8_tvec4>& PixData) {
 
-	uint32_t* pixels;
-	int pitch;
-	
-	const int numofPixels = u * v;
+	uint32_t* pixels = nullptr;
+	int pitch = 0;
 
 	// Lock the texture pixels for direct write access
-	int sdlError = SDL_LockTexture(texture, &screensize, (void**)&pixels, &pitch);
-	
-	if (sdlError != 0) {
-		raeErrorList("SDL texture could not be locked: " + std::string(SDL_GetError()));
+	if (SDL_LockTexture(texture, &screensize, (void**)&pixels, &pitch)) {
+		Utils::PrintError("SDL texture could not be locked: " + std::string(SDL_GetError()));
 	}
 
-	memcpy(pixels, PixData.data(), numofPixels * sizeof(uint32_t));
+	// Copy the pixel data to the locked texture
+	memcpy(pixels, PixData.data(), PixData.size() * sizeof(GLM::ui8_tvec4));
 
 	// Unlock the texture to allow rendering
 	SDL_UnlockTexture(texture);
 }
 
 bool Raether::raeInputEvents() {
+
 	bool Moved = false;
+	keyState = Keystate::STANDBY;
+	mouseState = Mousestate::STATIC;
 
 	SDL_Event event;
 
 	while (SDL_PollEvent(&event)) {
 
-		keyState = Keystate::STANDBY;
-		mouseState = Mousestate::STATIC;
-
+		// Exit event
 		if (event.type == SDL_QUIT) {
 			windowState = RaeState::EXIT;
 			break;
 		}
+		// Mouse wheel event
 		else if (event.type == SDL_MOUSEWHEEL) {
-
 			// Hide the mouse cursor
 			SDL_ShowCursor(SDL_DISABLE);
-
 			// Lock the mouse to the window
 			SDL_SetWindowGrab(window, SDL_TRUE);
 
 			scrollAmount = event.wheel.y;
 
-			Moved = true;
-
 			mouseState = Mousestate::SCROLLING;
+			Moved = true;
+			
+			break;
 		}
+		// Mouse left button event
 		else if (event.button.button == SDL_BUTTON_LEFT) {
 
 			if (event.type == SDL_MOUSEMOTION) {
-
 				// Hide the mouse cursor
 				SDL_ShowCursor(SDL_DISABLE);
-
 				// Lock the mouse to the window
 				SDL_SetWindowGrab(window, SDL_TRUE);
 
-				delta.x = event.motion.xrel;
-				delta.y = event.motion.yrel;
-
-				Moved = true;
+				mouseDelta.x = event.motion.xrel;
+				mouseDelta.y = event.motion.yrel;
 
 				mouseState = Mousestate::INMOTION;
+				Moved = true;
 				
 				break;
 			}
 		}
+		// Keyboard event
 		else if (event.type == SDL_KEYDOWN) {
 
 			if (event.key.keysym.sym == SDLK_w) {
 				keyState = Keystate::W;
 				Moved = true;
-				break;
 			}
 			else if (event.key.keysym.sym == SDLK_a) {
 				keyState = Keystate::A;
 				Moved = true;
-				break;
 			}
 			else if (event.key.keysym.sym == SDLK_s) {
 				keyState = Keystate::S;
 				Moved = true;
-				break;
 			}
 			else if (event.key.keysym.sym == SDLK_d) {
 				keyState = Keystate::D;
 				Moved = true;
-				break;
 			}
 			else if (event.key.keysym.sym == SDLK_q) {
 				keyState = Keystate::Q;
 				Moved = true;
-				break;
 			}
 			else if (event.key.keysym.sym == SDLK_e) {
 				keyState = Keystate::E;
 				Moved = true;
-				break;
 			}
 		}
 		else {
 			// Show the mouse cursor
 			SDL_ShowCursor(SDL_ENABLE);
-
 			// Unlock the mouse to the window
 			SDL_SetWindowGrab(window, SDL_FALSE);
 		}
@@ -180,19 +165,24 @@ bool Raether::raeInputEvents() {
 }
 
 void Raether::raeRenderBegin() {
+	// Clear the render target
 	SDL_RenderClear(renderer);
 }
 
 void Raether::raeRenderEnd() {
+	// Copy the texture to the render to the render target
 	SDL_RenderCopy(renderer, texture, NULL, &screensize);
+	// Swap the buffers
 	SDL_RenderPresent(renderer);
 }
 
 void Raether::raeQuit() {
 	if (windowState == RaeState::EXIT) {
+		// Destroy all the pointers
 		SDL_DestroyTexture(texture);
 		SDL_DestroyRenderer(renderer);
 		SDL_DestroyWindow(window);
+		// Clean up all the initialized subsystems
 		SDL_Quit();
 	}
 }
