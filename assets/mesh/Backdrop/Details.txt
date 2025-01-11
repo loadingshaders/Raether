@@ -2,3 +2,4 @@ Triangles: 36,864
 Vertices: 35,399
 Updated: 2024-11-29
 License: MIT License
+Copyright (c) 2023-2024 Shreyos Ghosh

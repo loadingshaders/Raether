@@ -2,4 +2,4 @@ Triangles: 75,789
 Vertices: 38055
 Updated: 2017-08-06
 License: Stanford Scan
-© 1996 Stanford University
+Copyright (c) 1996 Stanford University
